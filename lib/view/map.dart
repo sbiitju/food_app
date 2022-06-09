@@ -14,17 +14,13 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  final Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
 
   @override
   Widget build(BuildContext context) {
     Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-    final MarkerId markerId = MarkerId("");
+    const MarkerId markerId = MarkerId("");
     var arg = ModalRoute.of(context)!.settings.arguments as Position;
     _kLake = CameraPosition(
       target: LatLng(arg.latitude, arg.longitude),
@@ -39,6 +35,7 @@ class MapSampleState extends State<MapSample> {
     void updateCameraPosition(CameraPosition position) {
       print(position);
     }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -64,22 +61,34 @@ class MapSampleState extends State<MapSample> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 95,left: 10,right: 10),
+              padding: const EdgeInsets.only(bottom: 55, left: 10, right: 10),
               child: Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-
-                    IconButton(onPressed: (){}, icon: Icon(Icons.search_sharp))
-                  ],
-                ),
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white70,
                   shape: BoxShape.rectangle,
+                ),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      hintText: "Search Delivery Address",
+                      suffixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white70, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white70, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10)))),
+                  textAlign: TextAlign.center,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter some text";
+                    }
+                    return null;
+                  },
                 ),
               ),
             ),
@@ -90,21 +99,14 @@ class MapSampleState extends State<MapSample> {
               width: double.infinity,
               height: 50,
               color: Colors.redAccent,
-              child: Align(
+              child: const Align(
                 alignment: Alignment.center,
-                child: Text(
-                  "Select Location"
-                ),
+                child: Text("Select Location"),
               ),
             ),
           )
         ],
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
