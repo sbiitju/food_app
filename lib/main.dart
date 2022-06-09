@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/util/function.dart';
 import 'package:food_app/view/Splash.dart';
 
 void main() {
@@ -12,13 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:SplashScreen()
+        onGenerateRoute: onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
     );
   }
 }
-
-
