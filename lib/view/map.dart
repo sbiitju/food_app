@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:food_app/graphql/graphql.dart';
+import 'package:food_app/view/Home.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapSample extends StatefulWidget {
@@ -99,9 +103,13 @@ class MapSampleState extends State<MapSample> {
               width: double.infinity,
               height: 50,
               color: Colors.redAccent,
-              child: const Align(
+              child:Align(
                 alignment: Alignment.center,
-                child: Text("Select Location"),
+                child: MaterialButton(
+                  onPressed:(){
+                    Get.to(Home());
+                  } ,
+                    child: Text("Select Location")),
               ),
             ),
           )

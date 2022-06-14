@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
 import '../get/controller.dart';
+import '../graphql/graphql.dart';
 import '../util/geo_location.dart';
 import 'map.dart';
 
@@ -28,7 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     GeoLocation().determinePosition().then((value){
       position = value;
+      GraphqlClass.getReverseGeoCode(value.latitude, value.longitude);
     });
+    GraphqlClass.getCountries();
     Timer(const Duration(seconds: 5),
         () => Navigator.pushReplacementNamed(context, MapSample.RouteName,arguments: position));
   }
