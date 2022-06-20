@@ -7,7 +7,7 @@ import 'package:food_app/api/cats.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-  static const RouteName = "SplashScreen";
+  static const RouteName = "Home";
 
   @override
   State<Home> createState() => _HomeState();

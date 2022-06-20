@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+import 'bindings/initial_binding.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -18,18 +20,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return GetMaterialApp(
-        onGenerateRoute: onGenerateRoute,
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
-            bodyText1: GoogleFonts.oswald(textStyle: textTheme.bodyText1),
-          ),
-          primarySwatch: Colors.blue,
+      initialBinding: InitialBinding(),
+      onGenerateRoute: onGenerateRoute,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+          bodyText1: GoogleFonts.oswald(textStyle: textTheme.bodyText1),
         ),
+        primarySwatch: Colors.blue,
+      ),
       home: GraphQLProvider(
-        client: GraphqlClass.client,
-        child: SplashScreen(),
+        client: BaseDataSource.client,
+        child: const SplashScreen(),
       ),
     );
   }

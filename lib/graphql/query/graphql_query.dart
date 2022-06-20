@@ -69,7 +69,30 @@ class GraphQlQuery {
     }
 }
 """;
-  String getHPOutletList = """
+ String getServiceConfiguration = """ 
+ query getServiceConfiguration(\$versionNumber: String) {
+ getServiceConfiguration(versionNumber: \$versionNumber)
+ {
+  message
+  statusCode
+  result {
+  termsAndCondition
+  homePageSections{
+  queryName
+  type
+  title
+  minItem
+  }
+  configApiCallIntervalTime
+  faq
+  legal
+  privacyPolicy
+  }
+  }
+  }
+""";
+
+String getHPOutletList = """
   query getHPOutletList(\$params: HPOutletListInputParam!) {
     getHPOutletList(
       params:\$params

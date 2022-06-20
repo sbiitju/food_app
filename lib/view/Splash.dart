@@ -1,39 +1,47 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:food_app/view/Home.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
 import '../get/controller.dart';
-import '../graphql/graphql.dart';
 import '../util/geo_location.dart';
 import 'map.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late Position position;
-
+  Position? position;
+  bool isApiCallCompleted = false;
 
   final Controller controller = Get.put(Controller());
+
   @override
   void initState() {
     super.initState();
-    GeoLocation().determinePosition().then((value){
-      position = value;
-      GraphqlClass.getReverseGeoCode(value.latitude, value.longitude);
+    controller.getServiceConfiguration().then((value) {
+      isApiCallCompleted = value;
+      tryNavigateToNextScreen();
     });
-    GraphqlClass.getCountries();
-    Timer(const Duration(seconds: 5),
-        () => Navigator.pushReplacementNamed(context, MapSample.RouteName,arguments: position));
+
+    GeoLocation().determinePosition().then((value) {
+      position = value;
+      tryNavigateToNextScreen();
+    });
+  }
+
+  void tryNavigateToNextScreen() {
+    var check = (!(position == null) && isApiCallCompleted);
+    debugPrint(check.toString());
+    if (check == true) {
+      Get.to(const MapSample(),arguments: position);
+    }
   }
 
   @override
