@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     GeoLocation().determinePosition().then((value) {
       position = value;
+      controller.getReverseGeoCode(position?.latitude, position?.longitude).then((value) => controller.address.value = value);
       tryNavigateToNextScreen();
     });
   }
@@ -40,7 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
     var check = (!(position == null) && isApiCallCompleted);
     debugPrint(check.toString());
     if (check == true) {
-      Get.to(const MapSample(),arguments: position);
+      Get.to(
+          preventDuplicates: true,
+          const MapSample(),arguments: position);
     }
   }
 

@@ -10,5 +10,4 @@ class BaseDataSource {
   GraphQLClient clientToQuery() {
     return GraphQLClient(cache: GraphQLCache(), link: httpLink);
   }
-
 }

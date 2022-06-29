@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/view/Splash.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../view/Home.dart';
 import '../view/map.dart';
@@ -12,7 +13,7 @@ Route onGenerateRoute(settings) {
       _nextPage = SplashScreen();
       break;
     case Home.RouteName:
-      _nextPage = const Home();
+      _nextPage = Home(LatLng(0, 0));
       break;
     case MapSample.RouteName:
       _nextPage = const MapSample();

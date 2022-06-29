@@ -92,7 +92,7 @@ class GraphQlQuery {
   }
 """;
 
-String getHPOutletList = """
+  String getHPOutletList = """
   query getHPOutletList(\$params: HPOutletListInputParam!) {
     getHPOutletList(
       params:\$params
@@ -101,20 +101,16 @@ String getHPOutletList = """
     statusCode
     result{
       outlets{
-        id
-        rating
-        totalRating
-        deliveryFee
-        dealTitles
-        meta {
-          name
-          images{
-          cover
-          logo
-          }
-        }
+       id
         restaurant{
           name
+        }
+        deliveryFee
+        meta{
+          images{
+            cover
+            logo
+          }
         }
       }
     }
@@ -123,28 +119,43 @@ String getHPOutletList = """
   """;
 
   String getReverseGeoCode = """
-  query reverseGeoCode(\$point: Point!) {
+  query reverseGeoCode(\$coordinate: Point!) {
     reverseGeoCode(
-      coordinate:\$point
+      coordinate:\$coordinate
   ){
-    message
+      message
     statusCode
-    result{
+    result {
       address
-    
-  }
+      addressComponents{
+        house
+        road
+      }
+      area
+      areaComponents{
+        area
+      }
+      city
+      district
+  
+    }
  }
  }
   """;
 
   String getZone = """
- query GetZone (\$coordinateVar:Point!){
-  getZone(coordinate: \$coordinateVar) {
-  message
-  statusCode
-  result {
-  name
-  }
+ query GetZone (\$coordinate: Point!){
+  getZone(coordinate: \$coordinate) {
+   message
+    statusCode
+    result {
+      id
+      name
+      isActive
+      serviceArea{
+        name
+      }
+    }
   }
   }
   """;

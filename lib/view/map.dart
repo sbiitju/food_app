@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/view/Home.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../get/controller.dart';
 
 class MapSample extends StatefulWidget {
   static const RouteName = "MapSample";
@@ -20,9 +21,11 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
+  final Controller controller = Get.put(Controller());
 
   @override
   Widget build(BuildContext context) {
+    var latlon=LatLng(0,0);
     Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
     const MarkerId markerId = MarkerId("");
     var arg = ModalRoute.of(context)!.settings.arguments as Position;
@@ -37,17 +40,24 @@ class MapSampleState extends State<MapSample> {
     );
     markers[markerId] = marker;
     void updateCameraPosition(CameraPosition position) {
+      latlon=position.target;
+      controller
+          .getReverseGeoCode(
+              position.target.latitude, position.target.longitude)
+          .then((value) => controller.address.value = value);
+      controller.isServiceAvailable.value =controller.getZone(
+          position.target.latitude, position.target.longitude);
       print(position);
     }
 
-    return Scaffold(
-      body: Stack(
+    return Scaffold(body: Obx(() {
+      return Stack(
         children: [
           GoogleMap(
             onCameraMove: updateCameraPosition,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            mapType: MapType.hybrid,
+            mapType: MapType.normal,
             initialCameraPosition: _kLake,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
@@ -74,47 +84,69 @@ class MapSampleState extends State<MapSample> {
                   color: Colors.white70,
                   shape: BoxShape.rectangle,
                 ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      hintText: "Search Delivery Address",
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white70, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white70, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10)))),
-                  textAlign: TextAlign.center,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    return null;
-                  },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text( controller.address.value.areaName + "," +
+                        controller.address.value.cityName +
+                        ", ${controller.address.value.districtName}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                      fontSize: 15,
+                    ),),
+                    // TextFormField(
+                    //   decoration: const InputDecoration(
+                    //       hintText: "Search Delivery Address",
+                    //       suffixIcon: Icon(Icons.search),
+                    //       border: OutlineInputBorder(
+                    //           borderSide:
+                    //               BorderSide(color: Colors.white70, width: 1),
+                    //           borderRadius: BorderRadius.all(Radius.circular(10))),
+                    //       enabledBorder: OutlineInputBorder(
+                    //           borderSide:
+                    //               BorderSide(color: Colors.white70, width: 1),
+                    //           borderRadius: BorderRadius.all(Radius.circular(10)))),
+                    //   textAlign: TextAlign.center,
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return "Please enter some text";
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                  ],
                 ),
               ),
             ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              height: 50,
-              color: Colors.redAccent,
-              child:Align(
-                alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: controller.isServiceAvailable.value?Colors.redAccent:Colors.white70,
+                    borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
+                width: double.infinity,
+                height: 50,
                 child: MaterialButton(
-                  onPressed:(){
-                    Get.to(Home());
-                  } ,
-                    child: Text("Select Location")),
+                    onPressed:!controller.isServiceAvailable.value?null: () {
+                      var gotItems = controller.getItems();
+                      gotItems.then((value) => {
+                            if (value == true)
+                              {
+                                Get.to(Home(latlon))}
+                            else
+                              {Get.snackbar("Did not get Data", "Loading...")}
+                          });
+                    },
+                    child:controller.isServiceAvailable.value? Text("Select Location"):Text("No Service Available")),
               ),
             ),
           )
         ],
-      ),
-    );
+      );
+    }));
   }
 }
