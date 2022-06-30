@@ -19,33 +19,34 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
-  final Controller controller = Get.put(Controller());
+  late CameraPosition myPosition;
+  final Controller myController = Get.find<Controller>();
 
   @override
   Widget build(BuildContext context) {
     var latlon=LatLng(0,0);
-    Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-    const MarkerId markerId = MarkerId("");
+    Set<Marker> markers ={};
+    const MarkerId markerId = MarkerId("My Location");
     var arg = ModalRoute.of(context)!.settings.arguments as Position;
+    myPosition=CameraPosition(target: LatLng(arg.latitude,arg.longitude),zoom: 14.5);
     _kLake = CameraPosition(
       target: LatLng(arg.latitude, arg.longitude),
       zoom: 14.5,
     );
-    final Marker marker = Marker(
+    Marker marker = Marker(
       position: LatLng(arg.latitude, arg.longitude),
       infoWindow: const InfoWindow(title: "", snippet: '*'),
       markerId: markerId,
     );
-    markers[markerId] = marker;
-    void updateCameraPosition(CameraPosition position) {
+    updateCameraPosition(CameraPosition position) {
       latlon=position.target;
-      controller
+      myController
           .getReverseGeoCode(
               position.target.latitude, position.target.longitude)
-          .then((value) => controller.address.value = value);
-      controller.isServiceAvailable.value =controller.getZone(
+          .then((value) => myController.address.value = value);
+      myController.isServiceAvailable.value =myController.getZone(
           position.target.latitude, position.target.longitude);
       print(position);
     }
@@ -55,15 +56,30 @@ class MapSampleState extends State<MapSample> {
         children: [
           GoogleMap(
             onCameraMove: updateCameraPosition,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: true,
             mapType: MapType.normal,
             initialCameraPosition: _kLake,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },
+            markers: markers,
             // markers: Set<Marker>.of(markers.values),
           ),
+          Positioned(
+              top: MediaQuery.of(context).size.height-150,
+              left: MediaQuery.of(context).size.width -60,
+              child: IconButton(
+            icon: Icon(
+              Icons.my_location
+            ),
+            onPressed:(){
+              setState((){
+                _controller.future.then((value) => {
+                  value.animateCamera(CameraUpdate.newCameraPosition(myPosition))
+                });
+              });
+
+            },
+          )),
           const Center(
             child: Padding(
               padding: EdgeInsets.only(
@@ -87,33 +103,13 @@ class MapSampleState extends State<MapSample> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text( controller.address.value.areaName + "," +
-                        controller.address.value.cityName +
-                        ", ${controller.address.value.districtName}",
+                    Text( myController.address.value.areaName + "," +
+                        myController.address.value.cityName +
+                        ", ${myController.address.value.districtName}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                       fontSize: 15,
                     ),),
-                    // TextFormField(
-                    //   decoration: const InputDecoration(
-                    //       hintText: "Search Delivery Address",
-                    //       suffixIcon: Icon(Icons.search),
-                    //       border: OutlineInputBorder(
-                    //           borderSide:
-                    //               BorderSide(color: Colors.white70, width: 1),
-                    //           borderRadius: BorderRadius.all(Radius.circular(10))),
-                    //       enabledBorder: OutlineInputBorder(
-                    //           borderSide:
-                    //               BorderSide(color: Colors.white70, width: 1),
-                    //           borderRadius: BorderRadius.all(Radius.circular(10)))),
-                    //   textAlign: TextAlign.center,
-                    //   validator: (value) {
-                    //     if (value == null || value.isEmpty) {
-                    //       return "Please enter some text";
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
                   ],
                 ),
               ),
@@ -125,14 +121,14 @@ class MapSampleState extends State<MapSample> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Container(
                 decoration: BoxDecoration(
-                    color: controller.isServiceAvailable.value?Colors.redAccent:Colors.white70,
+                    color: myController.isServiceAvailable.value?Colors.redAccent:Colors.white70,
                     borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
                 width: double.infinity,
                 height: 50,
                 child: MaterialButton(
-                    onPressed:!controller.isServiceAvailable.value?null: () {
-                      var gotItems = controller.getItems();
+                    onPressed:!myController.isServiceAvailable.value?null: () {
+                      var gotItems = myController.getItems();
                       gotItems.then((value) => {
                             if (value == true)
                               {
@@ -141,7 +137,7 @@ class MapSampleState extends State<MapSample> {
                               {Get.snackbar("Did not get Data", "Loading...")}
                           });
                     },
-                    child:controller.isServiceAvailable.value? Text("Select Location"):Text("No Service Available")),
+                    child:myController.isServiceAvailable.value? Text("Select Location"):Text("No Service Available")),
               ),
             ),
           )

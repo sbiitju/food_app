@@ -100,13 +100,24 @@ class GraphQlQuery {
     message
     statusCode
     result{
-      outlets{
-       id
+       outlets{
+        id
+        outletTags  
+        averageFoodPreparationTime
         restaurant{
+          name
+        }
+        dealTitles
+        averageFoodPreparationTime
+        isOpen
+        outletTags
+        rating
+        cuisines{
           name
         }
         deliveryFee
         meta{
+          name
           images{
             cover
             logo

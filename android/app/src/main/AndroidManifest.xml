@@ -7,7 +7,7 @@
    <application
         android:label="food_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/logo_name">
         <activity
             android:name=".MainActivity"
             android:exported="true"

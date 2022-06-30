@@ -3,12 +3,14 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 class Outlet {
   String? id;
   String? name;
+  String? rating=0.toString();
   String? deliveryFee;
   String? coverImages;
   String? logoImages;
+  String? averageFoodPreparationTime;
   bool isFavourite;
-
-  Outlet(this.id, this.name, this.deliveryFee, this.coverImages,this.logoImages,{this.isFavourite =false});
+  var listOfCusins=<String?>[];
+  Outlet(this.id, this.name, this.deliveryFee, this.coverImages,this.logoImages,this.rating,this.listOfCusins,this.averageFoodPreparationTime,{this.isFavourite =false});
 
 }
 
@@ -34,8 +36,13 @@ class ParseHpOutletListResponse {
         result.data!["getHPOutletList"]["result"]["outlets"] as List<dynamic>;
     for (var e in list) {
       Outlet? outlet;
+      var listOfCusins=<String?>[];
+      var listOfOutletTags=<String?>[];
       try {
-        outlet = Outlet(e["id"], e["restaurant"]["name"],e["deliveryFee"].toString(),e["meta"]["images"]["cover"].toString(),e["meta"]["images"]["logo"].toString());
+        for(var i in e["cuisines"]){
+          listOfCusins.add(i["name"].toString());
+        }
+        outlet = Outlet(e["id"], e["restaurant"]["name"],e["deliveryFee"].toString(),e["meta"]["images"]["cover"].toString(),e["meta"]["images"]["logo"].toString(),e["rating"].toString(),listOfCusins,e["averageFoodPreparationTime"].toString());
       } catch (element) {
         outlet = null;
       }
