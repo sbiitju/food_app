@@ -21,7 +21,7 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
   late CameraPosition myPosition;
   final Controller myController = Get.find<Controller>();
@@ -35,10 +35,10 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    var latlon = LatLng(0, 0);
+    var latlon = LatLng(widget.position.latitude,widget.position.longitude);
     Set<Marker> markers = {};
     const MarkerId markerId = MarkerId("My Location");
-    var arg = ModalRoute.of(context)!.settings.arguments as Position;
+    var arg = widget.position;
     myPosition =
         CameraPosition(target: LatLng(arg.latitude, arg.longitude), zoom: 14.5);
     _kLake = CameraPosition(
@@ -142,7 +142,12 @@ class MapSampleState extends State<MapSample> {
                     onPressed: !myController.isServiceAvailable.value
                         ? null
                         : () {
-                            Get.to(Home(latlon));
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Home(latlon)),
+                              (Route<dynamic> route) => false,
+                            );
                           },
                     child: myController.isServiceAvailable.value
                         ? Text("Select Location")

@@ -41,9 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
     var check = (!(position == null) && isApiCallCompleted);
     debugPrint(check.toString());
     if (check == true) {
-      Get.to(
-          preventDuplicates: true,
-           MapSample(position!),arguments: position);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MapSample(position!)),
+            (Route<dynamic> route) => false,
+      );
     }
   }
 

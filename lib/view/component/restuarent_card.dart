@@ -34,8 +34,10 @@ class _ResturentCardState extends State<ResturentCard> {
                     children: [
                       Placeholder(
                         strokeWidth: 1,
-                        fallbackHeight: 190,
+                        fallbackHeight: 250,
+                        color: Colors.white,
                         child: CachedNetworkImage(
+                          alignment: Alignment.center,
                           placeholder: (context, url) =>
                               const Center(child: CircularProgressIndicator()),
                           imageUrl: widget.outlet.coverImages.toString(),
