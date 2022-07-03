@@ -32,10 +32,14 @@ class _ResturentCardState extends State<ResturentCard> {
                 children: [
                   Stack(
                     children: [
-                      CachedNetworkImage(
-                        placeholder: (context, url) =>
-                            Center(child: const CircularProgressIndicator()),
-                        imageUrl: widget.outlet.coverImages.toString(),
+                      Placeholder(
+                        strokeWidth: 1,
+                        fallbackHeight: 190,
+                        child: CachedNetworkImage(
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          imageUrl: widget.outlet.coverImages.toString(),
+                        ),
                       ),
                       Positioned(
                         width: 40,

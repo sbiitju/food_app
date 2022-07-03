@@ -10,9 +10,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../get/controller.dart';
 
 class MapSample extends StatefulWidget {
-  static const RouteName = "MapSample";
+  Position position;
 
-  const MapSample({Key? key}) : super(key: key);
+  MapSample(this.position, {Key? key}) : super(key: key);
+
+  static const RouteName = "MapSample";
 
   @override
   State<MapSample> createState() => MapSampleState();
@@ -23,6 +25,13 @@ class MapSampleState extends State<MapSample> {
   late CameraPosition _kLake;
   late CameraPosition myPosition;
   final Controller myController = Get.find<Controller>();
+
+  @override
+  void initState() {
+    myController.isServiceAvailable.value = myController.getZone(
+        widget.position.latitude, widget.position.longitude);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

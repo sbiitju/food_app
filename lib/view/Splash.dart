@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (check == true) {
       Get.to(
           preventDuplicates: true,
-          const MapSample(),arguments: position);
+           MapSample(position!),arguments: position);
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/view/Splash.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../view/Home.dart';
@@ -15,10 +16,7 @@ Route onGenerateRoute(settings) {
     case Home.RouteName:
       _nextPage = Home(LatLng(0, 0));
       break;
-    case MapSample.RouteName:
-      _nextPage = const MapSample();
-      break;
-    default:
+      default:
       _nextPage = Container();
   }
 
