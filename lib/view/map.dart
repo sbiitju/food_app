@@ -21,6 +21,8 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  Widget? testWidget;
+  Widget? testWidget2;
   final Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
   late CameraPosition myPosition;
@@ -35,7 +37,8 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    var latlon = LatLng(widget.position.latitude,widget.position.longitude);
+    debugPrint("Build function is Called");
+    var latlon = LatLng(widget.position.latitude, widget.position.longitude);
     Set<Marker> markers = {};
     const MarkerId markerId = MarkerId("My Location");
     var arg = widget.position;
@@ -61,7 +64,7 @@ class MapSampleState extends State<MapSample> {
       print(position);
     }
 
-    return Scaffold(body: Obx(() {
+    testWidget= Scaffold(body: Obx(() {
       return Stack(
         children: [
           GoogleMap(
@@ -117,7 +120,7 @@ class MapSampleState extends State<MapSample> {
                           myController.address.value.cityName +
                           ", ${myController.address.value.districtName}",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
@@ -135,7 +138,7 @@ class MapSampleState extends State<MapSample> {
                     color: myController.isServiceAvailable.value
                         ? Colors.redAccent
                         : Colors.white70,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: const BorderRadius.all(const Radius.circular(10))),
                 width: double.infinity,
                 height: 50,
                 child: MaterialButton(
@@ -150,13 +153,16 @@ class MapSampleState extends State<MapSample> {
                             );
                           },
                     child: myController.isServiceAvailable.value
-                        ? Text("Select Location")
-                        : Text("No Service Available")),
+                        ? const Text("Select Location")
+                        : const Text("No Service Available")),
               ),
             ),
           )
         ],
       );
     }));
+    debugPrint("Is TestWidget same ${testWidget==testWidget2}");
+    testWidget2 = testWidget;
+    return testWidget!;
   }
 }

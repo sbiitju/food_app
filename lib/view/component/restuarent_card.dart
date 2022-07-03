@@ -38,19 +38,17 @@ class _ResturentCardState extends State<ResturentCard> {
                         color: Colors.white,
                         child: CachedNetworkImage(
                           alignment: Alignment.center,
-                          placeholder: (context, url) =>
-                              const Center(child: CircularProgressIndicator()),
                           imageUrl: widget.outlet.coverImages.toString(),
                         ),
                       ),
                       Positioned(
                         width: 40,
                         top: 15,
-                        left: MediaQuery.of(context).size.width - 60,
+                        left: MediaQuery.of(context).size.width - 70,
                         height: 40,
                         child: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white60, shape: BoxShape.circle),
+                              color: Colors.white, shape: BoxShape.circle),
                           width: double.infinity,
                           child: widget.outlet.isFavourite
                               ? IconButton(
@@ -71,7 +69,7 @@ class _ResturentCardState extends State<ResturentCard> {
                                           !widget.outlet.isFavourite;
                                     });
                                   },
-                                  icon: const Icon(Icons.favorite_outline)),
+                                  icon: const Icon(Icons.favorite_outline,color: Colors.red,)),
                         ),
                       )
                     ],
@@ -94,7 +92,7 @@ class _ResturentCardState extends State<ResturentCard> {
                                       fit: BoxFit.fill,
                                       imageUrl:
                                           widget.outlet.logoImages.toString())),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -113,7 +111,7 @@ class _ResturentCardState extends State<ResturentCard> {
                                           child: Text(
                                             widget.outlet.name.toString(),
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -133,7 +131,7 @@ class _ResturentCardState extends State<ResturentCard> {
                                               child: Text(
                                                   widget.outlet.rating
                                                       .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold),
@@ -151,15 +149,15 @@ class _ResturentCardState extends State<ResturentCard> {
                                       children: [
                                        Row(
                                          children: [
-                                           Icon(Icons.access_time,color: Colors.red,),
-                                           SizedBox(width: 10,),
+                                           const Icon(Icons.access_time,color: Colors.red,),
+                                           const SizedBox(width: 10,),
                                            Text("${widget.outlet.averageFoodPreparationTime}min")
                                          ],
                                        ),
                                        Row(
                                          children: [
-                                           Icon(Icons.directions_bike_outlined,color: Colors.red,),
-                                           SizedBox(width: 10,),
+                                           const Icon(Icons.directions_bike_outlined,color: Colors.red,),
+                                           const SizedBox(width: 10,),
                                            Text("${widget.outlet.deliveryFee}Tk")
                                          ],
                                        ),
@@ -187,22 +185,22 @@ class _ResturentCardState extends State<ResturentCard> {
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height/2,
                     maxWidth: MediaQuery.of(context).size.width / 2),
+                decoration:const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8)),
+                    color: Colors.deepOrangeAccent),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  const EdgeInsets.all(8.0),
                   child: Expanded(
                     child: Text(
-                      widget.outlet.listOfCusins.toString(),style: TextStyle(
+                      widget.outlet.listOfCusins.toString(),style: const TextStyle(
                       color: Colors.white
                     ),
                       textAlign: TextAlign.start,
                     ),
                   ),
                 ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8)),
-                    color: HexColor("AAF26F31")),
               ),
             ))
       ],
