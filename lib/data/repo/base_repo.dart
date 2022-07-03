@@ -3,7 +3,7 @@ import 'package:food_app/data/model/outlet_model.dart';
 abstract class BaseRepo{
   Future<bool> getServiceConfiguration(String versionNumber);
 
-  Future<bool> getItems();
+  Future<bool> getItems(String id);
 
   String getPrettyJsonString(Map<String, dynamic>? data);
 

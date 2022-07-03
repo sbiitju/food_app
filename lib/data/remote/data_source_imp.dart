@@ -30,11 +30,11 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   }
 
   @override
-  Future<bool> getItems() async {
+  Future<bool> getItems(String id) async {
     Controller controller = Controller();
     QueryResult result = await client.clientToQuery().query(QueryOptions(
         document: gql(GraphQlQuery().getItems),
-        variables: {'outletId': "5cc7f78009472269fe3ca490"}));
+        variables: {'outletId':id}));
     debugPrint("ServiceConfig$result");
     String responsibleDetails = getPrettyJsonString(result.data);
     Map<String, dynamic> jsonData =

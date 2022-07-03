@@ -26,11 +26,12 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    var latlon=LatLng(0,0);
-    Set<Marker> markers ={};
+    var latlon = LatLng(0, 0);
+    Set<Marker> markers = {};
     const MarkerId markerId = MarkerId("My Location");
     var arg = ModalRoute.of(context)!.settings.arguments as Position;
-    myPosition=CameraPosition(target: LatLng(arg.latitude,arg.longitude),zoom: 14.5);
+    myPosition =
+        CameraPosition(target: LatLng(arg.latitude, arg.longitude), zoom: 14.5);
     _kLake = CameraPosition(
       target: LatLng(arg.latitude, arg.longitude),
       zoom: 14.5,
@@ -41,12 +42,12 @@ class MapSampleState extends State<MapSample> {
       markerId: markerId,
     );
     updateCameraPosition(CameraPosition position) {
-      latlon=position.target;
+      latlon = position.target;
       myController
           .getReverseGeoCode(
               position.target.latitude, position.target.longitude)
           .then((value) => myController.address.value = value);
-      myController.isServiceAvailable.value =myController.getZone(
+      myController.isServiceAvailable.value = myController.getZone(
           position.target.latitude, position.target.longitude);
       print(position);
     }
@@ -65,21 +66,19 @@ class MapSampleState extends State<MapSample> {
             // markers: Set<Marker>.of(markers.values),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height-150,
-              left: MediaQuery.of(context).size.width -60,
+              top: MediaQuery.of(context).size.height - 150,
+              left: MediaQuery.of(context).size.width - 60,
               child: IconButton(
-            icon: Icon(
-              Icons.my_location
-            ),
-            onPressed:(){
-              setState((){
-                _controller.future.then((value) => {
-                  value.animateCamera(CameraUpdate.newCameraPosition(myPosition))
-                });
-              });
-
-            },
-          )),
+                icon: const Icon(Icons.my_location),
+                onPressed: () {
+                  setState(() {
+                    _controller.future.then((value) => {
+                          value.animateCamera(
+                              CameraUpdate.newCameraPosition(myPosition))
+                        });
+                  });
+                },
+              )),
           const Center(
             child: Padding(
               padding: EdgeInsets.only(
@@ -103,13 +102,16 @@ class MapSampleState extends State<MapSample> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text( myController.address.value.areaName + "," +
-                        myController.address.value.cityName +
-                        ", ${myController.address.value.districtName}",
+                    Text(
+                      myController.address.value.areaName +
+                          "," +
+                          myController.address.value.cityName +
+                          ", ${myController.address.value.districtName}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                      fontSize: 15,
-                    ),),
+                        fontSize: 15,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -121,23 +123,21 @@ class MapSampleState extends State<MapSample> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Container(
                 decoration: BoxDecoration(
-                    color: myController.isServiceAvailable.value?Colors.redAccent:Colors.white70,
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: myController.isServiceAvailable.value
+                        ? Colors.redAccent
+                        : Colors.white70,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 width: double.infinity,
                 height: 50,
                 child: MaterialButton(
-                    onPressed:!myController.isServiceAvailable.value?null: () {
-                      var gotItems = myController.getItems();
-                      gotItems.then((value) => {
-                            if (value == true)
-                              {
-                                Get.to(Home(latlon))}
-                            else
-                              {Get.snackbar("Did not get Data", "Loading...")}
-                          });
-                    },
-                    child:myController.isServiceAvailable.value? Text("Select Location"):Text("No Service Available")),
+                    onPressed: !myController.isServiceAvailable.value
+                        ? null
+                        : () {
+                            Get.to(Home(latlon));
+                          },
+                    child: myController.isServiceAvailable.value
+                        ? Text("Select Location")
+                        : Text("No Service Available")),
               ),
             ),
           )

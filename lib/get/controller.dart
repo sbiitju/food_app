@@ -21,8 +21,8 @@ class Controller extends BaseController {
     _repository.getZone(23.797911, 90.414391);
    return _repository.getServiceConfiguration("4.1");
   }
-  Future<bool> getItems(){
-    return _repository.getItems();
+  Future<bool> getItems(id){
+    return _repository.getItems(id);
   }
   Future<Area> getReverseGeoCode(lat,lon){
     _repository.getZone(lat, lon);

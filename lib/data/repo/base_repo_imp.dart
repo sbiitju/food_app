@@ -10,8 +10,8 @@ class BaseRepoImp implements BaseRepo {
       Get.find(tag: (GraphQlDataSource).toString());
 
   @override
-  Future<bool> getItems() {
-    return _remoteSource.getItems();
+  Future<bool> getItems(String id) {
+    return _remoteSource.getItems(id);
   }
 
   @override
