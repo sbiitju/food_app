@@ -33,6 +33,28 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
   var rating;
   int? totalRating;
 
+  List<Widget> ratingWidget(rating,totalRating) {
+    var listOfWidget = <Widget>[];
+    listOfWidget.add(Container(
+        decoration: const BoxDecoration(
+            color: Colors.white, shape: BoxShape.circle),
+        child: const Icon(
+          Icons.star,
+          color: Colors.orange,
+          size: 18,
+        )));
+    if(rating != null && rating != 0){
+      if(totalRating != null && totalRating != 0){
+        listOfWidget.add(Text(" ${rating} (${totalRating})"));
+      }else{
+        listOfWidget.add(Text(" ${rating} "));
+      }
+    }
+    listOfWidget.add(SizedBox(width: 20,));
+    listOfWidget.add(Text(getCuisins(cuisines as List<Object?>)));
+    return listOfWidget;
+  }
+
   @override
   Widget build(BuildContext context) {
     id = widget.outlet.id;
@@ -71,8 +93,10 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Padding(
                   padding:
-                      EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-                  child: isOpen ? Text("Open") : Text("Close"),
+                  EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                  child: isOpen ? Text(
+                    "Open", style: TextStyle(color: Colors.white),) : Text(
+                      "Close"),
                 ),
               ),
               SizedBox(
@@ -83,9 +107,9 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     color: Colors.white, shape: BoxShape.circle),
                 child: isFavorite
                     ? const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      )
+                  Icons.search_sharp,
+                  color: Colors.red,
+                )
                     : const Icon(Icons.favorite_outline),
               )
             ],
@@ -107,21 +131,7 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
             height: 4,
           ),
           Row(
-            children: [
-              Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: const Icon(
-                    Icons.star,
-                    color: Colors.orange,
-                    size: 18,
-                  )),
-              totalRating == 0
-                  ? Text(" ${rating!}")
-                  : Text(" ${rating} (${totalRating})"),
-              SizedBox(width: 20,),
-              Text(getCuisins(cuisines as List<Object?>))
-            ],
+            children: ratingWidget(rating, totalRating),
           ),
           Row(
             children: [
@@ -134,7 +144,8 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     size: 18,
                   )),
               Text(
-                  " ($averageFoodPreparationTime-${averageFoodPreparationTime! + 5}) min"),
+                  " ($averageFoodPreparationTime-${averageFoodPreparationTime! +
+                      5}) min"),
               SizedBox(
                 width: 10,
               ),
@@ -156,8 +167,8 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
 
   String getCuisins(List<Object?> cuisines) {
     String cuisinsString = "";
-    if(cuisines.length>3){
-      cuisines=cuisines.sublist(0,3);
+    if (cuisines.length > 3) {
+      cuisines = cuisines.sublist(0, 3);
     }
     cuisines.forEach((element) {
       cuisinsString = "${cuisinsString + element!.toString()} . ";

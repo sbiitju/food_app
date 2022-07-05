@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:food_app/view/component/items_card.dart';
 import 'package:food_app/view/component/outelt_info_appbar_card.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:get/get.dart';
@@ -30,7 +31,7 @@ class _OutletInfoState extends State<OutletInfo> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Shahin"+widget.listOfItems.toString());
+    debugPrint("Shahin${widget.listOfItems}");
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -51,21 +52,8 @@ class _OutletInfoState extends State<OutletInfo> {
                             topLeft: Radius.circular(10))),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 80,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Card(
-                            elevation: 10,
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.white),
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 110,
                         ),
                         SizedBox(
                           height: 30,
@@ -96,19 +84,17 @@ class _OutletInfoState extends State<OutletInfo> {
                               scrollDirection: Axis.vertical,
                               itemCount: widget.listOfItems.length,
                               itemBuilder: (context, index) {
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
+                                return Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        widget.listOfItems[index].name.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                );
+                                        child: ListTile(
+                                          title: Text(
+                                            widget.listOfItems[index].name.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          subtitle: ItemsCard(widget.listOfItems[index].items),
+                                        ),
+                                    );
                               }),
                         ),
                       ],
@@ -124,7 +110,7 @@ class _OutletInfoState extends State<OutletInfo> {
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Card(
-                        elevation: 10, child: OutletInfoCard(widget.outlet)),
+                        elevation: 2, child: OutletInfoCard(widget.outlet)),
                   )),
             ],
           ),
