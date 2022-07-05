@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
+import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
+import 'package:food_app/graphql/query/getOutletQuery.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../get/controller.dart';
@@ -12,6 +14,7 @@ import '../../util/ItemModel.dart';
 
 class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   BaseDataSource client = BaseDataSource();
+
 
   @override
   Future<bool> getServiceConfiguration(String versionNumber) async {
@@ -92,5 +95,21 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     var x=ParseHpOutletListResponse(result);
     var y=x.parse();
     return y;
+  }
+
+  @override
+  Future<OutletInfoModel> getOutlet(String outletID)async{
+    Controller controller = Controller();
+    debugPrint("OutletInfo"+"Got it");
+    QueryResult result = await client.clientToQuery().query(QueryOptions(document: gql(OutletQuery().getOutlet),variables:{'outletId':outletID}) );
+    var modifiedResult=ParseHpOutletListResponse(result).parseOutletInfoResult();
+    return modifiedResult;
+  }
+
+  @override
+  Future<List<CategoryItems>> getCategoryItems(String outletId) async {
+    QueryResult result = await client.clientToQuery().query(QueryOptions(document: gql(GetCategorizedItems().getCategorizedItems),variables:{'outletId':outletId}) );
+    var modifiedResult=ParseHpOutletListResponse(result).parseListOfCategoryItems();
+    return modifiedResult;
   }
 }

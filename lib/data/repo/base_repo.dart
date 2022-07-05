@@ -1,7 +1,9 @@
 import 'package:food_app/data/model/outlet_model.dart';
 
-abstract class BaseRepo{
+abstract class BaseRepo {
   Future<bool> getServiceConfiguration(String versionNumber);
+
+  Future<List<CategoryItems>> getCategoryItems(String outletId);
 
   Future<bool> getItems(String id);
 
@@ -10,5 +12,8 @@ abstract class BaseRepo{
   Future<Area> getReverseGeoCode(double lat, double lon);
 
   Future<bool> getZone(double lat, double lon);
-  Future<List<Outlet>> getHPOutletList(double lat, double lon,int index);
+
+  Future<List<Outlet>> getHPOutletList(double lat, double lon, int index);
+
+  Future<OutletInfoModel> getOutlet(String outletID);
 }

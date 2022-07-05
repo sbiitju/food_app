@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:food_app/view/component/outelt_info_appbar_card.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:get/get.dart';
@@ -10,8 +10,10 @@ import '../get/controller.dart';
 
 // ignore: must_be_immutable
 class OutletInfo extends StatefulWidget {
-  OutletInfo(this.outlet, {Key? key}) : super(key: key);
-  Outlet outlet;
+  OutletInfoModel outlet;
+  List<CategoryItems> listOfItems;
+
+  OutletInfo(this.outlet, this.listOfItems, {Key? key}) : super(key: key);
 
   @override
   State<OutletInfo> createState() => _OutletInfoState();
@@ -28,6 +30,7 @@ class _OutletInfoState extends State<OutletInfo> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Shahin"+widget.listOfItems.toString());
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -38,21 +41,77 @@ class _OutletInfoState extends State<OutletInfo> {
               Positioned(child: OutletInfoAppBar(widget.outlet)),
               Positioned(
                   top: 180,
-                  child: Card(
-                    elevation: 2,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10))),
-                      child: Column(
-                        children: [
-
-                        ],
-                      ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10))),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 80,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: Card(
+                            elevation: 10,
+                            child: Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          child: Expanded(
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: widget.outlet.cuisines.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          widget.outlet.cuisines[index]
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ),
+                        Flexible(
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: widget.listOfItems.length,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        widget.listOfItems[index].name.toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                        ),
+                      ],
                     ),
                   )),
               Positioned(
@@ -61,10 +120,11 @@ class _OutletInfoState extends State<OutletInfo> {
                   top: 120,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 130,
+                    height: 140,
                     decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: const Card(elevation: 10, child: OutletInfoCard()),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                        elevation: 10, child: OutletInfoCard(widget.outlet)),
                   )),
             ],
           ),

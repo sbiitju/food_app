@@ -1,71 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/data/model/outlet_model.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../get/controller.dart';
 
 class OutletInfoCard extends StatefulWidget {
-  const OutletInfoCard({Key? key}) : super(key: key);
+  OutletInfoModel outlet;
+
+  OutletInfoCard(this.outlet, {Key? key}) : super(key: key);
 
   @override
   State<OutletInfoCard> createState() => _OutletInfoCardState();
 }
 
 class _OutletInfoCardState extends State<OutletInfoCard> {
-  bool isFavourite = false;
+  Controller controller = Get.find<Controller>();
+  bool isOpen = false;
+  String? id;
+  String? restaurantName;
+  String? outletName;
+  String? address;
+  String? coverUrl;
+  String? logoUrl;
+  int? averageFoodPreparationTime;
+  String? totalFavorite;
+  String? estimatedDeliveryTime;
+  var cuisines;
+
+  late bool isFavorite;
+  String? deliveryFee;
+  var rating;
+  int? totalRating;
 
   @override
   Widget build(BuildContext context) {
+    id = widget.outlet.id;
+    restaurantName = widget.outlet.restaurantName;
+    isOpen = widget.outlet.isOpen;
+    outletName = widget.outlet.outletName;
+    address = widget.outlet.address;
+    coverUrl = widget.outlet.coverUrl;
+    logoUrl = widget.outlet.logoUrl;
+    cuisines = widget.outlet.cuisines;
+    isFavorite = widget.outlet.isFavorite!;
+    deliveryFee = widget.outlet.deliveryFee;
+    averageFoodPreparationTime = widget.outlet.averageFoodPreparationTime;
+    totalFavorite = widget.outlet.totalFavorite;
+    estimatedDeliveryTime = widget.outlet.estimatedDeliveryTime;
+    rating = widget.outlet.rating;
+    totalRating = widget.outlet.totalRating;
+    debugPrint("Shahin${id}");
     return Padding(
-      padding: const EdgeInsets.all(7.0),
+      padding: EdgeInsets.all(7.0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Flexible(
+              Flexible(
                 child: Text(
-                  "Burger King Banani",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  "${restaurantName}-${outletName}",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
-                decoration: const BoxDecoration(
-                    color: Colors.deepOrangeAccent,
+                decoration: BoxDecoration(
+                    color: isOpen ? Colors.deepOrangeAccent : Colors.red,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: const Padding(
+                child: Padding(
                   padding:
                       EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-                  child: Text("Open"),
+                  child: isOpen ? Text("Open") : Text("Close"),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: isFavourite
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isFavourite = !isFavourite;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isFavourite = !isFavourite;
-                            });
-                          },
-                          icon: const Icon(Icons.favorite_outline)),
-                ),
+              SizedBox(
+                width: 30,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white, shape: BoxShape.circle),
+                child: isFavorite
+                    ? const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                    : const Icon(Icons.favorite_outline),
               )
             ],
           ),
           Row(
             children: [
-              Text("See more information"),
+              SizedBox(
+                height: 30,
+                child: TextButton(
+                    onPressed: () {}, child: Text("See more information")),
+              ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 12,
@@ -85,7 +116,11 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     color: Colors.orange,
                     size: 18,
                   )),
-              Text(" 4.5"),
+              totalRating == 0
+                  ? Text(" ${rating!}")
+                  : Text(" ${rating} (${totalRating})"),
+              SizedBox(width: 20,),
+              Text(getCuisins(cuisines as List<Object?>))
             ],
           ),
           Row(
@@ -98,8 +133,11 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     color: Colors.orange,
                     size: 18,
                   )),
-              Text(" 25-30 min"),
-              SizedBox(width: 10,),
+              Text(
+                  " ($averageFoodPreparationTime-${averageFoodPreparationTime! + 5}) min"),
+              SizedBox(
+                width: 10,
+              ),
               Container(
                   decoration: const BoxDecoration(
                       color: Colors.white, shape: BoxShape.circle),
@@ -108,11 +146,22 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     color: Colors.orange,
                     size: 18,
                   )),
-              Text(" Tk 20."),
+              Text("  Tk ${widget.outlet.deliveryFee}."),
             ],
           ),
         ],
       ),
     );
+  }
+
+  String getCuisins(List<Object?> cuisines) {
+    String cuisinsString = "";
+    if(cuisines.length>3){
+      cuisines=cuisines.sublist(0,3);
+    }
+    cuisines.forEach((element) {
+      cuisinsString = "${cuisinsString + element!.toString()} . ";
+    });
+    return cuisinsString;
   }
 }

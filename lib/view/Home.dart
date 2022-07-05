@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/get/controller.dart';
-import 'package:food_app/view/Splash.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
 import 'package:food_app/view/outlet_info.dart';
 import 'package:get/get.dart';
@@ -23,6 +23,8 @@ class _HomeState extends State<Home> {
   int _index = 1;
   Controller controller = Get.find<Controller>();
   var scrollController = ScrollController();
+  var listOfItems=<CategoryItems>[];
+  var gotListOfItems=false;
 
   @override
   void initState() {
@@ -56,7 +58,17 @@ class _HomeState extends State<Home> {
                           return index < controller.listOutletId.length
                               ? GestureDetector(
                               onTap: (){
-                                Get.to(OutletInfo(controller.listOutletId[index]));
+                                controller.getCategoryItems(controller.listOutletId[index].id).then((value) {
+                                 listOfItems=value;
+                                 gotListOfItems=true;
+                                });
+                                controller.getOutlet(controller.listOutletId[index].id).then((value) =>
+                                {
+                                  if(gotListOfItems){
+                                    Get.to(OutletInfo(value,listOfItems))
+                                  }
+                                }
+                                );
                                 // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
                                 //   return OutletInfo(controller.listOutletId[index].id);
                                 // } ));

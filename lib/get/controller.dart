@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import '../util/ItemModel.dart';
 
 class Controller extends BaseController {
-  var address = Area("areaName", "cityName", "districtName", "houseName", "roadName").obs;
+  var address = Area(
+      "areaName", "cityName", "districtName", "houseName", "roadName").obs;
   List demoList = <Demo>[].obs;
   var checking = false.obs;
   var isServiceAvailable = false.obs;
@@ -15,28 +16,40 @@ class Controller extends BaseController {
   var listOutletId = <Outlet>[].obs;
 
 
+
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
 
   Future<bool> getServiceConfiguration() {
-    _repository.getZone(23.797911, 90.414391);
-   return _repository.getServiceConfiguration("4.1");
+    return _repository.getServiceConfiguration("4.1");
   }
-  Future<bool> getItems(id){
+
+  Future<bool> getItems(id) {
     return _repository.getItems(id);
   }
-  Future<Area> getReverseGeoCode(lat,lon){
+
+  Future<Area> getReverseGeoCode(lat, lon) {
     _repository.getZone(lat, lon);
     return _repository.getReverseGeoCode(lat, lon);
   }
-  bool getZone(lat,lon){
+
+  bool getZone(lat, lon) {
     _repository.getZone(lat, lon).then((value) => isServiceAvailable(value));
     return isServiceAvailable.value;
   }
 
-  Future<List<Outlet>> getHpOutletList(lat,lon,index)async {
-     _repository.getHPOutletList(lat, lon,index).then((value) => listOutletId.addAll(value) );
+  Future<OutletInfoModel> getOutlet(outletId) {
+    return _repository.getOutlet(outletId);
+  }
+
+  Future<List<Outlet>> getHpOutletList(lat, lon, index) async {
+    _repository.getHPOutletList(lat, lon, index).then((value) =>
+        listOutletId.addAll(value));
     checking(true);
     return listOutletId;
+  }
+  Future<List<CategoryItems>> getCategoryItems(outletId) async{
+    List<CategoryItems> list=[];
+    return _repository.getCategoryItems(outletId);
   }
 
 }

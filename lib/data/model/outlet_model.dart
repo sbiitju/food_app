@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class Outlet {
   String? id;
   String? name;
-  String? rating=0.toString();
+  String? rating = 0.toString();
   String? deliveryFee;
   String? coverImages;
   String? logoImages;
@@ -13,7 +14,40 @@ class Outlet {
   Outlet(this.id, this.name, this.deliveryFee, this.coverImages,this.logoImages,this.rating,this.listOfCusins,this.averageFoodPreparationTime,{this.isFavourite =false});
 
 }
+class OutletInfoModel{
+  String? id;
+  String? restaurantName;
+  String? outletName;
+  String? address;
+  String? coverUrl;
+  String? logoUrl;
+  int? averageFoodPreparationTime;
+  String? totalFavorite;
+  String? estimatedDeliveryTime;
+  var cuisines =<String?>[];
+  bool? isFavorite;
+  bool isOpen;
+  String? deliveryFee;
+  var rating;
+  int? totalRating;
 
+  OutletInfoModel(
+      this.id,
+      this.restaurantName,
+      this.outletName,
+      this.address,
+      this.coverUrl,
+      this.logoUrl,
+      this.averageFoodPreparationTime,
+      this.totalFavorite,
+      this.estimatedDeliveryTime,
+      this.cuisines,
+      this.isFavorite,
+      this.isOpen,
+      this.deliveryFee,
+      this.rating,
+      this.totalRating);
+}
 class Area {
   final areaName;
   final cityName;
@@ -53,6 +87,35 @@ class ParseHpOutletListResponse {
     return resultOutlet;
   }
 
+  List<CategoryItems> parseListOfCategoryItems(){
+    var output = result.data!["getCategorizedItems"]["result"] as List<dynamic>;
+    var listOfCategoryItems=<CategoryItems>[];
+    String? id;
+    String? foodName;
+    var items =<ItemInfo>[];
+    int? basePrice;
+    String? itemId;
+    String? itemName;
+    String? itemDescription;
+    String? itemImage;
+    output.forEach((element) {
+      id=element["id"];
+      foodName=element["name"];
+      (element["items"] as List<dynamic>).forEach((listElement) {
+        basePrice=listElement["basePrice"];
+        itemId=listElement["id"];
+        itemDescription=listElement["meta"]["description"];
+        itemName=listElement["meta"]["name"];
+        try{itemImage=listElement["meta"]["images"];}catch(e){
+          debugPrint(e.toString());
+        }
+        items.add(ItemInfo(basePrice,itemId,itemName,itemDescription,itemImage));
+      });
+      listOfCategoryItems.add(CategoryItems(id, foodName, items));
+    });
+    return listOfCategoryItems;
+  }
+
   Area parseReverseGeoCodeResult() {
     var output = result.data!["reverseGeoCode"]["result"];
     var address = output["address"].toString();
@@ -63,8 +126,51 @@ class ParseHpOutletListResponse {
     return a;
   }
 
+  OutletInfoModel parseOutletInfoResult(){
+    var cuisines = <String?>[];
+    var output = result.data!["getOutlet"]["result"];
+    String id=output["id"].toString();
+    String restaurantName=output["restaurant"]["name"].toString();
+    String outletName=output["meta"]["name"].toString();
+    String address=output["meta"]["address"].toString();
+    String coverUrl=output["meta"]["images"]["cover"].toString();
+    String logoUrl=output["meta"]["images"]["logo"].toString();
+    int averageFoodPreparationTime=output["averageFoodPreparationTime"];
+    String totalFavorite=output["totalFavorite"].toString();
+    String? estimatedDeliveryTime=output["estimatedDeliveryTime"].toString();
+    for(var i in output["cuisines"]){
+      cuisines.add(i["name"].toString());
+    }
+    bool isFavorite=output["isFavorite"];
+    bool isOpen=output["isOpen"];
+    String deliveryFee=output["deliveryFee"].toString();
+    var rating=output["rating"] ;
+    int totalRating=output["totalRating"];
+    return OutletInfoModel(id, restaurantName, outletName, address, coverUrl, logoUrl, averageFoodPreparationTime, totalFavorite, estimatedDeliveryTime, cuisines, isFavorite, isOpen, deliveryFee, rating, totalRating);
+  }
   bool parseGetZone() {
     var output = result.data!["getZone"]["result"];
     return output["isActive"];
   }
+
+
+}
+class CategoryItems{
+  String? id;
+  String? name;
+  var items =<ItemInfo>[];
+
+  CategoryItems(this.id, this.name, this.items);
+
+}
+class ItemInfo{
+  int? basePrice;
+  String? itemId;
+  String? itemName;
+  String? itemDescription;
+  String? itemImage;
+
+  ItemInfo(this.basePrice, this.itemId, this.itemName, this.itemDescription,
+      this.itemImage);
+
 }

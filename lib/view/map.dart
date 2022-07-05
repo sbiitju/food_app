@@ -32,6 +32,8 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     myController.isServiceAvailable.value = myController.getZone(
         widget.position.latitude, widget.position.longitude);
+    myController.getOutlet("5ca4aefab19d90e0ad9ae3c1");
+    
     super.initState();
   }
 
@@ -64,7 +66,7 @@ class MapSampleState extends State<MapSample> {
       print(position);
     }
 
-    testWidget= Scaffold(body: Obx(() {
+    testWidget = Scaffold(body: Obx(() {
       return Stack(
         children: [
           GoogleMap(
@@ -138,7 +140,8 @@ class MapSampleState extends State<MapSample> {
                     color: myController.isServiceAvailable.value
                         ? Colors.redAccent
                         : Colors.white70,
-                    borderRadius: const BorderRadius.all(const Radius.circular(10))),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(10))),
                 width: double.infinity,
                 height: 50,
                 child: MaterialButton(
@@ -161,7 +164,7 @@ class MapSampleState extends State<MapSample> {
         ],
       );
     }));
-    debugPrint("Is TestWidget same ${testWidget==testWidget2}");
+    debugPrint("Is TestWidget same ${testWidget == testWidget2}");
     testWidget2 = testWidget;
     return testWidget!;
   }

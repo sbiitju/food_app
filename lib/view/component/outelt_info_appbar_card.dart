@@ -5,7 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../data/model/outlet_model.dart';
 
 class OutletInfoAppBar extends StatefulWidget {
-  Outlet outlet;
+  OutletInfoModel outlet;
 
   OutletInfoAppBar(this.outlet, {Key? key}) : super(key: key);
 
@@ -28,7 +28,7 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
               CachedNetworkImage(
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
-                imageUrl: widget.outlet.coverImages.toString(),
+                imageUrl: widget.outlet.coverUrl.toString(),
               ),
               // Positioned(
               //   top: 120,
@@ -164,7 +164,7 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
               // ),
               Positioned(
                 width: 40,
-                top: 30,
+                top: 40,
                 left: MediaQuery.of(context).size.width - 60,
                 height: 40,
                 child: Container(
@@ -174,8 +174,7 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
                   child:IconButton(
                           onPressed: () {
                             setState(() {
-                              widget.outlet.isFavourite =
-                                  !widget.outlet.isFavourite;
+
                             });
                           },
                           icon: const Icon(
@@ -189,7 +188,7 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
           ),
         ),
         Positioned(
-            top: 30,
+            top: 40,
             child: Padding(
               padding: const EdgeInsets.only(left: 6.0),
               child: Container(
