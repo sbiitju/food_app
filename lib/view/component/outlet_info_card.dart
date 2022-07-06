@@ -110,7 +110,7 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                   Icons.search_sharp,
                   color: Colors.red,
                 )
-                    : const Icon(Icons.favorite_outline),
+                    : const Icon(Icons.favorite_outline,color: Colors.red,),
               )
             ],
           ),

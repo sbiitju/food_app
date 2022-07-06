@@ -58,17 +58,8 @@ class _HomeState extends State<Home> {
                           return index < controller.listOutletId.length
                               ? GestureDetector(
                               onTap: (){
-                                controller.getCategoryItems(controller.listOutletId[index].id).then((value) {
-                                 listOfItems=value;
-                                 gotListOfItems=true;
-                                });
-                                controller.getOutlet(controller.listOutletId[index].id).then((value) =>
-                                {
-                                  if(gotListOfItems){
-                                    Get.to(OutletInfo(value,listOfItems))
-                                  }
-                                }
-                                );
+
+                                    Get.to(OutletInfo(controller.listOutletId[index].id));
                                 // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
                                 //   return OutletInfo(controller.listOutletId[index].id);
                                 // } ));

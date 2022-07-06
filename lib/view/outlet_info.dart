@@ -11,10 +11,10 @@ import '../get/controller.dart';
 
 // ignore: must_be_immutable
 class OutletInfo extends StatefulWidget {
-  OutletInfoModel outlet;
-  List<CategoryItems> listOfItems;
 
-  OutletInfo(this.outlet, this.listOfItems, {Key? key}) : super(key: key);
+  String? id;
+
+  OutletInfo(this.id,{Key? key}) : super(key: key);
 
   @override
   State<OutletInfo> createState() => _OutletInfoState();
@@ -22,24 +22,40 @@ class OutletInfo extends StatefulWidget {
 
 class _OutletInfoState extends State<OutletInfo> {
   var controller = Get.find<Controller>();
+  OutletInfoModel? outlet;
+  var outletCheck = false;
+  var listOutItemsCheck = false;
+  List<CategoryItems>? listOfItems;
 
   @override
   void initState() {
-    controller.getItems(widget.outlet.id);
     super.initState();
+    controller.getOutlet(widget.id).then((value){
+      outlet=value;
+      setState((){
+        outletCheck=true;
+      });
+    });
+    controller.getCategoryItems(widget.id).then((value) {
+      listOfItems = value;
+      setState((){
+        listOutItemsCheck=true;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Shahin${widget.listOfItems}");
+
+    debugPrint("Shahin${listOfItems}");
     return Scaffold(
-      body: SingleChildScrollView(
+      body:(outletCheck && listOutItemsCheck)? SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
-              Positioned(child: OutletInfoAppBar(widget.outlet)),
+              Positioned(child: OutletInfoAppBar(outlet!)),
               Positioned(
                   top: 180,
                   child: Container(
@@ -60,7 +76,7 @@ class _OutletInfoState extends State<OutletInfo> {
                           child: Expanded(
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: widget.outlet.cuisines.length,
+                                itemCount: outlet?.cuisines.length,
                                 itemBuilder: (context, index) {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +84,7 @@ class _OutletInfoState extends State<OutletInfo> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          widget.outlet.cuisines[index]
+                                          outlet!.cuisines[index]
                                               .toString(),
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
@@ -82,17 +98,17 @@ class _OutletInfoState extends State<OutletInfo> {
                         Flexible(
                           child: ListView.builder(
                               scrollDirection: Axis.vertical,
-                              itemCount: widget.listOfItems.length,
+                              itemCount:listOfItems?.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                         child: ListTile(
                                           title: Text(
-                                            widget.listOfItems[index].name.toString(),
+                                            listOfItems![index].name.toString(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          subtitle: ItemsCard(widget.listOfItems[index].items),
+                                          subtitle: ItemsCard(listOfItems![index].items),
                                         ),
                                     );
                               }),
@@ -110,12 +126,12 @@ class _OutletInfoState extends State<OutletInfo> {
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Card(
-                        elevation: 2, child: OutletInfoCard(widget.outlet)),
+                        elevation: 2, child: OutletInfoCard(outlet!)),
                   )),
             ],
           ),
         ),
-      ),
+      ):Center(child: CircularProgressIndicator(),),
     );
   }
 }
