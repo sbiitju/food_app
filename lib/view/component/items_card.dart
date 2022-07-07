@@ -10,10 +10,10 @@ class ItemsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    itemInfo.forEach((element) {
-      debugPrint("Bashar"+element.itemName .toString());
+    for (final element in itemInfo) {
+      debugPrint("Bashar${element.itemName}");
 
-    });
+    }
     return SizedBox(
       height: MediaQuery.of(context).size.height/3,
         width: MediaQuery.of(context).size.width,
@@ -25,7 +25,7 @@ class ItemsCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 height: 100,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
@@ -54,7 +54,7 @@ class ItemsCard extends StatelessWidget {
                               child: MaterialButton(
                                 color: Colors.deepOrangeAccent,
                             onPressed: (){},
-                            child: Text("Add"),
+                            child: const Text("Add"),
                           ))
                         ],
                       ),

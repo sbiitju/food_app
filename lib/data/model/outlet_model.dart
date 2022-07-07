@@ -10,11 +10,21 @@ class Outlet {
   String? logoImages;
   String? averageFoodPreparationTime;
   bool isFavourite;
-  var listOfCusins=<String?>[];
-  Outlet(this.id, this.name, this.deliveryFee, this.coverImages,this.logoImages,this.rating,this.listOfCusins,this.averageFoodPreparationTime,{this.isFavourite =false});
+  var listOfCusins = <String?>[];
 
+  Outlet(
+      this.id,
+      this.name,
+      this.deliveryFee,
+      this.coverImages,
+      this.logoImages,
+      this.rating,
+      this.listOfCusins,
+      this.averageFoodPreparationTime,
+      {this.isFavourite = false});
 }
-class OutletInfoModel{
+
+class OutletInfoModel {
   String? id;
   String? restaurantName;
   String? outletName;
@@ -24,7 +34,7 @@ class OutletInfoModel{
   int? averageFoodPreparationTime;
   String? totalFavorite;
   String? estimatedDeliveryTime;
-  var cuisines =<String?>[];
+  var cuisines = <String?>[];
   bool? isFavorite;
   bool isOpen;
   String? deliveryFee;
@@ -48,6 +58,7 @@ class OutletInfoModel{
       this.rating,
       this.totalRating);
 }
+
 class Area {
   final areaName;
   final cityName;
@@ -70,13 +81,21 @@ class ParseHpOutletListResponse {
         result.data!["getHPOutletList"]["result"]["outlets"] as List<dynamic>;
     for (var e in list) {
       Outlet? outlet;
-      var listOfCusins=<String?>[];
-      var listOfOutletTags=<String?>[];
+      var listOfCusins = <String?>[];
+      var listOfOutletTags = <String?>[];
       try {
-        for(var i in e["cuisines"]){
+        for (var i in e["cuisines"]) {
           listOfCusins.add(i["name"].toString());
         }
-        outlet = Outlet(e["id"], e["restaurant"]["name"],e["deliveryFee"].toString(),e["meta"]["images"]["cover"].toString(),e["meta"]["images"]["logo"].toString(),e["rating"].toString(),listOfCusins,e["averageFoodPreparationTime"].toString());
+        outlet = Outlet(
+            e["id"],
+            e["restaurant"]["name"],
+            e["deliveryFee"].toString(),
+            e["meta"]["images"]["cover"].toString(),
+            e["meta"]["images"]["logo"].toString(),
+            e["rating"].toString(),
+            listOfCusins,
+            e["averageFoodPreparationTime"].toString());
       } catch (element) {
         outlet = null;
       }
@@ -87,32 +106,32 @@ class ParseHpOutletListResponse {
     return resultOutlet;
   }
 
-  List<CategoryItems> parseListOfCategoryItems(){
-    var output = result.data!["getCategorizedItems"]["result"] as List<dynamic>;
-    var listOfCategoryItems=<CategoryItems>[];
-    String? id;
-    String? foodName;
-    var items =<ItemInfo>[];
-    int? basePrice;
-    String? itemId;
-    String? itemName;
-    String? itemDescription;
-    String? itemImage;
-    output.forEach((element) {
-      id=element["id"];
-      foodName=element["name"];
-      (element["items"] as List<dynamic>).forEach((listElement) {
-        basePrice=listElement["basePrice"];
-        itemId=listElement["id"];
-        itemDescription=listElement["meta"]["description"];
-        itemName=listElement["meta"]["name"];
-        try{itemImage=listElement["meta"]["images"];}catch(e){
-          debugPrint(e.toString());
-        }
-        items.add(ItemInfo(basePrice,itemId,itemName,itemDescription,itemImage));
-      });
-      listOfCategoryItems.add(CategoryItems(id, foodName, items));
-    });
+  List<CategoryItems> parseListOfCategoryItems() {
+    final output =
+        result.data!["getCategorizedItems"]["result"] as List<dynamic>;
+    final listOfCategoryItems = <CategoryItems>[];
+    for (final category in output) {
+      final items = <ItemInfo>[];
+      for (final item in (category["items"] as List<dynamic>)) {
+        items.add(
+            ItemInfo(
+                item["basePrice"].toDouble(),
+                item["meta"]["id"],
+                item["meta"]["name"],
+                item["meta"]["description"],
+                item["meta"]["images"]
+            )
+        );
+      }
+      listOfCategoryItems.add(
+          CategoryItems(
+              category["id"],
+              category["name"],
+              items
+          )
+      );
+    }
+
     return listOfCategoryItems;
   }
 
@@ -126,45 +145,60 @@ class ParseHpOutletListResponse {
     return a;
   }
 
-  OutletInfoModel parseOutletInfoResult(){
+  OutletInfoModel parseOutletInfoResult() {
     var cuisines = <String?>[];
     var output = result.data!["getOutlet"]["result"];
-    String id=output["id"].toString();
-    String restaurantName=output["restaurant"]["name"].toString();
-    String outletName=output["meta"]["name"].toString();
-    String address=output["meta"]["address"].toString();
-    String coverUrl=output["meta"]["images"]["cover"].toString();
-    String logoUrl=output["meta"]["images"]["logo"].toString();
-    int averageFoodPreparationTime=output["averageFoodPreparationTime"];
-    String totalFavorite=output["totalFavorite"].toString();
-    String? estimatedDeliveryTime=output["estimatedDeliveryTime"].toString();
-    for(var i in output["cuisines"]){
+    String id = output["id"].toString();
+    String restaurantName = output["restaurant"]["name"].toString();
+    String outletName = output["meta"]["name"].toString();
+    String address = output["meta"]["address"].toString();
+    String coverUrl = output["meta"]["images"]["cover"].toString();
+    String logoUrl = output["meta"]["images"]["logo"].toString();
+    int averageFoodPreparationTime = output["averageFoodPreparationTime"];
+    String totalFavorite = output["totalFavorite"].toString();
+    String? estimatedDeliveryTime = output["estimatedDeliveryTime"].toString();
+    for (var i in output["cuisines"]) {
       cuisines.add(i["name"].toString());
     }
-    bool isFavorite=output["isFavorite"];
-    bool isOpen=output["isOpen"];
-    String deliveryFee=output["deliveryFee"].toString();
-    var rating=output["rating"] ;
-    int totalRating=output["totalRating"];
-    return OutletInfoModel(id, restaurantName, outletName, address, coverUrl, logoUrl, averageFoodPreparationTime, totalFavorite, estimatedDeliveryTime, cuisines, isFavorite, isOpen, deliveryFee, rating, totalRating);
+    bool isFavorite = output["isFavorite"];
+    bool isOpen = output["isOpen"];
+    String deliveryFee = output["deliveryFee"].toString();
+    var rating = output["rating"];
+    int totalRating = output["totalRating"];
+    return OutletInfoModel(
+        id,
+        restaurantName,
+        outletName,
+        address,
+        coverUrl,
+        logoUrl,
+        averageFoodPreparationTime,
+        totalFavorite,
+        estimatedDeliveryTime,
+        cuisines,
+        isFavorite,
+        isOpen,
+        deliveryFee,
+        rating,
+        totalRating);
   }
+
   bool parseGetZone() {
     var output = result.data!["getZone"]["result"];
     return output["isActive"];
   }
-
-
 }
-class CategoryItems{
+
+class CategoryItems {
   String? id;
   String? name;
-  var items =<ItemInfo>[];
+  var items = <ItemInfo>[];
 
   CategoryItems(this.id, this.name, this.items);
-
 }
-class ItemInfo{
-  int? basePrice;
+
+class ItemInfo {
+  double basePrice;
   String? itemId;
   String? itemName;
   String? itemDescription;
@@ -172,5 +206,4 @@ class ItemInfo{
 
   ItemInfo(this.basePrice, this.itemId, this.itemName, this.itemDescription,
       this.itemImage);
-
 }
