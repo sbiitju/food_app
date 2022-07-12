@@ -77,42 +77,51 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
       padding: EdgeInsets.all(7.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Text(
-                  "${restaurantName}-${outletName}",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          SizedBox(
+            height: 35,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    "${restaurantName}-${outletName}",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: isOpen ? Colors.deepOrangeAccent : Colors.red,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Padding(
-                  padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-                  child: isOpen ? Text(
-                    "Open", style: TextStyle(color: Colors.white),) : Text(
-                      "Close"),
+                Container(
+                  decoration: BoxDecoration(
+                      color: isOpen ? Colors.deepOrangeAccent : Colors.red,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Padding(
+                    padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                    child: isOpen ? Text(
+                      "Open", style: TextStyle(color: Colors.white),) : Text(
+                        "Close"),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white, shape: BoxShape.circle),
-                child: isFavorite
-                    ? const Icon(
-                  Icons.search_sharp,
-                  color: Colors.red,
+                SizedBox(
+                  width: 30,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,borderRadius:BorderRadius.all(Radius.circular(20))),
+                  child: isFavorite
+                      ? const Icon(
+                    Icons.search_sharp,
+                    color: Colors.red,
+                  )
+                      : Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: IconButton(
+                        onPressed: (){
+                        },
+                        icon: const Icon(Icons.favorite_outline,color: Colors.red,)),
+                      ),
                 )
-                    : const Icon(Icons.favorite_outline,color: Colors.red,),
-              )
-            ],
+              ],
+            ),
           ),
           Row(
             children: [

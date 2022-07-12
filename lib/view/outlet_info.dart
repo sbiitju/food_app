@@ -1,8 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:food_app/view/component/items_card.dart';
-import 'package:food_app/view/component/outelt_info_appbar_card.dart';
-import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -50,86 +48,67 @@ class _OutletInfoState extends State<OutletInfo> {
     debugPrint("Shahin${listOfItems}");
     return Scaffold(
       body:(outletCheck && listOutItemsCheck)? SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: [
-              Positioned(child: OutletInfoAppBar(outlet!)),
-              Positioned(
-                  top: 180,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+        child: CustomScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              ///Properties of app bar
+              backgroundColor: Colors.white,
+              floating: false,
+              pinned: true,
+              expandedHeight: 200.0,
+
+              ///Properties of the App Bar when it is expanded
+              flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.pin,
+                background: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      shape: BoxShape.rectangle,
+                      color: Colors.white),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                    imageUrl: outlet!.coverUrl.toString(),
+                  ),
+                ),
+              ),
+              leadingWidth: 40,
+              leading: SizedBox(
+                width: 40,
+                height: 30,
+                child: Container(
+                    height: 30,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10))),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 110,
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Expanded(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: outlet?.cuisines.length,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          outlet!.cuisines[index]
-                                              .toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                          ),
-                        ),
-                        Flexible(
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount:listOfItems?.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                        child: ListTile(
-                                          title: Text(
-                                            listOfItems![index].name.toString(),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          subtitle: ItemsCard(listOfItems![index].items),
-                                        ),
-                                    );
-                              }),
-                        ),
-                      ],
-                    ),
-                  )),
-              Positioned(
-                  left: 10,
-                  right: 10,
-                  top: 120,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 140,
+                        color: Colors.white, shape: BoxShape.circle),
+                    width: 40,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.red,
+                        ))),
+              ),
+              actions: <Widget>[
+                Container(
+                    height: 30,
                     decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Card(
-                        elevation: 2, child: OutletInfoCard(outlet!)),
-                  )),
-            ],
-          ),
+                        color: Colors.white, shape: BoxShape.circle),
+                    width: 40,
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: const Icon(
+                          Icons.search_sharp,
+                          color: Colors.red,
+                        ))),
+              ],
+            ),
+          ],
         ),
       ):Center(child: CircularProgressIndicator(),),
     );
