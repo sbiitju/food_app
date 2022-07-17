@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
+import 'package:food_app/graphql/query/create_otp_queary.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
+import 'package:food_app/graphql/query/verify_otp.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../get/controller.dart';
@@ -28,6 +30,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     } catch (e) {
       isSuccess = false;
     }
+    createOTP("1613162522");
     return isSuccess;
   }
 
@@ -131,5 +134,29 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     var modifiedResult =
         ParseHpOutletListResponse(result).parseListOfCategoryItems();
     return modifiedResult;
+  }
+
+  @override
+  Future<void> createOTP(String phoneNumber) async {
+    QueryResult result = await client.clientToQuery().query(
+            QueryOptions(document: gql(CreateOtpQuery().createOtp), variables: {
+          "phoneNo": "1613162522",
+          "countryCode": "880",
+          "deviceUuid": "string",
+          "device": {}
+        }));
+    debugPrint("OtP ${result.toString()}");
+  }
+
+  @override
+  Future<void> verifyOTP(String phoneNumber,String otp) async {
+    QueryResult result = await client.clientToQuery().query(
+        QueryOptions(document: gql(VerifyOTP().verifyOTP), variables: {
+          "phoneNo": phoneNumber,
+          "countryCode": "880",
+          "deviceUuid": "string",
+          "otp": otp
+        }));
+    debugPrint("OtP ${result.toString()}");
   }
 }

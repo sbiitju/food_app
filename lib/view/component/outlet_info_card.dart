@@ -72,13 +72,12 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
     estimatedDeliveryTime = widget.outlet.estimatedDeliveryTime;
     rating = widget.outlet.rating;
     totalRating = widget.outlet.totalRating;
-    debugPrint("Shahin${id}");
     return Padding(
       padding: EdgeInsets.all(7.0),
       child: Column(
         children: [
           SizedBox(
-            height: 35,
+            height: 40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,7 +127,9 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
               SizedBox(
                 height: 30,
                 child: TextButton(
-                    onPressed: () {}, child: Text("See more information")),
+                    onPressed: () {}, child: Text("See more information",style: TextStyle(
+                  color: Colors.black
+                ),)),
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,

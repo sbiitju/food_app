@@ -28,6 +28,7 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
           child: Stack(
             children: [
               CachedNetworkImage(
+                height: 250,
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
                 imageUrl: widget.outlet.coverUrl.toString(),

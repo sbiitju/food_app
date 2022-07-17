@@ -65,17 +65,17 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                       clipBehavior: Clip.hardEdge,
                         children: [
                         Positioned(
-                            height: 200,
+                            height: 190,
                             width: MediaQuery.of(context).size.width,
                             child: OutletInfoAppBar(outlet!)),
                           Positioned(
-                              top: 80,
+                              top: 110,
                               left: 10,
                               right: 10,
-                              height: 120,
+                              height: 130,
                               child: Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.white54,
+                                      color: Colors.white70,
                                       borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
                                   child: OutletInfoCard(outlet!)))
