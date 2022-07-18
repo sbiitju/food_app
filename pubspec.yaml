@@ -47,6 +47,8 @@ dependencies:
   cached_network_image: ^3.2.1
   hexcolor: ^2.0.7
   carousel_slider: ^4.1.1
+  get_storage: ^2.0.3
+  phone_number: ^0.12.0+2
 
 
 

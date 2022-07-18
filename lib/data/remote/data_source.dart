@@ -1,6 +1,7 @@
 import 'package:food_app/data/model/outlet_model.dart';
 
 abstract class GraphQlDataSource {
+
   Future<bool> getServiceConfiguration(String versionNumber);
 
   Future<OutletInfoModel> getOutlet(String outletId);

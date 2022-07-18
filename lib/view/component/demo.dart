@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
@@ -62,25 +61,23 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                     centerTitle: false,
                     titlePadding: EdgeInsets.zero,
                     collapseMode: CollapseMode.parallax,
-                    background: Stack(
-                      clipBehavior: Clip.hardEdge,
-                        children: [
-                        Positioned(
-                            height: 190,
-                            width: MediaQuery.of(context).size.width,
-                            child: OutletInfoAppBar(outlet!)),
-                          Positioned(
-                              top: 110,
-                              left: 10,
-                              right: 10,
-                              height: 130,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white70,
-                                      borderRadius: BorderRadius.all(Radius.circular(10))
-                                ),
-                                  child: OutletInfoCard(outlet!)))
-                        ]),
+                    background: Stack(clipBehavior: Clip.hardEdge, children: [
+                      Positioned(
+                          height: 190,
+                          width: MediaQuery.of(context).size.width,
+                          child: OutletInfoAppBar(outlet!)),
+                      Positioned(
+                          top: 110,
+                          left: 10,
+                          right: 10,
+                          height: 130,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: OutletInfoCard(outlet!)))
+                    ]),
                   ),
                   leadingWidth: 40,
                   leading: SizedBox(
@@ -108,7 +105,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                         width: 40,
                         child: IconButton(
                             onPressed: () {
-                              Get.to( AuthPage());
+                              Get.to(AuthPage());
                             },
                             icon: const Icon(
                               Icons.search_sharp,
@@ -128,63 +125,50 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                       /// uncomment the following line:
                       /// if (index > n) return null;
                       return Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
+                        height: getLengtOfList(listOfItems!)*200,
                         child: Stack(
                           children: [
                             Positioned(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                          topLeft: Radius.circular(10))),
-                                  child: Column(
-                                    children: [
-                                      Flexible(
-                                        child: ListView.builder(
-                                          physics: NeverScrollableScrollPhysics(),
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: listOfItems?.length,
-                                            itemBuilder: (context, index) {
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: ListTile(
-                                                  title: Text(
-                                                    listOfItems![index]
-                                                        .name
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  subtitle: ItemsCard(
-                                                      listOfItems![index]
-                                                          .items),
-                                                ),
-                                              );
-                                            }),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            // Positioned(
-                            //     left: 10,
-                            //     right: 10,
-                            //     top: 120,
-                            //     child: Container(
-                            //       width: MediaQuery.of(context).size.width,
-                            //       height: 140,
-                            //       decoration: const BoxDecoration(
-                            //           borderRadius: BorderRadius.all(
-                            //               Radius.circular(20))),
-                            //       child: Card(
-                            //           elevation: 2,
-                            //           child: OutletInfoCard(outlet!)),
-                            //     )),
+                                child: Column(
+                              children: [
+                                Flexible(
+                                  child: ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: listOfItems?.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ListTile(
+                                            title: Text(
+                                              listOfItems![index]
+                                                  .name
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            subtitle: ItemsCard(
+                                                listOfItems![index].items),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              ],
+                            )),
+// Positioned(
+//     left: 10,
+//     right: 10,
+//     top: 120,
+//     child: Container(
+//       width: MediaQuery.of(context).size.width,
+//       height: 140,
+//       decoration: const BoxDecoration(
+//           borderRadius: BorderRadius.all(
+//               Radius.circular(20))),
+//       child: Card(
+//           elevation: 2,
+//           child: OutletInfoCard(outlet!)),
+//     )),
                           ],
                         ),
                       );
@@ -223,4 +207,12 @@ class _SliverListWidgetState extends State<SliverListWidget> {
           ],
         ),
       );
+}
+
+int getLengtOfList(List<CategoryItems> list) {
+  int length = 0;
+  list.forEach((element) {
+    length = length + element.items.length;
+  });
+  return length;
 }

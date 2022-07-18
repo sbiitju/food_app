@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:food_app/view/Splash.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:food_app/view/auth/auth_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../view/Home.dart';
-import '../view/map.dart';
+
+var LOGIN_STATUS = "login_status";
+var getStorage = GetStorage();
 
 Route onGenerateRoute(settings) {
   Widget _nextPage;
@@ -16,7 +22,7 @@ Route onGenerateRoute(settings) {
     case Home.RouteName:
       _nextPage = Home(LatLng(0, 0));
       break;
-      default:
+    default:
       _nextPage = Container();
   }
 
@@ -37,4 +43,77 @@ Route onGenerateRoute(settings) {
           child: child,
         );
       });
+}
+
+void initialSetUp() {}
+
+bool checkLoginStatus() {
+  var status = getStorage.read(LOGIN_STATUS) as String;
+  return status == "LogIn";
+}
+
+Widget loginCheckingDialog(context) {
+  return Dialog(
+    backgroundColor: Color(0xffffff),
+    child: SizedBox(
+      height: 350,
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          Container(
+            width: 280,
+            height: 320,
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.of(context, rootNavigator: true).pop('dialog');
+                    },
+                    icon: Icon(Icons.cancel_outlined,color: Colors.red,),
+                  ),
+                ),
+                SizedBox(
+                  height: 150,
+                  child: Center(child: Image.asset("assest/img_login.png")),
+                ),
+                SizedBox(height: 10,),
+                Center(
+                  child: Text("Please, Log In!",textAlign: TextAlign.center,style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.red,
+                  ),),
+                ),
+                SizedBox(height: 10,),
+                Center(
+                  child: Text("Hi! Please Login or Sign-Up so that \nwe can serve you",textAlign: TextAlign.center,),
+                )
+
+              ],
+            ),
+          ),
+          Positioned(
+              top: 300,
+              left: 120,
+              right: 120,
+              child: CircleAvatar(
+                backgroundColor: Colors.red,
+                child: IconButton(
+                  onPressed: (){
+                    Get.to(AuthPage());
+                  },
+                  icon: Icon(
+                    Icons.offline_pin_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+              ))
+        ],
+      ),
+    ),
+  );
 }

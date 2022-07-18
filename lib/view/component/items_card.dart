@@ -24,56 +24,68 @@ class _ItemsCardState extends State<ItemsCard> {
           shrinkWrap: true,
           itemCount: widget.itemInfo.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.itemInfo[index].itemName.toString(),
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                                textBaseline: TextBaseline.alphabetic,
-                                wordSpacing: 2),
+            return Column(
+              children: [
+                SizedBox(height: 5,child: Container(
+                  color: Colors.white,
+                ),),
+                Container(
+                  decoration: const BoxDecoration(
+                      color:Color(0x5feee9ec),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.itemInfo[index].itemName.toString(),
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    wordSpacing: 2),
+                              ),
+                              Text("Tk ${widget.itemInfo[index].basePrice}",style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  wordSpacing: 2),),
+                            ],
                           ),
-                          Text("Tk ${widget.itemInfo[index].basePrice}",style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              textBaseline: TextBaseline.alphabetic,
-                              wordSpacing: 2),),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: SizedBox(
-                        height: 100,
-                        child: Stack(
-                          children: [
-                            Image.asset("assest/a.webp"),
-                            Positioned(
-                                top: 50, left: 10, child: CartUpdateButton())
-                          ],
                         ),
-                      ),
-                    )
-                  ],
+                        Flexible(
+                          flex: 1,
+                          child: SizedBox(
+                            height: 120,
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                    height: 100,
+                                    child: Image.asset("assest/a.webp")),
+                                Positioned(
+                                    top: 75, left: 10, right:10,child: CartUpdateButton())
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(height: 5,child: Container(
+                  color: Colors.white,
+                ),)
+              ],
             );
           }),
     );
