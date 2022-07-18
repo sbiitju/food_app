@@ -83,6 +83,7 @@ flutter:
     - assest/splash.json
     - assest/logo_name.webp
     - assest/a.webp
+    - assest/img_login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

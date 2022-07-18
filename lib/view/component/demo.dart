@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -107,7 +108,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                         width: 40,
                         child: IconButton(
                             onPressed: () {
-                              setState(() {});
+                              Get.to( AuthPage());
                             },
                             icon: const Icon(
                               Icons.search_sharp,
@@ -142,36 +143,6 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                                           topLeft: Radius.circular(10))),
                                   child: Column(
                                     children: [
-                                      SizedBox(
-                                        height: 30,
-                                        child: Expanded(
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount:
-                                                  outlet?.cuisines.length,
-                                              itemBuilder: (context, index) {
-                                                return Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        outlet!.cuisines[index]
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              }),
-                                        ),
-                                      ),
                                       Flexible(
                                         child: ListView.builder(
                                           physics: NeverScrollableScrollPhysics(),

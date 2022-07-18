@@ -30,7 +30,6 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     } catch (e) {
       isSuccess = false;
     }
-    createOTP("1613162522");
     return isSuccess;
   }
 
@@ -136,27 +135,5 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     return modifiedResult;
   }
 
-  @override
-  Future<void> createOTP(String phoneNumber) async {
-    QueryResult result = await client.clientToQuery().query(
-            QueryOptions(document: gql(CreateOtpQuery().createOtp), variables: {
-          "phoneNo": "1613162522",
-          "countryCode": "880",
-          "deviceUuid": "string",
-          "device": {}
-        }));
-    debugPrint("OtP ${result.toString()}");
-  }
 
-  @override
-  Future<void> verifyOTP(String phoneNumber,String otp) async {
-    QueryResult result = await client.clientToQuery().query(
-        QueryOptions(document: gql(VerifyOTP().verifyOTP), variables: {
-          "phoneNo": phoneNumber,
-          "countryCode": "880",
-          "deviceUuid": "string",
-          "otp": otp
-        }));
-    debugPrint("OtP ${result.toString()}");
-  }
 }
