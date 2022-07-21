@@ -125,7 +125,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                       /// uncomment the following line:
                       /// if (index > n) return null;
                       return Container(
-                        height: getLengtOfList(listOfItems!)*200,
+                        height: getLengtOfList(listOfItems!) * 200,
                         child: Stack(
                           children: [
                             Positioned(

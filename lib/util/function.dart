@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/view/Splash.dart';
 import 'package:food_app/view/auth/auth_view.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:phone_number/phone_number.dart';
 
 import '../view/Home.dart';
 
@@ -52,6 +51,11 @@ bool checkLoginStatus() {
   return status == "LogIn";
 }
 
+Future<bool> isValidateNumber(String number) async {
+  PhoneNumberUtil plugin = PhoneNumberUtil();
+  return await plugin.validate(number, "880");
+}
+
 Widget loginCheckingDialog(context) {
   return Dialog(
     backgroundColor: Color(0xffffff),
@@ -71,28 +75,41 @@ Widget loginCheckingDialog(context) {
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop('dialog');
                     },
-                    icon: Icon(Icons.cancel_outlined,color: Colors.red,),
+                    icon: Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 150,
                   child: Center(child: Image.asset("assest/img_login.png")),
                 ),
-                SizedBox(height: 10,),
-                Center(
-                  child: Text("Please, Log In!",textAlign: TextAlign.center,style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.red,
-                  ),),
+                SizedBox(
+                  height: 10,
                 ),
-                SizedBox(height: 10,),
                 Center(
-                  child: Text("Hi! Please Login or Sign-Up so that \nwe can serve you",textAlign: TextAlign.center,),
+                  child: Text(
+                    "Please, Log In!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text(
+                    "Hi! Please Login or Sign-Up so that \nwe can serve you",
+                    textAlign: TextAlign.center,
+                  ),
                 )
-
               ],
             ),
           ),
@@ -103,7 +120,7 @@ Widget loginCheckingDialog(context) {
               child: CircleAvatar(
                 backgroundColor: Colors.red,
                 child: IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     Get.to(AuthPage());
                   },
                   icon: Icon(
