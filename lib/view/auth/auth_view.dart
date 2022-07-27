@@ -53,7 +53,13 @@ class AuthPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Easy Login with Phone Number"),
+                            const Text(
+                              "Enter Your Phone Number",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
                             const Text(
                                 "Verify Your account through phone number. We will send you a one-time verification code"),
                             Row(
@@ -79,15 +85,16 @@ class AuthPage extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     controller: phoneControllerET,
                                     keyboardType: TextInputType.phone,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Enter Your Phone Number",
                                     ),
                                     onTap: () {
                                       controller.showLoginImage.value = false;
                                     },
                                     onChanged: (value) => {
-                                      if (phoneControllerET.text.length == 10 ||
-                                          phoneControllerET.text.length == 11)
+                                      if ((phoneControllerET.text.length ==
+                                              10 ||
+                                          phoneControllerET.text.length == 11))
                                         {
                                           controller.isNumberValidate.value =
                                               true
@@ -102,6 +109,21 @@ class AuthPage extends StatelessWidget {
                                 )
                               ],
                             ),
+                            Row(
+                              children: [
+                                Checkbox(
+                                    value: controller.isAgreeBtnChecked.value,
+                                    onChanged: (value) {
+                                      controller.isAgreeBtnChecked.value =
+                                          value!;
+                                    }),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                    "I agree with terms & Conditions of Hungrynaki")
+                              ],
+                            ),
                             !controller.showLoginImage.value
                                 ? Column(
                                     children: [
@@ -110,46 +132,51 @@ class AuthPage extends StatelessWidget {
                                       ),
                                       Align(
                                         alignment: Alignment.bottomCenter,
-                                        child: MaterialButton(
-                                          color:
-                                              controller.isNumberValidate.value
-                                                  ? Colors.redAccent
-                                                  : Colors.white,
-                                          onPressed: controller
-                                                  .isNumberValidate.value
-                                              ? () {
-                                                  if (phoneControllerET
-                                                          .text.length ==
-                                                      11) {
-                                                    controller.createOtp(
-                                                        phoneControllerET.text
-                                                            .substring(1, 11));
-                                                    controller.showVerifyPage
-                                                        .value = true;
-                                                  } else if (phoneControllerET
-                                                          .text.length ==
-                                                      10) {
-                                                    controller.createOtp(
-                                                        phoneControllerET.text);
-                                                    controller.showVerifyPage
-                                                        .value = true;
-                                                  } else {
-                                                    Get.snackbar("Failed",
-                                                        "Please Input a valid phone Number",
-                                                        snackStyle: SnackStyle
-                                                            .GROUNDED);
+                                        child: Container(
+                                          width: 300,
+                                          height: 45,
+                                          color: checkVerifyMeBtnStatus()
+                                              ? Colors.redAccent
+                                              : Colors.black26,
+                                          child: MaterialButton(
+                                            color: checkVerifyMeBtnStatus()
+                                                ? Colors.redAccent
+                                                : Colors.black26,
+                                            onPressed: controller
+                                                    .isNumberValidate.value
+                                                ? () {
+                                                    if (phoneControllerET
+                                                            .text.length ==
+                                                        11) {
+                                                      controller.createOtp(
+                                                          phoneControllerET.text
+                                                              .substring(
+                                                                  1, 11));
+                                                      controller.showVerifyPage
+                                                          .value = true;
+                                                    } else if (phoneControllerET
+                                                            .text.length ==
+                                                        10) {
+                                                      controller.createOtp(
+                                                          phoneControllerET
+                                                              .text);
+                                                      controller.showVerifyPage
+                                                          .value = true;
+                                                    } else {
+                                                      Get.snackbar("Failed",
+                                                          "Please Input a valid phone Number",
+                                                          snackStyle: SnackStyle
+                                                              .GROUNDED);
+                                                    }
                                                   }
-                                                }
-                                              : null,
-                                          child: Container(
-                                              width: 250,
-                                              height: 45,
-                                              color: controller
-                                                      .isNumberValidate.value
-                                                  ? Colors.redAccent
-                                                  : Colors.white70,
-                                              child: Center(
-                                                  child: Text("Verify Me"))),
+                                                : null,
+                                            child: Center(
+                                                child: Text(
+                                              "Verify Me",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            )),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -196,15 +223,16 @@ class AuthPage extends StatelessWidget {
                                 width: 2,
                                 height: 22,
                                 enabled: true,
-                                fadeDuration: Duration(microseconds: 2000),
-                                radius: Radius.circular(20)),
+                                fadeDuration:
+                                    const Duration(microseconds: 2000),
+                                radius: const Radius.circular(20)),
                             enableInteractiveSelection: true,
                             decoration: UnderlineDecoration(
                               obscureStyle: ObscureStyle(isTextObscure: false),
-                              textStyle:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              textStyle: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                               colorBuilder:
-                                  FixedColorBuilder(Colors.deepOrange),
+                                  const FixedColorBuilder(Colors.deepOrange),
                             ),
                             onCodeChanged: (code) {
                               if (code!.length == 4) {
@@ -251,5 +279,10 @@ class AuthPage extends StatelessWidget {
               )),
       ),
     );
+  }
+
+  bool checkVerifyMeBtnStatus() {
+    return controller.isNumberValidate.value &&
+        controller.isAgreeBtnChecked.value;
   }
 }

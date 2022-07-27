@@ -9,6 +9,8 @@ class AuthController extends GetxController {
   var showVerifyPage = false.obs;
   var isNumberValidate = false.obs;
   var isSubmitBtnActive = false.obs;
+  var isAgreeBtnChecked = false.obs;
+  var isVerifyMeBtnActive = false.obs;
 
   Future<bool> createOtp(phoneNumber) async {
     return await _repository.createOtp(phoneNumber);
