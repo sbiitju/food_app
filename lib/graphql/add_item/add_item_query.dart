@@ -6,28 +6,8 @@ class AddItemQuery {
         statusCode
         result {
             fingerprint
-            isSync
-            cart {
-                payment {
-                    type
-                    deliveryMethod
-                    deliveryCharge
-                    outletServiceCharge
-                    itemSubtotal
-                    globalItemsPrice
-                    totalSD
-                    vat
-                    finalTotal
-                    voucherDiscountAmount
-                    dealDiscountAmount
-                    cartRuleDiscountAmount
-                    customerPayable
-                    hnCreditUsed
-                    riderTip
-                }
             }
         }
-    }
 }
   """;
 }

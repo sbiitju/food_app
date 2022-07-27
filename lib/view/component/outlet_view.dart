@@ -72,7 +72,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                           right: 10,
                           height: 130,
                           child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),

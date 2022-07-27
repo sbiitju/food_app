@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/get/controller.dart';
 import 'package:food_app/util/function.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CartUpdateButton extends StatefulWidget {
   const CartUpdateButton({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class CartUpdateButton extends StatefulWidget {
 }
 
 class _CartUpdateButtonState extends State<CartUpdateButton> {
+  var controller = Get.find<Controller>();
   int counter = 0;
   var isCounterZero = true;
 
@@ -26,6 +27,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   void increment() {
+    controller.addItem();
     setState(() {
       counter++;
       isCounterZero = false;
@@ -45,18 +47,23 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
             border: Border.all(color: Colors.deepOrangeAccent, width: 2)),
         child: isCounterZero
             ? Center(
-                child: MaterialButton(onPressed: (){
-                  if(checkLoginStatus()){
-                    increment();
-                  }else{
-                    showDialog(context: context, builder: (context){
-                      return loginCheckingDialog(context);
-                    });
-                  }
-
-                }, child: Text("Add",style: TextStyle(
-                  color: Colors.deepOrangeAccent,fontSize: 20
-                ),)))
+                child: MaterialButton(
+                    onPressed: () {
+                      if (checkLoginStatus()) {
+                        increment();
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return loginCheckingDialog(context);
+                            });
+                      }
+                    },
+                    child: Text(
+                      "Add",
+                      style: TextStyle(
+                          color: Colors.deepOrangeAccent, fontSize: 20),
+                    )))
             : Row(
                 children: [
                   Padding(

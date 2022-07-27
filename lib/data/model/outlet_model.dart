@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class Outlet {
@@ -113,23 +112,15 @@ class ParseHpOutletListResponse {
     for (final category in output) {
       final items = <ItemInfo>[];
       for (final item in (category["items"] as List<dynamic>)) {
-        items.add(
-            ItemInfo(
-                item["basePrice"].toDouble(),
-                item["meta"]["id"],
-                item["meta"]["name"],
-                item["meta"]["description"],
-                item["meta"]["images"]
-            )
-        );
+        items.add(ItemInfo(
+            item["basePrice"].toDouble(),
+            item["meta"]["id"],
+            item["meta"]["name"],
+            item["meta"]["description"],
+            item["meta"]["images"]));
       }
-      listOfCategoryItems.add(
-          CategoryItems(
-              category["id"],
-              category["name"],
-              items
-          )
-      );
+      listOfCategoryItems
+          .add(CategoryItems(category["id"], category["name"], items));
     }
 
     return listOfCategoryItems;
@@ -202,7 +193,7 @@ class ItemInfo {
   String? itemId;
   String? itemName;
   String? itemDescription;
-  String? itemImage;
+  var itemImage;
 
   ItemInfo(this.basePrice, this.itemId, this.itemName, this.itemDescription,
       this.itemImage);

@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
+import 'package:food_app/graphql/add_item/add_item_query.dart';
 import 'package:food_app/graphql/graphql.dart';
-import 'package:food_app/graphql/query/create_otp_queary.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
-import 'package:food_app/graphql/query/verify_otp.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../get/controller.dart';
@@ -120,6 +119,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     QueryResult result = await client.clientToQuery().query(QueryOptions(
         document: gql(OutletQuery().getOutlet),
         variables: {'outletId': outletID}));
+
     var modifiedResult =
         ParseHpOutletListResponse(result).parseOutletInfoResult();
     return modifiedResult;
@@ -130,10 +130,27 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     QueryResult result = await client.clientToQuery().query(QueryOptions(
         document: gql(GetCategorizedItems().getCategorizedItems),
         variables: {'outletId': outletId}));
+    debugPrint(result.data.toString());
+
     var modifiedResult =
         ParseHpOutletListResponse(result).parseListOfCategoryItems();
     return modifiedResult;
   }
 
-
+  @override
+  Future addToCart() async {
+    QueryResult result = await client.clientToQuery().query(QueryOptions(
+            document: gql(AddItemQuery().addItemQuery),
+            variables: const {
+              "coordinate": {
+                "type": "Point",
+                "coordinates": [90.4078, 23.7925]
+              },
+              "item": {
+                "fingerprint": "ngdhds",
+                "item": {"id": "5ca4ad2db19d90e0ad9a6eac"}
+              }
+            }));
+    debugPrint("AddToCart" + result.data.toString());
+  }
 }

@@ -8,10 +8,13 @@ class AuthController extends GetxController {
   var showLoginImage = true.obs;
   var showVerifyPage = false.obs;
   var isNumberValidate = false.obs;
-  Future<bool> createOtp(phoneNumber)async{
+  var isSubmitBtnActive = false.obs;
+
+  Future<bool> createOtp(phoneNumber) async {
     return await _repository.createOtp(phoneNumber);
   }
-  Future<VerifyResponse> verifyOTP(phoneNumber,otp)async{
-    return await _repository.verifyOtp(phoneNumber,otp);
+
+  Future<VerifyResponse> verifyOTP(phoneNumber, otp) async {
+    return await _repository.verifyOtp(phoneNumber, otp);
   }
 }

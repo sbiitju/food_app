@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     controller.getServiceConfiguration().then((value) {
       isApiCallCompleted = value;
       tryNavigateToNextScreen();
@@ -32,7 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     GeoLocation().determinePosition().then((value) {
       position = value;
-      controller.getReverseGeoCode(position?.latitude, position?.longitude).then((value) => controller.address.value = value);
+      controller
+          .getReverseGeoCode(position?.latitude, position?.longitude)
+          .then((value) => controller.address.value = value);
       tryNavigateToNextScreen();
     });
   }
@@ -44,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MapSample(position!)),
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
     }
   }

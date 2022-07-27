@@ -35,18 +35,22 @@ class BaseRepoImp implements BaseRepo {
   }
 
   @override
-  Future<List<Outlet>> getHPOutletList(double lat, double lon,int index) {
-   return _remoteSource.getHPOutletList(lat, lon,index);
+  Future<List<Outlet>> getHPOutletList(double lat, double lon, int index) {
+    return _remoteSource.getHPOutletList(lat, lon, index);
   }
 
   @override
   Future<OutletInfoModel> getOutlet(String outletID) {
     return _remoteSource.getOutlet(outletID);
-
   }
 
   @override
   Future<List<CategoryItems>> getCategoryItems(String outletId) {
     return _remoteSource.getCategoryItems(outletId);
+  }
+
+  @override
+  Future addToCart() {
+    return _remoteSource.addToCart();
   }
 }

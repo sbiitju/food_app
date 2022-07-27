@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/Splash.dart';
 import 'package:food_app/view/auth/auth_view.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:phone_number/phone_number.dart';
@@ -9,6 +8,7 @@ import 'package:phone_number/phone_number.dart';
 import '../view/Home.dart';
 
 var LOGIN_STATUS = "login_status";
+var TOKEN = "token";
 var getStorage = GetStorage();
 
 Route onGenerateRoute(settings) {
@@ -44,16 +44,32 @@ Route onGenerateRoute(settings) {
       });
 }
 
-void initialSetUp() {}
-
 bool checkLoginStatus() {
-  var status = getStorage.read(LOGIN_STATUS) as String;
-  return status == "LogIn";
+  var status = getStorage.read(TOKEN) as String?;
+  return !(status == null || status.isEmpty);
+}
+
+void initialSetUp() {
+  getStorage.write(LOGIN_STATUS, "LogIn");
 }
 
 Future<bool> isValidateNumber(String number) async {
   PhoneNumberUtil plugin = PhoneNumberUtil();
-  return await plugin.validate(number, "880");
+
+  RegionInfo region = RegionInfo(name: 'BD', code: '880', prefix: 880);
+  return await plugin.validate(number, region.code);
+}
+
+Future<void> saveToken(String token) async {
+  getStorage.write(TOKEN, token);
+}
+
+void changeLoginStatus() {
+  getStorage.write(LOGIN_STATUS, "LogIn");
+}
+
+Future<String> getToken() async {
+  return getStorage.read(TOKEN);
 }
 
 Widget loginCheckingDialog(context) {
@@ -121,7 +137,11 @@ Widget loginCheckingDialog(context) {
                 backgroundColor: Colors.red,
                 child: IconButton(
                   onPressed: () {
-                    Get.to(AuthPage());
+                    Navigator.of(context, rootNavigator: true).pop('dialog');
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return AuthPage();
+                    }));
                   },
                   icon: Icon(
                     Icons.offline_pin_rounded,

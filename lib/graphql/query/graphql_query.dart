@@ -69,7 +69,7 @@ class GraphQlQuery {
     }
 }
 """;
- String getServiceConfiguration = """ 
+  String getServiceConfiguration = """ 
  query getServiceConfiguration(\$versionNumber: String) {
  getServiceConfiguration(versionNumber: \$versionNumber)
  {
@@ -170,6 +170,4 @@ class GraphQlQuery {
   }
   }
   """;
-
-
 }

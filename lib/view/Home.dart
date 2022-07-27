@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/get/controller.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
-import 'package:food_app/view/outlet_info.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'component/demo.dart';
+import 'component/outlet_view.dart';
 
 class Home extends StatefulWidget {
   LatLng latLng;
@@ -25,8 +24,8 @@ class _HomeState extends State<Home> {
   int _index = 1;
   Controller controller = Get.find<Controller>();
   var scrollController = ScrollController();
-  var listOfItems=<CategoryItems>[];
-  var gotListOfItems=false;
+  var listOfItems = <CategoryItems>[];
+  var gotListOfItems = false;
 
   @override
   void initState() {
@@ -59,13 +58,15 @@ class _HomeState extends State<Home> {
                         itemBuilder: (context, index) {
                           return index < controller.listOutletId.length
                               ? GestureDetector(
-                              onTap: (){
-                                    Get.to(SliverListWidget(controller.listOutletId[index].id));
-                                // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
-                                //   return OutletInfo(controller.listOutletId[index].id);
-                                // } ));
-                              },
-                              child: ResturentCard(controller.listOutletId[index]))
+                                  onTap: () {
+                                    Get.to(SliverListWidget(
+                                        controller.listOutletId[index].id));
+                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
+                                    //   return OutletInfo(controller.listOutletId[index].id);
+                                    // } ));
+                                  },
+                                  child: ResturentCard(
+                                      controller.listOutletId[index]))
                               : const Center(
                                   child: Padding(
                                   padding: EdgeInsets.symmetric(vertical: 5),
@@ -75,13 +76,11 @@ class _HomeState extends State<Home> {
                   );
                 }),
               )
-            : Builder(
-              builder: (context) {
+            : Builder(builder: (context) {
                 return Center(
-                    child: CircularProgressIndicator(),
-                  );
-              }
-            ),
+                  child: CircularProgressIndicator(),
+                );
+              }),
       ),
     );
   }

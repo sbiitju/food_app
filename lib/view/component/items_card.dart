@@ -26,12 +26,15 @@ class _ItemsCardState extends State<ItemsCard> {
           itemBuilder: (context, index) {
             return Column(
               children: [
-                SizedBox(height: 5,child: Container(
-                  color: Colors.white,
-                ),),
+                SizedBox(
+                  height: 5,
+                  child: Container(
+                    color: Colors.white,
+                  ),
+                ),
                 Container(
                   decoration: const BoxDecoration(
-                      color:Color(0x5feee9ec),
+                      color: Color(0x5feee9ec),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -54,12 +57,15 @@ class _ItemsCardState extends State<ItemsCard> {
                                     textBaseline: TextBaseline.alphabetic,
                                     wordSpacing: 2),
                               ),
-                              Text("Tk ${widget.itemInfo[index].basePrice}",style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                  textBaseline: TextBaseline.alphabetic,
-                                  wordSpacing: 2),),
+                              Text(
+                                "Tk ${widget.itemInfo[index].basePrice}",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    wordSpacing: 2),
+                              ),
                             ],
                           ),
                         ),
@@ -73,7 +79,11 @@ class _ItemsCardState extends State<ItemsCard> {
                                     height: 100,
                                     child: Image.asset("assest/a.webp")),
                                 Positioned(
-                                    top: 75, left: 10, right:10,child: CartUpdateButton())
+                                  top: 75,
+                                  left: 10,
+                                  right: 10,
+                                  child: CartUpdateButton(),
+                                )
                               ],
                             ),
                           ),
@@ -82,9 +92,12 @@ class _ItemsCardState extends State<ItemsCard> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5,child: Container(
-                  color: Colors.white,
-                ),)
+                SizedBox(
+                  height: 5,
+                  child: Container(
+                    color: Colors.white,
+                  ),
+                )
               ],
             );
           }),
