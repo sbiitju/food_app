@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
   Controller controller = Get.find<Controller>();
   var scrollController = ScrollController();
   var listOfItems = <CategoryItems>[];
-  var gotListOfItems = false;
 
   @override
   void initState() {
@@ -47,41 +46,38 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: controller.checking.value
-            ? Container(
-                child: Obx(() {
-                  return RefreshIndicator(
-                    onRefresh: refresh,
-                    child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: controller.listOutletId.length + 1,
-                        itemBuilder: (context, index) {
-                          return index < controller.listOutletId.length
-                              ? GestureDetector(
-                                  onTap: () {
-                                    Get.to(SliverListWidget(
-                                        controller.listOutletId[index].id));
-                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
-                                    //   return OutletInfo(controller.listOutletId[index].id);
-                                    // } ));
-                                  },
-                                  child: ResturentCard(
-                                      controller.listOutletId[index]))
-                              : const Center(
-                                  child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: CircularProgressIndicator(),
-                                ));
-                        }),
-                  );
-                }),
-              )
-            : Builder(builder: (context) {
-                return Center(
+          child: controller.checking.value
+              ? Container(
+                  child: Obx(() {
+                    return RefreshIndicator(
+                      onRefresh: refresh,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: controller.listOutletId.length + 1,
+                          itemBuilder: (context, index) {
+                            return index < controller.listOutletId.length
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Get.to(SliverListWidget(
+                                          controller.listOutletId[index].id));
+                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
+                                      //   return OutletInfo(controller.listOutletId[index].id);
+                                      // } ));
+                                    },
+                                    child: ResturentCard(
+                                        controller.listOutletId[index]))
+                                : const Center(
+                                    child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: CircularProgressIndicator(),
+                                  ));
+                          }),
+                    );
+                  }),
+                )
+              : Center(
                   child: CircularProgressIndicator(),
-                );
-              }),
-      ),
+                )),
     );
   }
 
