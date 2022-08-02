@@ -33,7 +33,7 @@ class MapSampleState extends State<MapSample> {
     myController.isServiceAvailable.value = myController.getZone(
         widget.position.latitude, widget.position.longitude);
     myController.getOutlet("5ca4aefab19d90e0ad9ae3c1");
-    
+
     super.initState();
   }
 
@@ -93,12 +93,13 @@ class MapSampleState extends State<MapSample> {
                   });
                 },
               )),
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 bottom: 45.0,
               ),
-              child: Icon(Icons.location_on, color: Colors.redAccent, size: 50),
+              child: Icon(Icons.location_on,
+                  color: Theme.of(context).primaryColor, size: 50),
             ),
           ),
           Align(
@@ -109,8 +110,8 @@ class MapSampleState extends State<MapSample> {
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.white70,
                   shape: BoxShape.rectangle,
                 ),
                 child: Column(
@@ -138,8 +139,8 @@ class MapSampleState extends State<MapSample> {
               child: Container(
                 decoration: BoxDecoration(
                     color: myController.isServiceAvailable.value
-                        ? Colors.redAccent
-                        : Colors.white70,
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).scaffoldBackgroundColor,
                     borderRadius:
                         const BorderRadius.all(const Radius.circular(10))),
                 width: double.infinity,

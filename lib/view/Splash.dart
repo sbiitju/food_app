@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/view/Home.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -55,7 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
       child: Center(
         child: Lottie.asset('assest/splash.json'),
       ),

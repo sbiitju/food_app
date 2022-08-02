@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/repo/base_repo.dart';
-import 'package:food_app/get/base_controller.dart';
 import 'package:get/get.dart';
 
 import '../util/ItemModel.dart';
 
-class Controller extends BaseController {
+class Controller extends GetxController {
   var address = Area("", "", "", "", "").obs;
   List demoList = <Demo>[].obs;
   var checking = false.obs;
@@ -17,6 +17,14 @@ class Controller extends BaseController {
 
   Future<bool> getServiceConfiguration() {
     return _repository.getServiceConfiguration("4.1");
+  }
+
+  Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
+
+  bool get isDarkMode => themeMode.value == ThemeMode.dark;
+
+  void toggleThemeMode(bool isOn) {
+    themeMode.value = isOn ? ThemeMode.dark : ThemeMode.light;
   }
 
   Future addItem() {

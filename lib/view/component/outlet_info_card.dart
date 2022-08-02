@@ -33,24 +33,25 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
   var rating;
   int? totalRating;
 
-  List<Widget> ratingWidget(rating,totalRating) {
+  List<Widget> ratingWidget(rating, totalRating) {
     var listOfWidget = <Widget>[];
     listOfWidget.add(Container(
-        decoration: const BoxDecoration(
-            color: Colors.white, shape: BoxShape.circle),
-        child: const Icon(
+        decoration: const BoxDecoration(shape: BoxShape.circle),
+        child: Icon(
           Icons.star,
-          color: Colors.orange,
+          color: Theme.of(context).primaryColor,
           size: 18,
         )));
-    if(rating != null && rating != 0){
-      if(totalRating != null && totalRating != 0){
+    if (rating != null && rating != 0) {
+      if (totalRating != null && totalRating != 0) {
         listOfWidget.add(Text(" ${rating} (${totalRating})"));
-      }else{
+      } else {
         listOfWidget.add(Text(" ${rating} "));
       }
     }
-    listOfWidget.add(SizedBox(width: 20,));
+    listOfWidget.add(SizedBox(
+      width: 20,
+    ));
     listOfWidget.add(Text(getCuisins(cuisines as List<Object?>)));
     return listOfWidget;
   }
@@ -90,14 +91,19 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: isOpen ? Colors.deepOrangeAccent : Colors.red,
+                      color:
+                          isOpen ? Theme.of(context).primaryColor : Colors.red,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Padding(
                     padding:
-                    EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-                    child: isOpen ? Text(
-                      "Open", style: TextStyle(color: Colors.white),) : Text(
-                        "Close"),
+                        EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                    child: isOpen
+                        ? Text(
+                            "Open",
+                            style: TextStyle(
+                                color: Theme.of(context).backgroundColor),
+                          )
+                        : Text("Close"),
                   ),
                 ),
                 SizedBox(
@@ -105,19 +111,22 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      color: Colors.white,borderRadius:BorderRadius.all(Radius.circular(20))),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: isFavorite
-                      ? const Icon(
-                    Icons.search_sharp,
-                    color: Colors.red,
-                  )
+                      ? Icon(
+                          Icons.search_sharp,
+                          color: Theme.of(context).primaryColor,
+                        )
                       : Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: IconButton(
-                        onPressed: (){
-                        },
-                        icon: const Icon(Icons.favorite_outline,color: Colors.red,)),
-                      ),
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: IconButton(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.favorite_outline,
+                                color: Theme.of(context).primaryColor,
+                              )),
+                        ),
                 )
               ],
             ),
@@ -127,9 +136,11 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
               SizedBox(
                 height: 30,
                 child: TextButton(
-                    onPressed: () {}, child: Text("See more information",style: TextStyle(
-                  color: Colors.black
-                ),)),
+                    onPressed: () {},
+                    child: Text(
+                      "See more information",
+                      style: TextStyle(),
+                    )),
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
@@ -146,25 +157,22 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
           Row(
             children: [
               Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Icon(
                     Icons.alarm,
-                    color: Colors.orange,
+                    color: Theme.of(context).primaryColor,
                     size: 18,
                   )),
               Text(
-                  " ($averageFoodPreparationTime-${averageFoodPreparationTime! +
-                      5}) min"),
+                  " ($averageFoodPreparationTime-${averageFoodPreparationTime! + 5}) min"),
               SizedBox(
                 width: 10,
               ),
               Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Icon(
                     Icons.electric_bike_rounded,
-                    color: Colors.orange,
+                    color: Theme.of(context).primaryColor,
                     size: 18,
                   )),
               Text("  Tk ${widget.outlet.deliveryFee}."),

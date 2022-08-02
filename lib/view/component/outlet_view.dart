@@ -51,7 +51,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                 ///First sliver is the App Bar
                 SliverAppBar(
                   ///Properties of app bar
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).backgroundColor,
                   floating: false,
                   pinned: true,
                   expandedHeight: 200,
@@ -73,7 +73,6 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                           height: 130,
                           child: Container(
                               decoration: const BoxDecoration(
-                                  color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               child: OutletInfoCard(outlet!)))
@@ -84,30 +83,30 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Container(
                         height: 30,
-                        decoration: const BoxDecoration(
-                            color: Colors.white, shape: BoxShape.circle),
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
                         width: 45,
                         child: IconButton(
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.arrow_back,
-                              color: Colors.red,
+                              color: Theme.of(context).primaryColor,
                             ))),
                   ),
                   title: Align(
                     alignment: Alignment.topRight,
                     child: Container(
                         height: 40,
-                        decoration: const BoxDecoration(
-                            color: Colors.white, shape: BoxShape.circle),
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
                         width: 48,
                         child: IconButton(
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             onPressed: () {
                               Get.to(AuthPage());
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.search_sharp,
                               color: Colors.red,
                             ))),

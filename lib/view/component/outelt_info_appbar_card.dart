@@ -19,8 +19,9 @@ class _OutletInfoAppBarState extends State<OutletInfoAppBar> {
       children: [
         Container(
           height: 200,
-          decoration: const BoxDecoration(
-              shape: BoxShape.rectangle, color: Colors.white),
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Theme.of(context).backgroundColor),
           child: Stack(
             children: [
               CachedNetworkImage(

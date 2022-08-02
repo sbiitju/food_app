@@ -44,7 +44,8 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
             color: Colors.white70,
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.deepOrangeAccent, width: 2)),
+            border:
+                Border.all(color: Theme.of(context).primaryColor, width: 2)),
         child: isCounterZero
             ? Center(
                 child: MaterialButton(

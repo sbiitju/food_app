@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import '../../data/model/outlet_model.dart';
 
@@ -24,9 +23,9 @@ class _ResturentCardState extends State<ResturentCard> {
             elevation: 1,
             child: Container(
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  shape: BoxShape.rectangle,
-                  color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                shape: BoxShape.rectangle,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -35,7 +34,6 @@ class _ResturentCardState extends State<ResturentCard> {
                       Placeholder(
                         strokeWidth: 1,
                         fallbackHeight: 250,
-                        color: Colors.white,
                         child: CachedNetworkImage(
                           alignment: Alignment.center,
                           imageUrl: widget.outlet.coverImages.toString(),
@@ -47,35 +45,39 @@ class _ResturentCardState extends State<ResturentCard> {
                         left: MediaQuery.of(context).size.width - 70,
                         height: 40,
                         child: Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white, shape: BoxShape.circle),
+                          decoration: BoxDecoration(shape: BoxShape.circle),
                           width: double.infinity,
                           child: widget.outlet.isFavourite
                               ? IconButton(
+                                  color: Theme.of(context).backgroundColor,
                                   onPressed: () {
                                     setState(() {
                                       widget.outlet.isFavourite =
                                           !widget.outlet.isFavourite;
                                     });
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.favorite,
-                                    color: Colors.red,
+                                    color: Theme.of(context).primaryColor,
                                   ))
                               : IconButton(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                   onPressed: () {
                                     setState(() {
                                       widget.outlet.isFavourite =
                                           !widget.outlet.isFavourite;
                                     });
                                   },
-                                  icon: const Icon(Icons.favorite_outline,color: Colors.red,)),
+                                  icon: Icon(
+                                    Icons.favorite_outline,
+                                    color: Theme.of(context).primaryColor,
+                                  )),
                         ),
                       )
                     ],
                   ),
                   Container(
-                    color: Colors.white60,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -112,7 +114,6 @@ class _ResturentCardState extends State<ResturentCard> {
                                             widget.outlet.name.toString(),
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(
-                                                color: Colors.black,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -123,7 +124,8 @@ class _ResturentCardState extends State<ResturentCard> {
                                           children: [
                                             Icon(
                                               Icons.star,
-                                              color: HexColor("F26F31"),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -132,7 +134,6 @@ class _ResturentCardState extends State<ResturentCard> {
                                                   widget.outlet.rating
                                                       .toString(),
                                                   style: const TextStyle(
-                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                   textAlign: TextAlign.start),
@@ -143,24 +144,40 @@ class _ResturentCardState extends State<ResturentCard> {
                                     ),
                                   ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width - 100,
+                                    width:
+                                        MediaQuery.of(context).size.width - 100,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                       Row(
-                                         children: [
-                                           const Icon(Icons.access_time,color: Colors.red,),
-                                           const SizedBox(width: 10,),
-                                           Text("${widget.outlet.averageFoodPreparationTime}min")
-                                         ],
-                                       ),
-                                       Row(
-                                         children: [
-                                           const Icon(Icons.directions_bike_outlined,color: Colors.red,),
-                                           const SizedBox(width: 10,),
-                                           Text("${widget.outlet.deliveryFee}Tk")
-                                         ],
-                                       ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.access_time,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                                "${widget.outlet.averageFoodPreparationTime}min")
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.directions_bike_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                                "${widget.outlet.deliveryFee}Tk")
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   )
@@ -183,20 +200,19 @@ class _ResturentCardState extends State<ResturentCard> {
               padding: const EdgeInsets.only(left: 6.0),
               child: Container(
                 constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height/2,
+                    maxHeight: MediaQuery.of(context).size.height / 2,
                     maxWidth: MediaQuery.of(context).size.width / 2),
-                decoration:const BoxDecoration(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8)),
-                    color: Colors.deepOrangeAccent),
+                    color: Theme.of(context).primaryColor),
                 child: Padding(
-                  padding:  const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Expanded(
                     child: Text(
-                      widget.outlet.listOfCusins.toString(),style: const TextStyle(
-                      color: Colors.white
-                    ),
+                      widget.outlet.listOfCusins.toString(),
+                      style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.start,
                     ),
                   ),
