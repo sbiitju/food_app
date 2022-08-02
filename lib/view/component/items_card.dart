@@ -88,9 +88,9 @@ class _ItemsCardState extends State<ItemsCard> {
                   ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 2,
                   child: Container(
-                    color: Colors.white,
+                    color: Theme.of(context).dividerColor,
                   ),
                 )
               ],

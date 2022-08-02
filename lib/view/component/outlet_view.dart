@@ -72,7 +72,9 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                           right: 10,
                           height: 130,
                           child: Container(
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               child: OutletInfoCard(outlet!)))
@@ -83,10 +85,11 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Container(
                         height: 30,
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            shape: BoxShape.circle),
                         width: 45,
                         child: IconButton(
-                            color: Theme.of(context).scaffoldBackgroundColor,
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -99,7 +102,9 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                     alignment: Alignment.topRight,
                     child: Container(
                         height: 40,
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            shape: BoxShape.circle),
                         width: 48,
                         child: IconButton(
                             color: Theme.of(context).scaffoldBackgroundColor,
@@ -108,7 +113,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                             },
                             icon: Icon(
                               Icons.search_sharp,
-                              color: Colors.red,
+                              color: Theme.of(context).primaryColor,
                             ))),
                   ),
                 ),

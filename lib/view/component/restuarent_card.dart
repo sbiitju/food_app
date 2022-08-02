@@ -22,7 +22,7 @@ class _ResturentCardState extends State<ResturentCard> {
           child: Card(
             elevation: 1,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 shape: BoxShape.rectangle,
               ),
@@ -33,7 +33,7 @@ class _ResturentCardState extends State<ResturentCard> {
                     children: [
                       Placeholder(
                         strokeWidth: 1,
-                        fallbackHeight: 250,
+                        fallbackHeight: 200,
                         child: CachedNetworkImage(
                           alignment: Alignment.center,
                           imageUrl: widget.outlet.coverImages.toString(),
@@ -45,7 +45,9 @@ class _ResturentCardState extends State<ResturentCard> {
                         left: MediaQuery.of(context).size.width - 70,
                         height: 40,
                         child: Container(
-                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              shape: BoxShape.circle),
                           width: double.infinity,
                           child: widget.outlet.isFavourite
                               ? IconButton(
@@ -203,7 +205,7 @@ class _ResturentCardState extends State<ResturentCard> {
                     maxHeight: MediaQuery.of(context).size.height / 2,
                     maxWidth: MediaQuery.of(context).size.width / 2),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(8),
                         bottomRight: Radius.circular(8)),
                     color: Theme.of(context).primaryColor),
@@ -212,7 +214,7 @@ class _ResturentCardState extends State<ResturentCard> {
                   child: Expanded(
                     child: Text(
                       widget.outlet.listOfCusins.toString(),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       textAlign: TextAlign.start,
                     ),
                   ),

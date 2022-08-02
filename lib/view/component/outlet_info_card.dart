@@ -100,8 +100,7 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     child: isOpen
                         ? Text(
                             "Open",
-                            style: TextStyle(
-                                color: Theme.of(context).backgroundColor),
+                            style: TextStyle(color: Colors.white),
                           )
                         : Text("Close"),
                   ),
@@ -110,7 +109,8 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                   width: 30,
                 ),
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: isFavorite
                       ? Icon(
