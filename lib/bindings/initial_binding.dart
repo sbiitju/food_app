@@ -3,6 +3,7 @@ import 'package:food_app/bindings/auth_repo_bindings.dart';
 import 'package:food_app/bindings/main_controller_bindings.dart';
 import 'package:food_app/bindings/remote_source_bindigs.dart';
 import 'package:food_app/view/auth/auth_bindings.dart';
+import 'package:food_app/view/cart/cart_bindings.dart';
 import 'package:get/get.dart';
 
 import 'repository_bindings.dart';
@@ -16,5 +17,6 @@ class InitialBinding implements Bindings {
     AuthRepositoryBindings().dependencies();
     AuthBindings().dependencies();
     MainController().dependencies();
+    CartBindings().dependencies();
   }
 }
