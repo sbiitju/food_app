@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/Splash.dart';
 import 'package:food_app/view/auth/auth_view.dart';
+import 'package:food_app/view/cart/model/invoice_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:phone_number/phone_number.dart';
@@ -171,5 +172,13 @@ List<ItemListModel> getDemoItemList() {
   list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
   list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
   list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  return list;
+}
+
+List<InvoiceModel> getDemoInvoiceList() {
+  var list = <InvoiceModel>[];
+  list.add(InvoiceModel(costName: "Shahin Bashar", costAmount: "200"));
+  list.add(InvoiceModel(costName: "Shahin Bashar", costAmount: "200"));
+  list.add(InvoiceModel(costName: "Shahin Bashar", costAmount: "200"));
   return list;
 }

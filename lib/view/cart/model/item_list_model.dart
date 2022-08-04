@@ -1,6 +1,6 @@
 class ItemListModel {
-  final itemName;
-  final itemPrice;
+  final String itemName;
+  final String itemPrice;
   int? itemCount;
 
   ItemListModel(

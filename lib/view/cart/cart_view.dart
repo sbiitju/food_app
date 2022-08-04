@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
+import 'package:food_app/view/cart/cart_component/invoice_list.dart';
 import 'package:food_app/view/cart/cart_component/item_list.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
@@ -41,13 +42,13 @@ class MyCartView extends GetView<CartController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CustomizedContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+              child: CustomizedContainer(
                 maxHeight: getScreenHeight(context) / 7,
                 maxWidth: MediaQuery.of(context).size.width,
                 child: Card(
@@ -83,12 +84,22 @@ class MyCartView extends GetView<CartController> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              CartItemList(itemListModelList: getDemoItemList()),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                child: CartItemList(itemListModelList: getDemoItemList())),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                child: CartInvoiceList(invoiceModelList: getDemoInvoiceList())),
+          ],
         ),
       ),
     );
