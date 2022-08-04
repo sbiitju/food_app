@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomizedContainer extends StatelessWidget {
-  double? height;
-  double? width;
-  double? radius;
-  Color? color;
-  Widget child;
+  final double? height;
+  final double maxHeight;
+  final double? minHeight;
+  final double? width;
+  final double maxWidth;
+  final double? minWidth;
+  final double? radius;
+  final Color? color;
+  final Widget child;
 
-  CustomizedContainer(
+  const CustomizedContainer(
       {Key? key,
+      required this.maxHeight,
+      required this.maxWidth,
+      this.minWidth,
+      this.minHeight,
       this.width,
       this.height,
       this.radius,
@@ -18,14 +26,18 @@ class CustomizedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 48,
-      width: width ?? 48,
-      decoration: BoxDecoration(
-          color: color ?? Theme.of(context).scaffoldBackgroundColor,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.all(Radius.circular(radius ?? 10))),
-      child: child ?? const SizedBox(),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth: maxWidth,
+          maxHeight: maxHeight,
+          minHeight: minHeight ?? 30,
+          minWidth: minWidth ?? 30),
+      child: Container(
+          decoration: BoxDecoration(
+              color: color ?? Theme.of(context).scaffoldBackgroundColor,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(Radius.circular(radius ?? 10))),
+          child: child),
     );
   }
 }

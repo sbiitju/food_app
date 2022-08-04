@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:phone_number/phone_number.dart';
 
 import '../view/Home.dart';
+import '../view/cart/model/item_list_model.dart';
 
 var LOGIN_STATUS = "login_status";
 var TOKEN = "token";
@@ -161,4 +162,14 @@ double getScreenHeight(BuildContext context) {
 
 double getScreenWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
+}
+
+List<ItemListModel> getDemoItemList() {
+  var list = <ItemListModel>[];
+  list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  list.add(ItemListModel(itemName: "Shahin Bashar", itemPrice: "200"));
+  return list;
 }
