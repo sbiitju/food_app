@@ -99,6 +99,20 @@ class MyCartView extends GetView<CartController> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                 child: CartInvoiceList(invoiceModelList: getDemoInvoiceList())),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: getScreenWidth(context),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.rectangle,
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: BigTextView(text: "Review Payment and Address"),
+                ),
+              ),
+            )
           ],
         ),
       ),
