@@ -20,8 +20,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    initialSetUp();
-    final textTheme = Theme.of(context).textTheme;
     return GetMaterialApp(
       initialBinding: InitialBinding(),
       onGenerateRoute: onGenerateRoute,

@@ -1,7 +1,6 @@
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/repo/base_repo.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../remote/data_source.dart';
 

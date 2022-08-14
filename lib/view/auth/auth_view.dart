@@ -265,7 +265,6 @@ class AuthPage extends StatelessWidget {
                                     otpControllerET.text)
                                 .then((value) {
                               saveToken(value.token);
-                              changeLoginStatus();
                               controller.isSubmitBtnActive.value = false;
                               controller.showLoginImage.value = true;
                               controller.showVerifyPage.value = false;

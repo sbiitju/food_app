@@ -9,7 +9,6 @@ import 'package:phone_number/phone_number.dart';
 import '../view/Home.dart';
 import '../view/cart/model/item_list_model.dart';
 
-var LOGIN_STATUS = "login_status";
 var TOKEN = "token";
 var getStorage = GetStorage();
 
@@ -51,10 +50,6 @@ bool checkLoginStatus() {
   return !(status == null || status.isEmpty);
 }
 
-void initialSetUp() {
-  getStorage.write(LOGIN_STATUS, "LogIn");
-}
-
 Future<bool> isValidateNumber(String number) async {
   PhoneNumberUtil plugin = PhoneNumberUtil();
 
@@ -64,10 +59,6 @@ Future<bool> isValidateNumber(String number) async {
 
 Future<void> saveToken(String token) async {
   getStorage.write(TOKEN, token);
-}
-
-void changeLoginStatus() {
-  getStorage.write(LOGIN_STATUS, "LogIn");
 }
 
 Future<String> getToken() async {
