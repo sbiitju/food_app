@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="food_app"
+        android:label="Food App"
         android:name="${applicationName}"
         android:icon="@drawable/logo_name">
         <activity
