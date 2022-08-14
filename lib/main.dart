@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/settings/app_theme.dart';
 import 'package:food_app/util/function.dart';
-import 'package:food_app/view/cart/cart_view.dart';
+import 'package:food_app/view/Splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: AppThemes.lightTheme,
       home: GraphQLProvider(
         client: BaseDataSource.client,
-        child: const MyCartView(),
+        child: const SplashScreen(),
       ),
     );
   }
