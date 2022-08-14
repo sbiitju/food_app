@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/util/function.dart';
 
 import '../../data/model/outlet_model.dart';
 
@@ -200,18 +201,19 @@ class _ResturentCardState extends State<ResturentCard> {
             top: 20,
             child: Padding(
               padding: const EdgeInsets.only(left: 6.0),
-              child: Container(
+              child: ConstrainedBox(
                 constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height / 2,
-                    maxWidth: MediaQuery.of(context).size.width / 2),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8)),
-                    color: Theme.of(context).primaryColor),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
+                    minHeight: 0,
+                    minWidth: 0,
+                    maxWidth: getScreenWidth(context) / 2),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       widget.outlet.listOfCusins.toString(),
                       style: const TextStyle(color: Colors.white),
