@@ -4,7 +4,7 @@
 Food App is a simple food delivery app developed by using Flutter SDK for browsing food catalogs and placing orders to restaurants. This app was designed by following MVVM architecture. For communicating with the backend using GraphQL here we use GraphQL flutter library.
 
 
-[Try Sample APK]()
+[Try Sample APK](https://drive.google.com/file/d/1B9FAuS-0nNCnJUYlx8CKZCnNCYF1tNKB/view?usp=sharing)
 
 
 ### Sample
