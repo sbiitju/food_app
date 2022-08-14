@@ -196,31 +196,6 @@ class _ResturentCardState extends State<ResturentCard> {
             ),
           ),
         ),
-        Positioned(
-            top: 20,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 6.0),
-              child: Container(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height / 2,
-                    maxWidth: MediaQuery.of(context).size.width / 2),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8)),
-                    color: Theme.of(context).primaryColor),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
-                    child: Text(
-                      widget.outlet.listOfCusins.toString(),
-                      style: const TextStyle(color: Colors.white),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ),
-              ),
-            ))
       ],
     );
   }
