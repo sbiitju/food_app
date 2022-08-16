@@ -2,7 +2,6 @@ import 'package:food_app/data/remote/auth/auth_data_source.dart';
 import 'package:food_app/data/remote/auth/auth_model.dart';
 import 'package:food_app/data/remote/auth/auth_repo.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class AuthRepoImp implements AuthRepo {
   final AuthDataSource _authDataSource =

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static final darkTheme = ThemeData(
       scaffoldBackgroundColor: Colors.grey.shade900,
+      cardColor: Colors.grey.shade900,
       backgroundColor: Colors.grey.shade900,
       primaryColor: const Color(0xFFFC8019),
       iconTheme: const IconThemeData(color: Colors.white),
@@ -11,6 +12,7 @@ class AppThemes {
 
   static final lightTheme = ThemeData(
       primaryColor: const Color(0xFFFC8019),
+      cardColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       backgroundColor: Colors.white,
       iconTheme: const IconThemeData(color: Colors.black),
