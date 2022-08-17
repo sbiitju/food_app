@@ -111,21 +111,24 @@ class AuthPage extends StatelessWidget {
                                 )
                               ],
                             ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                    value: controller.isAgreeBtnChecked.value,
-                                    onChanged: (value) {
-                                      controller.isAgreeBtnChecked.value =
-                                          value!;
-                                    }),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Text(
-                                    "I agree with terms & Conditions of Hungrynaki")
-                              ],
-                            ),
+                            !controller.showLoginImage.value
+                                ? Row(
+                                    children: [
+                                      Checkbox(
+                                          value: controller
+                                              .isAgreeBtnChecked.value,
+                                          onChanged: (value) {
+                                            controller.isAgreeBtnChecked.value =
+                                                value!;
+                                          }),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Text(
+                                          "I agree with terms & Conditions of Hungrynaki")
+                                    ],
+                                  )
+                                : SizedBox(),
                             !controller.showLoginImage.value
                                 ? Column(
                                     children: [

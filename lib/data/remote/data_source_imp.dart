@@ -14,11 +14,9 @@ import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
 
 class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
-  BaseDataSource client = BaseDataSource();
-
   @override
   Future<bool> getServiceConfiguration(String versionNumber) async {
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
+    QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(GraphQlQuery().getServiceConfiguration),
         variables: {'versionNumber': "4.1"}));
     debugPrint("ServiceConfig" + result.toString());
@@ -35,7 +33,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
   Future<bool> getItems(String id) async {
     Controller controller = Controller();
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
+    QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(GraphQlQuery().getItems), variables: {'outletId': id}));
     debugPrint("ServiceConfig$result");
     String responsibleDetails = getPrettyJsonString(result.data);
@@ -79,14 +77,13 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<bool> getZone(double lat, double lon) async {
-    QueryResult result = await client
-        .clientToQuery()
+    QueryResult result = await clientToQuery()
         .query(QueryOptions(document: gql(GraphQlQuery().getZone), variables: {
-          'coordinate': {
-            "type": "Point",
-            "coordinates": [lon, lat]
-          }
-        }));
+      'coordinate': {
+        "type": "Point",
+        "coordinates": [lon, lat]
+      }
+    }));
     var x = ParseHpOutletListResponse(result);
     return x.parseGetZone();
   }
@@ -94,18 +91,17 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
   Future<List<Outlet>> getHPOutletList(
       double lat, double lon, int index) async {
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
-            document: gql(GraphQlQuery().getHPOutletList),
-            variables: {
-              "params": {
-                "queryName": "getNearestOutlets",
-                "coordinate": {
-                  "type": "Point",
-                  "coordinates": [lon, lat]
-                },
-                "pagination": {"limit": 18, "skip": index}
-              }
-            }));
+    QueryResult result = await clientToQuery().query(
+        QueryOptions(document: gql(GraphQlQuery().getHPOutletList), variables: {
+      "params": {
+        "queryName": "getNearestOutlets",
+        "coordinate": {
+          "type": "Point",
+          "coordinates": [lon, lat]
+        },
+        "pagination": {"limit": 18, "skip": index}
+      }
+    }));
     debugPrint("HpOutletList $index" + result.toString());
     var x = ParseHpOutletListResponse(result);
     var y = x.parse();
@@ -116,7 +112,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   Future<OutletInfoModel> getOutlet(String outletID) async {
     Controller controller = Controller();
     debugPrint("OutletInfo" + "Got it");
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
+    QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(OutletQuery().getOutlet),
         variables: {'outletId': outletID}));
 
@@ -127,7 +123,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<List<CategoryItems>> getCategoryItems(String outletId) async {
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
+    QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(GetCategorizedItems().getCategorizedItems),
         variables: {'outletId': outletId}));
     debugPrint(result.data.toString());
@@ -139,18 +135,18 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future addToCart() async {
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
-            document: gql(AddItemQuery().addItemQuery),
-            variables: const {
-              "coordinate": {
-                "type": "Point",
-                "coordinates": [90.4078, 23.7925]
-              },
-              "item": {
-                "fingerprint": "ngdhds",
-                "item": {"id": "5ca4ad2db19d90e0ad9a6eac"}
-              }
-            }));
+    QueryResult result = await clientToQuery().query(QueryOptions(
+        document: gql(AddItemQuery().addItemQuery),
+        variables: const {
+          "coordinate": {
+            "type": "Point",
+            "coordinates": [90.4078, 23.7925]
+          },
+          "item": {
+            "fingerprint": "ngdhds",
+            "item": {"id": "5ca4ad2db19d90e0ad9a6eac"}
+          }
+        }));
     debugPrint("AddToCart" + result.data.toString());
   }
 }

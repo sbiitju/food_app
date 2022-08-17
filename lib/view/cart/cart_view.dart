@@ -6,9 +6,12 @@ import 'package:food_app/view/cart/cart_component/item_list.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
+import 'package:food_app/view/checkout/checkout_view.dart';
+import 'package:food_app/view/checkout/model/delivery_address_model.dart';
 import 'package:food_app/view/component/customized_container.dart';
 import 'package:food_app/view/outlet_info.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyCartView extends GetView<CartController> {
   const MyCartView({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class MyCartView extends GetView<CartController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: IconButton(
           icon:
@@ -101,15 +105,27 @@ class MyCartView extends GetView<CartController> {
                 child: CartInvoiceList(invoiceModelList: getDemoInvoiceList())),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                width: getScreenWidth(context),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    shape: BoxShape.rectangle,
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: MaterialButton(
-                  onPressed: () {},
-                  child: BigTextView(text: "Review Payment and Address"),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Container(
+                  width: getScreenWidth(context),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: MaterialButton(
+                    onPressed: () {
+                      Get.to(CheckOutView(
+                        deliveryAddress: DeliveryAddress(
+                            "Md. Shahin Bashar",
+                            "+8801613162522",
+                            const LatLng(23.7925, 90.4078),
+                            "Jahangirnagar University, Bangobondhu Hall, Room  Number 213"),
+                      ));
+                    },
+                    child: BigTextView(text: "Review Payment and Address"),
+                  ),
                 ),
               ),
             )

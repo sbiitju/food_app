@@ -88,6 +88,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assest/splash.json
+    - assest/ic_mobile_banking.png
     - assest/logo_name.webp
     - assest/a.webp
     - assest/img_login.png
