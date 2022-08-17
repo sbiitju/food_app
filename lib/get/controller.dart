@@ -12,7 +12,7 @@ class Controller extends GetxController {
   var isServiceAvailable = false.obs;
   var listOfItem = <Item>[].obs;
   var listOutletId = <Outlet>[].obs;
-  var isCartPopUpShowing = false.obs;
+  var isCartPopUpShowing = true.obs;
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
 
