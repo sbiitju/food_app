@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/get/controller.dart';
+import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'cart/model/cart_popup_model.dart';
 import 'component/outlet_view.dart';
 
 class Home extends StatefulWidget {
@@ -47,33 +49,43 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: SafeArea(
           child: controller.checking.value
-              ? Container(
-                  child: Obx(() {
-                    return RefreshIndicator(
-                      onRefresh: refresh,
-                      child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: controller.listOutletId.length + 1,
-                          itemBuilder: (context, index) {
-                            return index < controller.listOutletId.length
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Get.to(SliverListWidget(
-                                          controller.listOutletId[index].id));
-                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
-                                      //   return OutletInfo(controller.listOutletId[index].id);
-                                      // } ));
-                                    },
-                                    child: ResturentCard(
-                                        controller.listOutletId[index]))
-                                : const Center(
-                                    child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: CircularProgressIndicator(),
-                                  ));
-                          }),
-                    );
-                  }),
+              ? Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      child: Obx(() {
+                        return RefreshIndicator(
+                          onRefresh: refresh,
+                          child: ListView.builder(
+                              controller: scrollController,
+                              itemCount: controller.listOutletId.length + 1,
+                              itemBuilder: (context, index) {
+                                return index < controller.listOutletId.length
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          Get.to(SliverListWidget(controller
+                                              .listOutletId[index].id));
+                                          // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
+                                          //   return OutletInfo(controller.listOutletId[index].id);
+                                          // } ));
+                                        },
+                                        child: ResturentCard(
+                                            controller.listOutletId[index]))
+                                    : const Center(
+                                        child: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        child: CircularProgressIndicator(),
+                                      ));
+                              }),
+                        );
+                      }),
+                    ),
+                    Positioned(
+                        child: CartNavigationCard(
+                      cartPopUpModel: CartPopUpModel("", "10", "1000"),
+                    )),
+                  ],
                 )
               : Container(
                   child: Center(
