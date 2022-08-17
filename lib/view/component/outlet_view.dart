@@ -6,6 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../data/model/outlet_model.dart';
 import '../../get/controller.dart';
+import '../cart/cart_component/cart_navigation.dart';
+import '../cart/model/cart_popup_model.dart';
 import 'items_card.dart';
 import 'outelt_info_appbar_card.dart';
 
@@ -46,142 +48,146 @@ class _SliverListWidgetState extends State<SliverListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: (listOutItemsCheck && outletCheck)
-          ? CustomScrollView(
-              slivers: <Widget>[
-                ///First sliver is the App Bar
-                SliverAppBar(
-                  ///Properties of app bar
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  floating: false,
-                  pinned: true,
-                  expandedHeight: 200,
+          ? Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                CustomScrollView(
+                  slivers: <Widget>[
+                    ///First sliver is the App Bar
+                    SliverAppBar(
+                      ///Properties of app bar
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      floating: false,
+                      pinned: true,
+                      expandedHeight: 200,
 
-                  ///Properties of the App Bar when it is expanded
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: false,
-                    titlePadding: EdgeInsets.zero,
-                    collapseMode: CollapseMode.pin,
-                    background: Stack(clipBehavior: Clip.hardEdge, children: [
-                      Positioned(
-                          height: 190,
-                          width: MediaQuery.of(context).size.width,
-                          child: OutletInfoAppBar(outlet!)),
-                      Positioned(
-                          top: 110,
-                          left: 10,
-                          right: 10,
-                          height: 130,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: OutletInfoCard(outlet!)))
-                    ]),
-                  ),
-                  leadingWidth: 50,
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            shape: BoxShape.circle),
-                        width: 45,
-                        child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: Theme.of(context).primaryColor,
-                            ))),
-                  ),
-                  title: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            shape: BoxShape.circle),
-                        width: 48,
-                        child: IconButton(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            onPressed: () {
-                              Get.to(AuthPage());
-                            },
-                            icon: Icon(
-                              Icons.search_sharp,
-                              color: Theme.of(context).primaryColor,
-                            ))),
-                  ),
-                ),
-                SliverList(
-                  ///Use SliverChildListDelegate and provide a list
-                  ///of widgets if the count is limited
-                  ///
-                  ///Lazy building of list
-                  delegate: SliverChildBuilderDelegate(
-                    childCount: 1,
-                    (BuildContext context, int index) {
-                      /// To convert this infinite list to a list with "n" no of items,
-                      /// uncomment the following line:
-                      /// if (index > n) return null;
-                      return Container(
-                        height: getLengtOfList(listOfItems!) * 200,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                child: Column(
+                      ///Properties of the App Bar when it is expanded
+                      flexibleSpace: FlexibleSpaceBar(
+                        centerTitle: false,
+                        titlePadding: EdgeInsets.zero,
+                        collapseMode: CollapseMode.pin,
+                        background:
+                            Stack(clipBehavior: Clip.hardEdge, children: [
+                          Positioned(
+                              height: 190,
+                              width: MediaQuery.of(context).size.width,
+                              child: OutletInfoAppBar(outlet!)),
+                          Positioned(
+                              top: 110,
+                              left: 10,
+                              right: 10,
+                              height: 130,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: OutletInfoCard(outlet!)))
+                        ]),
+                      ),
+                      leadingWidth: 50,
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                shape: BoxShape.circle),
+                            width: 45,
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Theme.of(context).primaryColor,
+                                ))),
+                      ),
+                      title: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                shape: BoxShape.circle),
+                            width: 48,
+                            child: IconButton(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                onPressed: () {
+                                  Get.to(AuthPage());
+                                },
+                                icon: Icon(
+                                  Icons.search_sharp,
+                                  color: Theme.of(context).primaryColor,
+                                ))),
+                      ),
+                    ),
+                    SliverList(
+                      ///Use SliverChildListDelegate and provide a list
+                      ///of widgets if the count is limited
+                      ///
+                      ///Lazy building of list
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: 1,
+                        (BuildContext context, int index) {
+                          /// To convert this infinite list to a list with "n" no of items,
+                          /// uncomment the following line:
+                          /// if (index > n) return null;
+                          return Container(
+                            height: getLengtOfList(listOfItems!) * 200,
+                            child: Stack(
                               children: [
-                                Flexible(
-                                  child: ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: listOfItems?.length,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            title: Text(
-                                              listOfItems![index]
-                                                  .name
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            subtitle: ItemsCard(
-                                                listOfItems![index].items),
-                                          ),
-                                        );
-                                      }),
-                                ),
+                                Positioned(
+                                    child: Column(
+                                  children: [
+                                    Flexible(
+                                      child: ListView.builder(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: listOfItems?.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ListTile(
+                                                title: Text(
+                                                  listOfItems![index]
+                                                      .name
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                subtitle: ItemsCard(
+                                                    listOfItems![index].items),
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ],
+                                )),
                               ],
-                            )),
-// Positioned(
-//     left: 10,
-//     right: 10,
-//     top: 120,
-//     child: Container(
-//       width: MediaQuery.of(context).size.width,
-//       height: 140,
-//       decoration: const BoxDecoration(
-//           borderRadius: BorderRadius.all(
-//               Radius.circular(20))),
-//       child: Card(
-//           elevation: 2,
-//           child: OutletInfoCard(outlet!)),
-//     )),
-                          ],
-                        ),
-                      );
-                    },
+                            ),
+                          );
+                        },
 
-                    /// Set childCount to limit no.of items
-                    /// childCount: 100,
-                  ),
-                )
+                        /// Set childCount to limit no.of items
+                        /// childCount: 100,
+                      ),
+                    )
+                  ],
+                ),
+                controller.isCartPopUpShowing.value
+                    ? Positioned(
+                        child: CartNavigationCard(
+                        cartPopUpModel: CartPopUpModel("", "10", "1000"),
+                      ))
+                    : SizedBox(),
               ],
             )
           : const Center(

@@ -81,10 +81,12 @@ class _HomeState extends State<Home> {
                         );
                       }),
                     ),
-                    Positioned(
-                        child: CartNavigationCard(
-                      cartPopUpModel: CartPopUpModel("", "10", "1000"),
-                    )),
+                    controller.isCartPopUpShowing.value
+                        ? Positioned(
+                            child: CartNavigationCard(
+                            cartPopUpModel: CartPopUpModel("", "10", "1000"),
+                          ))
+                        : SizedBox(),
                   ],
                 )
               : Container(
