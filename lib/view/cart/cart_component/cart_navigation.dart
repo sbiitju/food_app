@@ -29,8 +29,10 @@ class CartNavigationCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      "${cartPopUpModel.numberOfItems} $item | Tk. ${cartPopUpModel.totalAmount}"),
-                  Text("View Cart")
+                    "${cartPopUpModel.numberOfItems} $item | Tk. ${cartPopUpModel.totalAmount}",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text("View Cart", style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
