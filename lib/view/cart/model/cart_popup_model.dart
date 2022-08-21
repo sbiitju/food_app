@@ -1,7 +1,6 @@
 class CartPopUpModel {
-  final String id;
-  final String numberOfItems;
-  final String totalAmount;
+  final int numberOfItems;
+  final double totalAmount;
 
-  CartPopUpModel(this.id, this.numberOfItems, this.totalAmount);
+  CartPopUpModel(this.numberOfItems, this.totalAmount);
 }

@@ -82,10 +82,9 @@ class _HomeState extends State<Home> {
                       }),
                     ),
                     controller.isCartPopUpShowing.value
-                        ? Positioned(
-                            child: CartNavigationCard(
-                            cartPopUpModel: CartPopUpModel("", "10", "1000"),
-                          ))
+                        ? CartNavigationCard(
+                            cartPopUpModel: CartPopUpModel(10, 1000),
+                          )
                         : SizedBox(),
                   ],
                 )

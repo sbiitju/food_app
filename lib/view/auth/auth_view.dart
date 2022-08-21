@@ -180,105 +180,102 @@ class AuthPage extends StatelessWidget {
                   ],
                 ),
               )
-            : Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Wrap(
-                      alignment: WrapAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            onPressed: goToLoginPage,
-                            icon: const Icon(Icons.arrow_back),
-                          ),
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: IconButton(
+                          onPressed: goToLoginPage,
+                          icon: const Icon(Icons.arrow_back),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "We have sent SMS to :",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              ),
-                              Text(
-                                "+88${phoneControllerET.text.length == 11 ? phoneControllerET.text.substring(1, 11) : "0${phoneControllerET.text}"}",
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.redAccent),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 100, top: 8, bottom: 8),
-                          child: PinFieldAutoFill(
-                            controller: otpControllerET,
-                            codeLength: 4,
-                            autoFocus: true,
-                            cursor: Cursor(
-                                color: Colors.black,
-                                width: 2,
-                                height: 22,
-                                enabled: true,
-                                fadeDuration:
-                                    const Duration(microseconds: 2000),
-                                radius: const Radius.circular(20)),
-                            enableInteractiveSelection: false,
-                            decoration: UnderlineDecoration(
-                              obscureStyle: ObscureStyle(isTextObscure: false),
-                              textStyle: const TextStyle(
-                                  fontSize: 20, color: Colors.black),
-                              colorBuilder:
-                                  const FixedColorBuilder(Colors.deepOrange),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "We have sent SMS to :",
+                              textAlign: TextAlign.left,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
                             ),
-                            onCodeChanged: (code) {
-                              if (code!.length == 4) {
-                                controller.isSubmitBtnActive.value = true;
-                              } else {
-                                controller.isSubmitBtnActive.value = false;
-                              }
-                            },
-                          ),
+                            Text(
+                              "+88${phoneControllerET.text.length == 11 ? phoneControllerET.text.substring(1, 11) : "0${phoneControllerET.text}"}",
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.redAccent),
+                            )
+                          ],
                         ),
-                        resendOTPandEditMobileNumber()
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        child: LoginOtpButton(
-                          text: "Submit",
-                          color: controller.isSubmitBtnActive.value
-                              ? Colors.redAccent
-                              : Colors.black26,
-                          clickEvenListener: () {
-                            debugPrint(otpControllerET.text);
-                            controller
-                                .verifyOTP(
-                                    phoneControllerET.text.substring(1, 11),
-                                    otpControllerET.text)
-                                .then((value) {
-                              saveToken(value.token);
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8, right: 100, top: 8, bottom: 8),
+                        child: PinFieldAutoFill(
+                          controller: otpControllerET,
+                          codeLength: 4,
+                          autoFocus: true,
+                          cursor: Cursor(
+                              color: Colors.black,
+                              width: 2,
+                              height: 22,
+                              enabled: true,
+                              fadeDuration: const Duration(microseconds: 2000),
+                              radius: const Radius.circular(20)),
+                          enableInteractiveSelection: false,
+                          decoration: UnderlineDecoration(
+                            obscureStyle: ObscureStyle(isTextObscure: false),
+                            textStyle: const TextStyle(
+                                fontSize: 20, color: Colors.black),
+                            colorBuilder:
+                                const FixedColorBuilder(Colors.deepOrange),
+                          ),
+                          onCodeChanged: (code) {
+                            if (code!.length == 4) {
+                              controller.isSubmitBtnActive.value = true;
+                            } else {
                               controller.isSubmitBtnActive.value = false;
-                              controller.showLoginImage.value = true;
-                              controller.showVerifyPage.value = false;
-                              Navigator.of(context).pop();
-                            });
+                            }
                           },
                         ),
                       ),
-                    )
-                  ],
-                ),
+                      resendOTPandEditMobileNumber()
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      child: LoginOtpButton(
+                        text: "Submit",
+                        color: controller.isSubmitBtnActive.value
+                            ? Colors.redAccent
+                            : Colors.black26,
+                        clickEvenListener: () {
+                          debugPrint(otpControllerET.text);
+                          controller
+                              .verifyOTP(
+                                  phoneControllerET.text.substring(1, 11),
+                                  otpControllerET.text)
+                              .then((value) {
+                            saveToken(value.token);
+                            controller.isSubmitBtnActive.value = false;
+                            controller.showLoginImage.value = true;
+                            controller.showVerifyPage.value = false;
+                            Navigator.of(context).pop();
+                          });
+                        },
+                      ),
+                    ),
+                  )
+                ],
               )),
       ),
     );

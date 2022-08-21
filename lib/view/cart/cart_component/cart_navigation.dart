@@ -11,7 +11,7 @@ class CartNavigationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final item = int.parse(cartPopUpModel.numberOfItems) > 1 ? "Items" : "Item";
+    final item = cartPopUpModel.numberOfItems > 1 ? "Items" : "Item";
 
     return Container(
       color: Theme.of(context).backgroundColor,

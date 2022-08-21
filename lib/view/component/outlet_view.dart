@@ -185,7 +185,7 @@ class _SliverListWidgetState extends State<SliverListWidget> {
                 controller.isCartPopUpShowing.value
                     ? Positioned(
                         child: CartNavigationCard(
-                        cartPopUpModel: CartPopUpModel("", "10", "1000"),
+                        cartPopUpModel: CartPopUpModel(10, 1000),
                       ))
                     : SizedBox(),
               ],

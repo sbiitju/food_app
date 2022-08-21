@@ -37,6 +37,7 @@ class _ResturentCardState extends State<ResturentCard> {
                         fallbackHeight: 200,
                         child: CachedNetworkImage(
                           alignment: Alignment.center,
+                          fit: BoxFit.fill,
                           imageUrl: widget.outlet.coverImages.toString(),
                         ),
                       ),

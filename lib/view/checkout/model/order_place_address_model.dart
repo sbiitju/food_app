@@ -3,7 +3,8 @@ class OrderPlaceAddress {
   final String receiverName;
   final String receiverNumber;
   final String address;
+  var isSelected = false;
 
-  OrderPlaceAddress(
-      this.tagName, this.receiverName, this.receiverNumber, this.address);
+  OrderPlaceAddress(this.tagName, this.receiverName, this.receiverNumber,
+      this.address, this.isSelected);
 }
