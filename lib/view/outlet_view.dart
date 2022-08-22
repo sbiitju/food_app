@@ -4,23 +4,23 @@ import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../data/model/outlet_model.dart';
-import '../../get/controller.dart';
-import '../cart/cart_component/cart_navigation.dart';
-import '../cart/model/cart_popup_model.dart';
-import 'items_card.dart';
-import 'outelt_info_appbar_card.dart';
+import '../data/model/outlet_model.dart';
+import '../get/controller.dart';
+import 'cart/cart_component/cart_navigation.dart';
+import 'cart/model/cart_popup_model.dart';
+import 'component/items_card.dart';
+import 'component/outelt_info_appbar_card.dart';
 
-class SliverListWidget extends StatefulWidget {
+class OutletView extends StatefulWidget {
   String? id;
 
-  SliverListWidget(this.id, {Key? key}) : super(key: key);
+  OutletView(this.id, {Key? key}) : super(key: key);
 
   @override
-  State<SliverListWidget> createState() => _SliverListWidgetState();
+  State<OutletView> createState() => _OutletViewState();
 }
 
-class _SliverListWidgetState extends State<SliverListWidget> {
+class _OutletViewState extends State<OutletView> {
   Controller controller = Get.find<Controller>();
   OutletInfoModel? outlet;
   var outletCheck = false;

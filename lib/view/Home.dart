@@ -9,7 +9,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'cart/model/cart_popup_model.dart';
-import 'component/outlet_view.dart';
+import 'outlet_view.dart';
 
 class Home extends StatefulWidget {
   LatLng latLng;
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
                                 return index < controller.listOutletId.length
                                     ? GestureDetector(
                                         onTap: () {
-                                          Get.to(SliverListWidget(controller
+                                          Get.to(OutletView(controller
                                               .listOutletId[index].id));
                                           // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
                                           //   return OutletInfo(controller.listOutletId[index].id);
