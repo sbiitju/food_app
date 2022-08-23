@@ -3,13 +3,13 @@ import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/get/controller.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
+import 'package:food_app/view/outlet/outlet_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'cart/model/cart_popup_model.dart';
-import 'outlet_view.dart';
 
 class Home extends StatefulWidget {
   LatLng latLng;

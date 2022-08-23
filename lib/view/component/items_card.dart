@@ -18,84 +18,66 @@ class _ItemsCardState extends State<ItemsCard> {
     for (final element in widget.itemInfo) {
       debugPrint("Bashar${element.itemName}");
     }
-    return SizedBox(
-      child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: widget.itemInfo.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                SizedBox(
-                  height: 5,
-                  child: Container(),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
+    return ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        separatorBuilder: (context, index) => Divider(),
+        shrinkWrap: true,
+        itemCount: widget.itemInfo.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.itemInfo[index].itemName.toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    wordSpacing: 2),
-                              ),
-                              Text(
-                                "Tk ${widget.itemInfo[index].basePrice}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    wordSpacing: 2),
-                              ),
-                            ],
-                          ),
+                        Text(
+                          widget.itemInfo[index].itemName.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              textBaseline: TextBaseline.alphabetic,
+                              wordSpacing: 2),
                         ),
-                        Flexible(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 120,
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                    height: 100,
-                                    child: Image.asset("assest/a.webp")),
-                                const Positioned(
-                                  top: 75,
-                                  left: 10,
-                                  right: 10,
-                                  child: CartUpdateButton(),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                        Text(
+                          "Tk ${widget.itemInfo[index].basePrice}",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              textBaseline: TextBaseline.alphabetic,
+                              wordSpacing: 2),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 2,
-                  child: Container(
-                    color: Theme.of(context).dividerColor,
-                  ),
-                )
-              ],
-            );
-          }),
-    );
+                  Flexible(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 120,
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                              height: 100, child: Image.asset("assest/a.webp")),
+                          const Positioned(
+                            top: 75,
+                            left: 10,
+                            right: 10,
+                            child: CartUpdateButton(),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          );
+        });
   }
 }
