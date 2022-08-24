@@ -1,38 +1,37 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:food_app/view/Home.dart';
+import 'package:food_app/view/map/map_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../get/controller.dart';
+import '../home/home_view.dart';
 
-class MapSample extends StatefulWidget {
+class MapView extends StatefulWidget {
   Position position;
 
-  MapSample(this.position, {Key? key}) : super(key: key);
+  MapView(this.position, {Key? key}) : super(key: key);
 
   static const RouteName = "MapSample";
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapView> createState() => MapViewState();
 }
 
-class MapSampleState extends State<MapSample> {
+class MapViewState extends State<MapView> {
   Widget? testWidget;
   Widget? testWidget2;
   final Completer<GoogleMapController> _controller = Completer();
   late CameraPosition _kLake;
   late CameraPosition myPosition;
-  final Controller myController = Get.find<Controller>();
+  final MapController myController = Get.find<MapController>();
 
   @override
   void initState() {
     myController.isServiceAvailable.value = myController.getZone(
         widget.position.latitude, widget.position.longitude);
-    myController.getOutlet("5ca4aefab19d90e0ad9ae3c1");
 
     super.initState();
   }
@@ -152,7 +151,7 @@ class MapSampleState extends State<MapSample> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Home(latlon)),
+                                  builder: (context) => HomeView(latlon)),
                               (Route<dynamic> route) => false,
                             );
                           },

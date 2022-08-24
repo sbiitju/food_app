@@ -1,5 +1,9 @@
 import 'package:food_app/data/model/outlet_model.dart';
 
+import '../model/area_model.dart';
+import '../model/category_items_model.dart';
+import '../model/outlet_info_model.dart';
+
 abstract class GraphQlDataSource {
   Future<bool> getServiceConfiguration(String versionNumber);
 

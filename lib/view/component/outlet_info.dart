@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../data/model/outlet_model.dart';
-import '../../get/controller.dart';
+import '../../data/model/category_items_model.dart';
+import '../../data/model/outlet_info_model.dart';
 
 // ignore: must_be_immutable
 class OutletInfo extends StatefulWidget {
@@ -18,7 +19,7 @@ class OutletInfo extends StatefulWidget {
 }
 
 class _OutletInfoState extends State<OutletInfo> {
-  var controller = Get.find<Controller>();
+  final controller = Get.find<OutletController>();
   OutletInfoModel? outlet;
   var outletCheck = false;
   var listOutItemsCheck = false;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/view/Splash.dart';
 import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/cart/model/invoice_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:phone_number/phone_number.dart';
 
-import '../view/Home.dart';
 import '../view/cart/model/item_list_model.dart';
+import '../view/home/home_view.dart';
+import '../view/splash/splash_view.dart';
 
 var TOKEN = "token";
 var getStorage = GetStorage();
@@ -19,8 +19,8 @@ Route onGenerateRoute(settings) {
     case '/':
       _nextPage = SplashScreen();
       break;
-    case Home.RouteName:
-      _nextPage = Home(LatLng(0, 0));
+    case HomeView.RouteName:
+      _nextPage = HomeView(LatLng(0, 0));
       break;
     default:
       _nextPage = Container();
@@ -31,7 +31,7 @@ Route onGenerateRoute(settings) {
       settings: settings,
       pageBuilder: (_, __, ___) => _nextPage,
       transitionsBuilder: (_, anim1, __, child) {
-        var begin = (settings.name != Home.RouteName)
+        var begin = (settings.name != HomeView.RouteName)
             ? const Offset(1.0, 0.0)
             : const Offset(0.0, 1.0);
         var end = Offset.zero;

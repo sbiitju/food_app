@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../data/model/category_items_model.dart';
 import '../../data/model/outlet_model.dart';
 
 class Categories extends StatefulWidget {

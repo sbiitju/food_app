@@ -7,11 +7,17 @@ import 'package:food_app/graphql/add_item/add_item_query.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
+import 'package:food_app/view/outlet/outlet_controller.dart';
+import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../get/controller.dart';
 import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
+import '../model/area_model.dart';
+import '../model/category_items_model.dart';
+import '../model/outlet_info_model.dart';
+import '../model/parse_response.dart';
 
 class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
@@ -32,7 +38,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<bool> getItems(String id) async {
-    Controller controller = Controller();
+    OutletController controller = Get.find<OutletController>();
     QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(GraphQlQuery().getItems), variables: {'outletId': id}));
     debugPrint("ServiceConfig$result");
@@ -71,7 +77,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
                 "coordinates": [lon, lat]
               }
             }));
-    var x = ParseHpOutletListResponse(result);
+    var x = ParseResponse(result);
     return x.parseReverseGeoCodeResult();
   }
 
@@ -84,7 +90,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         "coordinates": [lon, lat]
       }
     }));
-    var x = ParseHpOutletListResponse(result);
+    var x = ParseResponse(result);
     return x.parseGetZone();
   }
 
@@ -103,7 +109,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
       }
     }));
     debugPrint("HpOutletList $index" + result.toString());
-    var x = ParseHpOutletListResponse(result);
+    var x = ParseResponse(result);
     var y = x.parse();
     return y;
   }
@@ -116,8 +122,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         document: gql(OutletQuery().getOutlet),
         variables: {'outletId': outletID}));
 
-    var modifiedResult =
-        ParseHpOutletListResponse(result).parseOutletInfoResult();
+    var modifiedResult = ParseResponse(result).parseOutletInfoResult();
     return modifiedResult;
   }
 
@@ -128,8 +133,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         variables: {'outletId': outletId}));
     debugPrint(result.data.toString());
 
-    var modifiedResult =
-        ParseHpOutletListResponse(result).parseListOfCategoryItems();
+    var modifiedResult = ParseResponse(result).parseListOfCategoryItems();
     return modifiedResult;
   }
 
