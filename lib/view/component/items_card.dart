@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/component/cart_add_button.dart';
 
+import '../../data/model/item_info_model.dart';
 import '../../data/model/outlet_model.dart';
 
 class ItemsCard extends StatefulWidget {

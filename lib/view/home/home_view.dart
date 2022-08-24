@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/outlet_model.dart';
-import 'package:food_app/get/controller.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
+import 'package:food_app/view/home/home_controller.dart';
 import 'package:food_app/view/outlet/outlet_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'cart/model/cart_popup_model.dart';
+import '../../data/model/category_items_model.dart';
+import '../cart/model/cart_popup_model.dart';
 
-class Home extends StatefulWidget {
+class HomeView extends StatefulWidget {
   LatLng latLng;
 
-  Home(this.latLng, {Key? key}) : super(key: key);
+  HomeView(this.latLng, {Key? key}) : super(key: key);
 
   static const RouteName = "Home";
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeViewState extends State<HomeView> {
   int _index = 1;
-  Controller controller = Get.find<Controller>();
+  final HomeController controller = Get.find<HomeController>();
   var scrollController = ScrollController();
   var listOfItems = <CategoryItems>[];
 
@@ -65,9 +65,6 @@ class _HomeState extends State<Home> {
                                         onTap: () {
                                           Get.to(OutletView(controller
                                               .listOutletId[index].id));
-                                          // Navigator.pushReplacement(context, MaterialPageRoute(builder:(cotext){
-                                          //   return OutletInfo(controller.listOutletId[index].id);
-                                          // } ));
                                         },
                                         child: ResturentCard(
                                             controller.listOutletId[index]))

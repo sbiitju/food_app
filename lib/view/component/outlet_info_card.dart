@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/outlet_model.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../../get/controller.dart';
+import '../../data/model/outlet_info_model.dart';
 
 class OutletInfoCard extends StatefulWidget {
   OutletInfoModel outlet;
@@ -15,7 +12,6 @@ class OutletInfoCard extends StatefulWidget {
 }
 
 class _OutletInfoCardState extends State<OutletInfoCard> {
-  Controller controller = Get.find<Controller>();
   bool isOpen = false;
   String? id;
   String? restaurantName;

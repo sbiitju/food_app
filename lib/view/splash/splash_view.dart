@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/util/function.dart';
+import 'package:food_app/view/map/map_view.dart';
+import 'package:food_app/view/splash/splash_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
-import '../get/controller.dart';
-import '../util/geo_location.dart';
-import 'map.dart';
+import '../../util/geo_location.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Position? position;
   bool isApiCallCompleted = false;
 
-  final Controller controller = Get.put(Controller());
+  final SplashController controller = Get.find<SplashController>();
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (check == true) {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MapSample(position!)),
+        MaterialPageRoute(builder: (context) => MapView(position!)),
         (Route<dynamic> route) => false,
       );
     }

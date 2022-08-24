@@ -2,11 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
+import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../../data/model/outlet_model.dart';
-import '../../../get/controller.dart';
+import '../../data/model/category_items_model.dart';
+import '../../data/model/outlet_info_model.dart';
 import '../cart/cart_component/cart_navigation.dart';
 import '../cart/model/cart_popup_model.dart';
 import 'category_tab_layout.dart';
@@ -22,7 +23,7 @@ class OutletView extends StatefulWidget {
 }
 
 class _OutletViewState extends State<OutletView> {
-  Controller controller = Get.find<Controller>();
+  final OutletController controller = Get.find<OutletController>();
   OutletInfoModel? outlet;
   int selectedCategoryIndex = 0;
   var outletCheck = false;

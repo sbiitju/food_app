@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/get/controller.dart';
 import 'package:food_app/util/function.dart';
+import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
 
 class CartUpdateButton extends StatefulWidget {
@@ -11,7 +11,7 @@ class CartUpdateButton extends StatefulWidget {
 }
 
 class _CartUpdateButtonState extends State<CartUpdateButton> {
-  var controller = Get.find<Controller>();
+  var controller = Get.find<CartController>();
   int counter = 0;
   var isCounterZero = true;
 
