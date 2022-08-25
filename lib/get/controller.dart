@@ -3,6 +3,8 @@ import 'package:food_app/data/repo/base_repo.dart';
 import 'package:food_app/get/base_controller.dart';
 import 'package:get/get.dart';
 
+import '../util/ItemModel.dart';
+
 class Controller extends BaseController {
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
 
@@ -14,7 +16,7 @@ class Controller extends BaseController {
     themeMode.value = isOn ? ThemeMode.dark : ThemeMode.light;
   }
 
-  Future<bool> getItems(id) {
+  Future<List<Item>> getItems(id) {
     return _repository.getItems(id);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:food_app/data/model/outlet_model.dart';
 
+import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
@@ -11,7 +12,7 @@ abstract class GraphQlDataSource {
 
   Future<List<CategoryItems>> getCategoryItems(String outletId);
 
-  Future<bool> getItems(String id);
+  Future<List<Item>> getItems(String id);
 
   String getPrettyJsonString(Map<String, dynamic>? data);
 

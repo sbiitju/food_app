@@ -37,7 +37,8 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   }
 
   @override
-  Future<bool> getItems(String id) async {
+  Future<List<Item>> getItems(String id) async {
+    List<Item> listOfItem = <Item>[];
     OutletController controller = Get.find<OutletController>();
     QueryResult result = await clientToQuery().query(QueryOptions(
         document: gql(GraphQlQuery().getItems), variables: {'outletId': id}));
@@ -49,9 +50,9 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         jsonData["getItems"]["result"]["menuCategories"] as List<dynamic>;
     for (var i = 0; i < list.length; i++) {
       var item = Item(list[i]["id"].toString(), list[i]["name"].toString());
-      controller.listOfItem.add(item);
+      listOfItem.add(item);
     }
-    return list.isNotEmpty;
+    return listOfItem;
   }
 
   @override

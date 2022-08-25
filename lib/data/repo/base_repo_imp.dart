@@ -2,6 +2,7 @@ import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/repo/base_repo.dart';
 import 'package:get/get.dart';
 
+import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
@@ -12,7 +13,7 @@ class BaseRepoImp implements BaseRepo {
       Get.find(tag: (GraphQlDataSource).toString());
 
   @override
-  Future<bool> getItems(String id) {
+  Future<List<Item>> getItems(String id) {
     return _remoteSource.getItems(id);
   }
 

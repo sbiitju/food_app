@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 // ignore: must_be_immutable
 class OutletInfo extends StatefulWidget {
@@ -21,7 +19,7 @@ class _OutletInfoState extends State<OutletInfo> {
   @override
   Widget build(BuildContext context) {
     controller.getOutlet(widget.id);
-    controller.getCategoryItems(widget.id).then((value) => null);
+    controller.getCategoryItems(widget.id);
     return Obx(() {
       return Scaffold(
         body: controller.listOfItems.value.isNotEmpty
@@ -50,7 +48,7 @@ class _OutletInfoState extends State<OutletInfo> {
                             placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator()),
                             imageUrl:
-                                controller.outlet.value.coverUrl.toString(),
+                                controller.outlet.value!.coverUrl.toString(),
                           ),
                         ),
                       ),
