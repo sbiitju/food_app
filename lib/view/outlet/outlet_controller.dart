@@ -7,16 +7,23 @@ import '../../data/repo/base_repo.dart';
 import '../../util/ItemModel.dart';
 
 class OutletController extends BaseController {
-  var listOfItem = <Item>[].obs;
+  List<Item> listOfItem = <Item>[].obs;
+  Rx<OutletInfoModel> outlet = OutletInfoModel(
+          "", "", "", "", "", "", 0, "", "", [], true, true, "", "0", 0)
+      .obs;
+  RxList<CategoryItems> listOfItems = <CategoryItems>[].obs;
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
 
-  Future<OutletInfoModel> getOutlet(outletId) {
-    return _repository.getOutlet(outletId);
+  void getOutlet(outletId) {
+    _repository.getOutlet(outletId).then((value) {
+      outlet.value = value;
+    });
   }
 
-  Future<List<CategoryItems>> getCategoryItems(outletId) async {
-    List<CategoryItems> list = [];
-    return _repository.getCategoryItems(outletId);
+  Future getCategoryItems(outletId) async {
+    _repository.getCategoryItems(outletId).then((value) {
+      listOfItems.value = value;
+    });
   }
 }

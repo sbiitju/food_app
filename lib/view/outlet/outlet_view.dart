@@ -4,10 +4,7 @@ import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../../data/model/category_items_model.dart';
-import '../../data/model/outlet_info_model.dart';
 import '../cart/cart_component/cart_navigation.dart';
 import '../cart/model/cart_popup_model.dart';
 import 'category_tab_layout.dart';
@@ -24,42 +21,18 @@ class OutletView extends StatefulWidget {
 
 class _OutletViewState extends State<OutletView> {
   final OutletController controller = Get.find<OutletController>();
-  OutletInfoModel? outlet;
+
   int selectedCategoryIndex = 0;
-  var outletCheck = false;
-  var listOutItemsCheck = false;
   final scrollController = ScrollController();
-  List<CategoryItems>? listOfItems;
   double outletInfoHeight = 252 - kToolbarHeight;
   List<double> breackPoints = [];
-
-  @override
-  void initState() {
-    super.initState();
-    controller.getOutlet(widget.id).then((value) {
-      outlet = value;
-      setState(() {
-        outletCheck = true;
-      });
-    });
-    controller.getCategoryItems(widget.id).then((value) {
-      listOfItems = value;
-      scrollController.addListener(() {
-        updateBrerackPoint(scrollController.offset);
-      });
-      createBreackPoints();
-      setState(() {
-        listOutItemsCheck = true;
-      });
-    });
-  }
 
   void createBreackPoints() {
     double firstBreackPoint = outletInfoHeight;
     breackPoints.add(firstBreackPoint);
-    for (var i = 0; i < listOfItems!.length; i++) {
-      double breackPoint =
-          breackPoints.last + (190 * listOfItems![i].items.length);
+    for (var i = 0; i < controller.listOfItems.value.length; i++) {
+      double breackPoint = breackPoints.last +
+          (190 * controller.listOfItems.value[i].items.length);
       breackPoints.add(breackPoint);
     }
   }
@@ -68,7 +41,7 @@ class _OutletViewState extends State<OutletView> {
     if (selectedCategoryIndex != index) {
       int totalItems = 0;
       for (var i = 0; i <= index; i++) {
-        totalItems += listOfItems![i].items.length;
+        totalItems += controller.listOfItems.value[i].items.length;
       }
       scrollController.animateTo(outletInfoHeight + (200 * totalItems),
           duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -79,7 +52,7 @@ class _OutletViewState extends State<OutletView> {
   }
 
   void updateBrerackPoint(double offset) {
-    for (var i = 0; i < listOfItems!.length; i++) {
+    for (var i = 0; i < controller.listOfItems.value.length; i++) {
       if (i == 0) {
         if ((offset < breackPoints.first) & (selectedCategoryIndex != 0)) {
           setState(() {
@@ -97,6 +70,18 @@ class _OutletViewState extends State<OutletView> {
   }
 
   @override
+  void initState() {
+    controller.getOutlet(widget.id);
+    controller.getCategoryItems(widget.id).then((value) {
+      scrollController.addListener(() {
+        updateBrerackPoint(scrollController.offset);
+      });
+      createBreackPoints();
+    });
+    super.initState();
+  }
+
+  @override
   void dispose() {
     scrollController.dispose();
     super.dispose();
@@ -104,120 +89,145 @@ class _OutletViewState extends State<OutletView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: (listOutItemsCheck && outletCheck)
-          ? Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                CustomScrollView(
-                  controller: scrollController,
-                  slivers: <Widget>[
-                    ///First sliver is the App Bar
-                    SliverAppBar(
-                      ///Properties of app bar
-                      backgroundColor: Theme.of(context).backgroundColor,
-                      pinned: true,
-                      elevation: 0,
-                      scrolledUnderElevation: 0,
-                      expandedHeight: 200,
+    return Obx(() {
+      return Scaffold(
+        body: controller.listOfItems.value.isNotEmpty
+            ? Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
 
-                      ///Properties of the App Bar when it is expanded
-                      flexibleSpace: FlexibleSpaceBar(
-                        background:
-                            Stack(clipBehavior: Clip.hardEdge, children: [
-                          Positioned(
-                              height: 190,
-                              width: MediaQuery.of(context).size.width,
-                              child: CachedNetworkImage(
-                                height: 250,
-                                placeholder: (context, url) => const Center(
-                                    child: CircularProgressIndicator()),
-                                imageUrl: outlet!.coverUrl.toString(),
-                              )),
-                          Positioned(
-                              top: 110,
-                              left: 10,
-                              right: 10,
-                              height: 130,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: OutletInfoCard(outlet!)))
-                        ]),
-                      ),
-                      leading: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: BoxShape.circle),
-                            width: 45,
-                            child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: Theme.of(context).primaryColor,
-                                ))),
-                      ),
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                ///First sliver is the App Bar
+                SliverAppBar(
+
+                  ///Properties of app bar
+                  backgroundColor: Theme
+                      .of(context)
+                      .backgroundColor,
+                  pinned: true,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                  expandedHeight: 200,
+
+                  ///Properties of the App Bar when it is expanded
+                  flexibleSpace: FlexibleSpaceBar(
+                    background:
+                    Stack(clipBehavior: Clip.hardEdge, children: [
+                      Positioned(
+                          height: 190,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          child: CachedNetworkImage(
+                            height: 250,
+                            placeholder: (context, url) =>
+                            const Center(
+                                child: CircularProgressIndicator()),
+                            imageUrl: controller.outlet.value.coverUrl
+                                .toString() ??
+                                "",
+                          )),
+                      Positioned(
+                          top: 110,
+                          left: 10,
+                          right: 10,
+                          height: 130,
                           child: Container(
-                              height: 30,
                               decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  shape: BoxShape.circle),
-                              width: 45,
-                              child: IconButton(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  onPressed: () {
-                                    Get.to(AuthPage());
-                                  },
-                                  icon: Icon(
-                                    Icons.search_sharp,
-                                    color: Theme.of(context).primaryColor,
-                                  ))),
-                        ),
-                      ],
-                    ),
-                    SliverPersistentHeader(
-                        pinned: true,
-                        delegate: CategoryTabLayout(
-                            onChanged: scrollToCategory,
-                            selectedIndex: selectedCategoryIndex,
-                            listOfItems: listOfItems)),
-                    SliverPadding(
-                      padding:
-                          EdgeInsets.only(left: 10, right: 10, bottom: 100),
-                      sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (context, categoryIndex) {
-                        return MenuCategories(listOfItems![categoryIndex].name!,
-                            listOfItems![categoryIndex].items);
-                      }, childCount: listOfItems!.length)),
+                                  color: Theme
+                                      .of(context)
+                                      .scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(10))),
+                              child: OutletInfoCard(
+                                  controller.outlet.value)))
+                    ]),
+                  ),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color:
+                            Theme
+                                .of(context)
+                                .scaffoldBackgroundColor,
+                            shape: BoxShape.circle),
+                        width: 45,
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
+                            ))),
+                  ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                          height: 30,
+                          decoration: BoxDecoration(
+                              color: Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              shape: BoxShape.circle),
+                          width: 45,
+                          child: IconButton(
+                              color: Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              onPressed: () {
+                                Get.to(AuthPage());
+                              },
+                              icon: Icon(
+                                Icons.search_sharp,
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
+                              ))),
                     ),
                   ],
                 ),
-                Visibility(
-                  visible: controller.isCartPopUpShowing.value,
-                  child: CartNavigationCard(
-                    cartPopUpModel: CartPopUpModel(10, 1000),
-                  ),
-                )
+                SliverPersistentHeader(
+                    pinned: true,
+                    delegate: CategoryTabLayout(
+                        onChanged: scrollToCategory,
+                        selectedIndex: selectedCategoryIndex,
+                        listOfItems: controller.listOfItems.value)),
+                SliverPadding(
+                  padding:
+                  EdgeInsets.only(left: 10, right: 10, bottom: 100),
+                  sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                              (context, categoryIndex) {
+                            return MenuCategories(
+                                controller
+                                    .listOfItems.value![categoryIndex].name!,
+                                controller
+                                    .listOfItems.value![categoryIndex].items);
+                          }, childCount: controller.listOfItems.value!.length)),
+                ),
               ],
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
             ),
-    );
+            Visibility(
+              visible: controller.isCartPopUpShowing.value,
+              child: CartNavigationCard(
+                cartPopUpModel: CartPopUpModel(10, 1000),
+              ),
+            )
+          ],
+        )
+            : const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    });
   }
 }
