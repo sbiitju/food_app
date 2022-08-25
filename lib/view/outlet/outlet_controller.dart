@@ -10,9 +10,7 @@ import '../../util/ItemModel.dart';
 
 class OutletController extends BaseController {
   List<Item> listOfItem = <Item>[].obs;
-  Rx<OutletInfoModel> outlet = OutletInfoModel(
-          "", "", "", "", "", "", 0, "", "", [], true, true, "", "0", 0)
-      .obs;
+  var outlet = Rx<OutletInfoModel?>(null);
   RxList<CategoryItems> listOfItems = <CategoryItems>[].obs;
   Rx<int> selectedCategoryIndex = 0.obs;
   final scrollController = ScrollController();
@@ -39,9 +37,9 @@ class OutletController extends BaseController {
   void createBreackPoints() {
     double firstBreackPoint = outletInfoHeight;
     breackPoints.add(firstBreackPoint);
-    for (var i = 0; i < listOfItems.value.length; i++) {
+    for (var i = 0; i < listOfItems.length; i++) {
       double breackPoint =
-          breackPoints.last + (190 * listOfItems.value[i].items.length);
+          breackPoints.last + (190 * listOfItems[i].items.length);
       breackPoints.add(breackPoint);
     }
   }
@@ -50,7 +48,7 @@ class OutletController extends BaseController {
     if (selectedCategoryIndex != index) {
       int totalItems = 0;
       for (var i = 0; i <= index; i++) {
-        totalItems += listOfItems.value[i].items.length;
+        totalItems += listOfItems[i].items.length;
       }
       scrollController.animateTo(outletInfoHeight + (200 * totalItems),
           duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -59,7 +57,7 @@ class OutletController extends BaseController {
   }
 
   void updateBrerackPoint(double offset) {
-    for (var i = 0; i < listOfItems.value.length; i++) {
+    for (var i = 0; i < listOfItems.length; i++) {
       if (i == 0) {
         if ((offset < breackPoints.first) & (selectedCategoryIndex != 0)) {
           selectedCategoryIndex.value = 0;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/model/outlet_info_model.dart';
 
 class OutletInfoCard extends StatefulWidget {
-  OutletInfoModel outlet;
+  OutletInfoModel? outlet;
 
   OutletInfoCard(this.outlet, {Key? key}) : super(key: key);
 
@@ -22,7 +22,7 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
   int? averageFoodPreparationTime;
   String? totalFavorite;
   String? estimatedDeliveryTime;
-  var cuisines;
+  dynamic cuisines;
 
   late bool isFavorite;
   String? deliveryFee;
@@ -54,21 +54,21 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    id = widget.outlet.id;
-    restaurantName = widget.outlet.restaurantName;
-    isOpen = widget.outlet.isOpen;
-    outletName = widget.outlet.outletName;
-    address = widget.outlet.address;
-    coverUrl = widget.outlet.coverUrl;
-    logoUrl = widget.outlet.logoUrl;
-    cuisines = widget.outlet.cuisines;
-    isFavorite = widget.outlet.isFavorite!;
-    deliveryFee = widget.outlet.deliveryFee;
-    averageFoodPreparationTime = widget.outlet.averageFoodPreparationTime;
-    totalFavorite = widget.outlet.totalFavorite;
-    estimatedDeliveryTime = widget.outlet.estimatedDeliveryTime;
-    rating = widget.outlet.rating;
-    totalRating = widget.outlet.totalRating;
+    id = widget.outlet?.id;
+    restaurantName = widget.outlet?.restaurantName;
+    isOpen = widget.outlet?.isOpen ?? false;
+    outletName = widget.outlet?.outletName;
+    address = widget.outlet?.address;
+    coverUrl = widget.outlet?.coverUrl;
+    logoUrl = widget.outlet?.logoUrl;
+    cuisines = widget.outlet?.cuisines;
+    isFavorite = widget.outlet?.isFavorite ?? false;
+    deliveryFee = widget.outlet?.deliveryFee;
+    averageFoodPreparationTime = widget.outlet?.averageFoodPreparationTime;
+    totalFavorite = widget.outlet?.totalFavorite;
+    estimatedDeliveryTime = widget.outlet?.estimatedDeliveryTime;
+    rating = widget.outlet?.rating;
+    totalRating = widget.outlet?.totalRating;
     return Padding(
       padding: EdgeInsets.all(7.0),
       child: Column(
@@ -171,7 +171,7 @@ class _OutletInfoCardState extends State<OutletInfoCard> {
                     color: Theme.of(context).primaryColor,
                     size: 18,
                   )),
-              Text("  Tk ${widget.outlet.deliveryFee}."),
+              Text("  Tk ${widget.outlet?.deliveryFee}."),
             ],
           ),
         ],

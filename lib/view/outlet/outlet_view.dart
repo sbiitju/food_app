@@ -11,7 +11,7 @@ import 'category_tab_layout.dart';
 import 'menu_categories.dart';
 
 class OutletView extends StatefulWidget {
-  String? id;
+  final String? id;
 
   OutletView(this.id, {Key? key}) : super(key: key);
 
@@ -39,7 +39,8 @@ class _OutletViewState extends State<OutletView> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        body: controller.listOfItems.value.isNotEmpty
+        body: (controller.listOfItems.isNotEmpty &&
+                controller.outlet.value != null)
             ? Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -66,7 +67,7 @@ class _OutletViewState extends State<OutletView> {
                                   height: 250,
                                   placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator()),
-                                  imageUrl: controller.outlet.value.coverUrl
+                                  imageUrl: controller.outlet.value?.coverUrl
                                           .toString() ??
                                       "",
                                 )),
@@ -132,7 +133,7 @@ class _OutletViewState extends State<OutletView> {
                               onChanged: controller.scrollToCategory,
                               selectedIndex:
                                   controller.selectedCategoryIndex.value,
-                              listOfItems: controller.listOfItems.value)),
+                              listOfItems: controller.listOfItems)),
                       SliverPadding(
                         padding:
                             EdgeInsets.only(left: 10, right: 10, bottom: 100),
@@ -140,10 +141,9 @@ class _OutletViewState extends State<OutletView> {
                             delegate: SliverChildBuilderDelegate(
                                 (context, categoryIndex) {
                           return MenuCategories(
-                              controller.listOfItems.value[categoryIndex].name!,
-                              controller
-                                  .listOfItems.value![categoryIndex].items);
-                        }, childCount: controller.listOfItems.value!.length)),
+                              controller.listOfItems[categoryIndex].name!,
+                              controller.listOfItems[categoryIndex].items);
+                        }, childCount: controller.listOfItems.length)),
                       ),
                     ],
                   ),
