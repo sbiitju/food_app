@@ -72,18 +72,26 @@ class _OutletViewState extends State<OutletView> {
                                       "",
                                 )),
                             Positioned(
-                                top: 110,
+                                top: 100,
                                 left: 10,
                                 right: 10,
-                                height: 130,
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    child: OutletInfoCard(
-                                        controller.outlet.value)))
+                                height: 140,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Card(
+                                    shadowColor:
+                                        Theme.of(context).backgroundColor,
+                                    elevation: 20,
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: OutletInfoCard(
+                                            controller.outlet.value)),
+                                  ),
+                                ))
                           ]),
                         ),
                         leading: Padding(

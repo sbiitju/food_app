@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../data/model/category_items_model.dart';
-import '../../data/model/outlet_model.dart';
 import 'category.dart';
 
 class CategoryTabLayout extends SliverPersistentHeaderDelegate {
@@ -19,7 +18,7 @@ class CategoryTabLayout extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
         height: 52,
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: Categories(
           onChanged: onChanged,
           selectedIndex: selectedIndex,
