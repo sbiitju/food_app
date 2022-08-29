@@ -2,13 +2,15 @@ import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:get/get.dart';
 
+import '../../model/cart/cart.dart';
+
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
       Get.find(tag: (CartDataSource).toString());
 
   @override
-  Future getCart(String fingerPrint) {
-    return _remoteSource.getCart(fingerPrint);
+  Future<Cart> getCart() {
+    return _remoteSource.getCart("");
   }
 
   @override

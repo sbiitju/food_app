@@ -7,18 +7,21 @@ import 'package:food_app/graphql/query/get_payment_query.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../graphql/add_item/add_item_query.dart';
+import '../../model/cart/cart.dart';
 
 class CartDataSourceImp extends BaseDataSource implements CartDataSource {
   @override
-  Future getCart(String fingerPrint) async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
-        document: gql(GetCart().getCart), variables: {"fingerprint": ""}));
+  Future<Cart> getCart(String fingerPrint) async {
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(GetCart().getCart),
+        variables: {"fingerprint": fingerPrint}));
     debugPrint("GetCart" + result.toString());
+    return Cart("", "", "0", [], []);
   }
 
   @override
   Future addToCart() async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(AddItemQuery().addItemQuery),
         variables: const {
           "coordinate": {
@@ -35,7 +38,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
 
   @override
   Future getPaymentMethods(double lat, double lon) async {
-    QueryResult result = await clientToQuery().query(
+    QueryResult result = await BaseDataSource.client.value.query(
         QueryOptions(document: gql(GetPaymentQuery().getPayment), variables: {
       "coordinate": {
         "type": "Point",
@@ -46,7 +49,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
 
   @override
   Future getCustomerShoppingCartReceivingAddresses() async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
   }

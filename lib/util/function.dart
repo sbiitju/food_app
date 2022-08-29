@@ -62,7 +62,9 @@ Future<void> saveToken(String token) async {
 }
 
 Future<String> getToken() async {
-  return getStorage.read(TOKEN);
+  final token = getStorage.read(TOKEN);
+  debugPrint("MyToken" + token);
+  return token;
 }
 
 Widget loginCheckingDialog(context) {

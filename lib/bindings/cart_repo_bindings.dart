@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 class CartRepositoryBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CartRepo>(
-      () => CartRepoImp(),
-      tag: (CartRepo).toString(),
-    );
+    Get.lazyPut<CartRepo>(() => CartRepoImp(),
+        tag: (CartRepo).toString(), fenix: true);
   }
 }

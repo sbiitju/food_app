@@ -21,7 +21,7 @@ import '../model/parse_response.dart';
 class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
   Future<bool> getServiceConfiguration(String versionNumber) async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GraphQlQuery().getServiceConfiguration),
         variables: {'versionNumber': "4.1"}));
     debugPrint("ServiceConfig" + result.toString());
@@ -39,7 +39,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   Future<List<Item>> getItems(String id) async {
     List<Item> listOfItem = <Item>[];
     OutletController controller = Get.find<OutletController>();
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GraphQlQuery().getItems), variables: {'outletId': id}));
     debugPrint("ServiceConfig$result");
     String responsibleDetails = getPrettyJsonString(result.data);
@@ -68,22 +68,21 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         "coordinates": [lat, lon]
       }
     };
-    BaseDataSource client = BaseDataSource();
-    QueryResult result = await client.clientToQuery().query(QueryOptions(
-            document: gql(GraphQlQuery().getReverseGeoCode),
-            variables: {
-              'coordinate': {
-                "type": "Point",
-                "coordinates": [lon, lat]
-              }
-            }));
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(GraphQlQuery().getReverseGeoCode),
+        variables: {
+          'coordinate': {
+            "type": "Point",
+            "coordinates": [lon, lat]
+          }
+        }));
     var x = ParseResponse(result);
     return x.parseReverseGeoCodeResult();
   }
 
   @override
   Future<bool> getZone(double lat, double lon) async {
-    QueryResult result = await clientToQuery()
+    QueryResult result = await BaseDataSource.client.value
         .query(QueryOptions(document: gql(GraphQlQuery().getZone), variables: {
       'coordinate': {
         "type": "Point",
@@ -97,7 +96,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
   Future<List<Outlet>> getHPOutletList(
       double lat, double lon, int index) async {
-    QueryResult result = await clientToQuery().query(
+    QueryResult result = await BaseDataSource.client.value.query(
         QueryOptions(document: gql(GraphQlQuery().getHPOutletList), variables: {
       "params": {
         "queryName": "getNearestOutlets",
@@ -118,7 +117,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   Future<OutletInfoModel> getOutlet(String outletID) async {
     Controller controller = Controller();
     debugPrint("OutletInfo" + "Got it");
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(OutletQuery().getOutlet),
         variables: {'outletId': outletID}));
 
@@ -128,7 +127,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<List<CategoryItems>> getCategoryItems(String outletId) async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCategorizedItems().getCategorizedItems),
         variables: {'outletId': outletId}));
     debugPrint(result.data.toString());

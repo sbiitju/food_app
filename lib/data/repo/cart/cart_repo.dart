@@ -1,5 +1,7 @@
+import '../../model/cart/cart.dart';
+
 abstract class CartRepo {
-  Future getCart(String fingerPrint);
+  Future<Cart> getCart();
 
   Future addToCart();
 

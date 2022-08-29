@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/component/login_otp_button.dart';
 import 'package:get/get.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../util/function.dart';
 import '../component/customize_textview.dart';
@@ -206,7 +205,7 @@ class AuthPage extends StatelessWidget {
                                   TextStyle(fontSize: 20, color: Colors.black),
                             ),
                             Text(
-                              "+88${phoneControllerET.text.length == 11 ? phoneControllerET.text.substring(1, 11) : "0${phoneControllerET.text}"}",
+                              "+880${phoneControllerET.text.length == 11 ? phoneControllerET.text.substring(1, 11) : "0${phoneControllerET.text}"}",
                               textAlign: TextAlign.start,
                               style: const TextStyle(
                                   fontSize: 20, color: Colors.redAccent),
@@ -217,32 +216,12 @@ class AuthPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 8, right: 100, top: 8, bottom: 8),
-                        child: PinFieldAutoFill(
+                        child: TextFormField(
                           controller: otpControllerET,
-                          codeLength: 4,
-                          autoFocus: true,
-                          cursor: Cursor(
-                              color: Colors.black,
-                              width: 2,
-                              height: 22,
-                              enabled: true,
-                              fadeDuration: const Duration(microseconds: 2000),
-                              radius: const Radius.circular(20)),
-                          enableInteractiveSelection: false,
-                          decoration: UnderlineDecoration(
-                            obscureStyle: ObscureStyle(isTextObscure: false),
-                            textStyle: const TextStyle(
-                                fontSize: 20, color: Colors.black),
-                            colorBuilder:
-                                const FixedColorBuilder(Colors.deepOrange),
+                          maxLength: 4,
+                          decoration: InputDecoration(
+                            hintText: "Enter OTP Here",
                           ),
-                          onCodeChanged: (code) {
-                            if (code!.length == 4) {
-                              controller.isSubmitBtnActive.value = true;
-                            } else {
-                              controller.isSubmitBtnActive.value = false;
-                            }
-                          },
                         ),
                       ),
                       resendOTPandEditMobileNumber()

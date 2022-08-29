@@ -25,7 +25,7 @@ class _MyCartViewState extends State<MyCartView> {
 
   @override
   void initState() {
-    controller.getCart("fingerPrint");
+    controller.getCart();
     super.initState();
   }
 

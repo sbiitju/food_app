@@ -1,6 +1,6 @@
 class GetCart {
   String getCart = """
-  query getCart(\$fingerprint: fingerprint){
+  query getCart(\$fingerprint: String!){
   getCart(fingerprint: \$fingerprint) {
     message
     statusCode

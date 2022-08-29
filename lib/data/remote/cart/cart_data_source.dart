@@ -1,5 +1,7 @@
+import '../../model/cart/cart.dart';
+
 abstract class CartDataSource {
-  Future getCart(String fingerPrint);
+  Future<Cart> getCart(String fingerPrint);
 
   Future addToCart();
 

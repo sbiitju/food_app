@@ -8,7 +8,7 @@ class CartController extends GetxController {
     return _repository.addToCart();
   }
 
-  Future getCart(String fingerPrint) {
-    return _repository.getCart(fingerPrint);
+  Future getCart() {
+    return _repository.getCart();
   }
 }
