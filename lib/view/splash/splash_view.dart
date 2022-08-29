@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     controller.getServiceConfiguration().then((value) {
       isApiCallCompleted = value;
       tryNavigateToNextScreen();

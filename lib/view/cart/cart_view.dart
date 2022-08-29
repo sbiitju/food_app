@@ -13,8 +13,21 @@ import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MyCartView extends GetView<CartController> {
+class MyCartView extends StatefulWidget {
   const MyCartView({Key? key}) : super(key: key);
+
+  @override
+  State<MyCartView> createState() => _MyCartViewState();
+}
+
+class _MyCartViewState extends State<MyCartView> {
+  final controller = Get.find<CartController>();
+
+  @override
+  void initState() {
+    controller.getCart("fingerPrint");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

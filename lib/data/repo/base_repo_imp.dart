@@ -51,9 +51,4 @@ class BaseRepoImp implements BaseRepo {
   Future<List<CategoryItems>> getCategoryItems(String outletId) {
     return _remoteSource.getCategoryItems(outletId);
   }
-
-  @override
-  Future addToCart() {
-    return _remoteSource.addToCart();
-  }
 }

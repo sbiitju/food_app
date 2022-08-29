@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
-import 'package:food_app/graphql/add_item/add_item_query.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
@@ -136,22 +135,5 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
     var modifiedResult = ParseResponse(result).parseListOfCategoryItems();
     return modifiedResult;
-  }
-
-  @override
-  Future addToCart() async {
-    QueryResult result = await clientToQuery().query(QueryOptions(
-        document: gql(AddItemQuery().addItemQuery),
-        variables: const {
-          "coordinate": {
-            "type": "Point",
-            "coordinates": [90.4078, 23.7925]
-          },
-          "item": {
-            "fingerprint": "ngdhds",
-            "item": {"id": "5ca4ad2db19d90e0ad9a6eac"}
-          }
-        }));
-    debugPrint("AddToCart" + result.data.toString());
   }
 }

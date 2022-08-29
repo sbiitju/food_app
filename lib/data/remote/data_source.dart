@@ -20,7 +20,5 @@ abstract class GraphQlDataSource {
 
   Future<bool> getZone(double lat, double lon);
 
-  Future addToCart();
-
   Future<List<Outlet>> getHPOutletList(double lat, double lon, int index);
 }
