@@ -3,6 +3,8 @@ import 'package:food_app/data/model/cart/Invoice.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 
+import 'invoice_card_component.dart';
+
 class CartInvoiceList extends StatelessWidget {
   final List<CartInvoice> invoiceModelList;
 
@@ -35,14 +37,9 @@ class CartInvoiceList extends StatelessWidget {
                   itemBuilder: (context, itemCount) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(invoiceModelList[itemCount].title),
-                          ),
-                          Text(invoiceModelList[itemCount].amount.toString()),
-                        ],
+                      child: InvoiceCardComponent(
+                        invoiceModelList: invoiceModelList,
+                        index: itemCount,
                       ),
                     );
                   }),

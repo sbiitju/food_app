@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/util/function.dart';
-import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 
 import '../../../data/model/cart/Item.dart';
+import 'item_card_component.dart';
 
 class CartItemList extends StatelessWidget {
   List<CartItem> itemListModelList;
@@ -38,18 +38,9 @@ class CartItemList extends StatelessWidget {
                   itemBuilder: (context, itemCount) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: MediumTextView(
-                                text: itemListModelList[itemCount].itemName),
-                          ),
-                          MediumTextView(
-                              text: itemListModelList[itemCount]
-                                  .price
-                                  .toString()),
-                        ],
+                      child: ItemCardComponent(
+                        itemListModelList: itemListModelList,
+                        index: itemCount,
                       ),
                     );
                   }),
