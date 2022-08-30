@@ -19,5 +19,6 @@ class AppThemes {
       textTheme: const TextTheme(overline: TextStyle(color: Colors.black)),
       colorScheme: ThemeData.light().colorScheme.copyWith(
             primary: const Color(0xfffc8019),
+            background: const Color(0xf0f0f0),
           ));
 }

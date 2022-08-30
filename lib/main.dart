@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/settings/app_theme.dart';
 import 'package:food_app/util/function.dart';
-import 'package:food_app/view/cart/cart_view.dart';
+import 'package:food_app/view/splash/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         darkTheme: AppThemes.darkTheme,
         theme: AppThemes.lightTheme,
-        home: MyCartView(),
+        home: SplashScreen(),
       ),
     );
   }

@@ -10,7 +10,7 @@ class BigTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.titleMedium,
     );
   }
 }

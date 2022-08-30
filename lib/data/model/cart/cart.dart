@@ -38,7 +38,7 @@ class CartParse {
       CartInvoice("title", "colorCode", 200),
       CartInvoice("title", "colorCode", 200),
       CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
+      CartInvoice("Last title", "colorCode", 500),
     ]);
   }
 }
