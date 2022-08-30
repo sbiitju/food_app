@@ -6,10 +6,8 @@ import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:food_app/view/checkout/checkout_view.dart';
-import 'package:food_app/view/checkout/model/delivery_address_model.dart';
 import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/cart/cart.dart';
 
@@ -179,13 +177,7 @@ class _MyCartViewState extends State<MyCartView> {
                                     Radius.circular(10))),
                             child: MaterialButton(
                               onPressed: () {
-                                Get.to(CheckOutView(
-                                  deliveryAddress: DeliveryAddress(
-                                      "Md. Shahin Bashar",
-                                      "+8801613162522",
-                                      const LatLng(23.7925, 90.4078),
-                                      "Jahangirnagar University, Bangobondhu Hall, Room  Number 213"),
-                                ));
+                                Get.to(CheckOutView());
                               },
                               child: Text(
                                 "Review Payment and Address",

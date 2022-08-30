@@ -2,6 +2,8 @@ import 'package:food_app/bindings/auth_data_source_bindings.dart';
 import 'package:food_app/bindings/auth_repo_bindings.dart';
 import 'package:food_app/bindings/cart_data_source_bindings.dart';
 import 'package:food_app/bindings/cart_repo_bindings.dart';
+import 'package:food_app/bindings/checkout_data_source_bindings.dart';
+import 'package:food_app/bindings/checkout_repo_bindings.dart';
 import 'package:food_app/bindings/main_controller_bindings.dart';
 import 'package:food_app/bindings/remote_source_bindigs.dart';
 import 'package:food_app/view/auth/auth_bindings.dart';
@@ -32,5 +34,7 @@ class InitialBinding implements Bindings {
     OutletBindings().dependencies();
     CartRepositoryBindings().dependencies();
     CartDataSourceBindings().dependencies();
+    CheckOutRepoBindings().dependencies();
+    CheckOutDataSourceBindings().dependencies();
   }
 }

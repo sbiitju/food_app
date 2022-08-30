@@ -5,9 +5,8 @@ import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
+import 'package:food_app/view/checkout/model/delivery_address_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../checkout/model/delivery_address_model.dart';
 
 class CheckOutMapHead extends StatelessWidget {
   final DeliveryAddress deliveryAddress;
