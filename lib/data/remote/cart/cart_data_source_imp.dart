@@ -16,7 +16,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
         document: gql(GetCart().getCart),
         variables: {"fingerprint": fingerPrint}));
     debugPrint("GetCart" + result.toString());
-    return Cart("", "", "0", [], []);
+    return CartParse.parseGetCart();
   }
 
   @override

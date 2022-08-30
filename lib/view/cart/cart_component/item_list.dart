@@ -4,11 +4,11 @@ import 'package:food_app/view/cart/cart_component/big_textview.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 
+import '../../../data/model/cart/Item.dart';
 import '../../component/customized_container.dart';
-import '../model/item_list_model.dart';
 
 class CartItemList extends StatelessWidget {
-  List<ItemListModel> itemListModelList;
+  List<CartItem> itemListModelList;
 
   CartItemList({Key? key, required this.itemListModelList}) : super(key: key);
 
@@ -35,6 +35,7 @@ class CartItemList extends StatelessWidget {
                     maxHeight: getScreenHeight(context), minHeight: 30),
                 child: ListView.builder(
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: itemListModelList.length,
                     itemBuilder: (context, itemCount) {
                       return Padding(
@@ -47,7 +48,9 @@ class CartItemList extends StatelessWidget {
                                   text: itemListModelList[itemCount].itemName),
                             ),
                             MediumTextView(
-                                text: itemListModelList[itemCount].itemPrice),
+                                text: itemListModelList[itemCount]
+                                    .price
+                                    .toString()),
                           ],
                         ),
                       );

@@ -14,15 +14,31 @@ class Cart {
 
 class CartParse {
   static Cart parseGetCart() {
-    return Cart(
-        "outletName",
-        "restaurantName",
-        "25 - 30 mins",
-        [
-
-
-        ],
-        [
-        ]);
+    return Cart("outletName", "restaurantName", "25 - 30 mins", [
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+      CartItem("itemName", 3, 100),
+    ], [
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+      CartInvoice("title", "colorCode", 200),
+    ]);
   }
 }

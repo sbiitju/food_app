@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/data/model/cart/Invoice.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 
 import '../../component/customized_container.dart';
-import '../model/invoice_model.dart';
 
 class CartInvoiceList extends StatelessWidget {
-  final List<InvoiceModel> invoiceModelList;
+  final List<CartInvoice> invoiceModelList;
 
   const CartInvoiceList({Key? key, required this.invoiceModelList})
       : super(key: key);
@@ -32,6 +32,7 @@ class CartInvoiceList extends StatelessWidget {
                     maxHeight: getScreenHeight(context), minHeight: 30),
                 child: ListView.builder(
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: invoiceModelList.length,
                     itemBuilder: (context, itemCount) {
                       return Padding(
@@ -40,9 +41,9 @@ class CartInvoiceList extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: Text(invoiceModelList[itemCount].costName),
+                              child: Text(invoiceModelList[itemCount].title),
                             ),
-                            Text(invoiceModelList[itemCount].costAmount),
+                            Text(invoiceModelList[itemCount].amount.toString()),
                           ],
                         ),
                       );
