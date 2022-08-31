@@ -8,7 +8,7 @@ class CheckOutRepoImp implements CheckOutRepo {
       Get.find(tag: (CheckOutDataSource).toString());
 
   @override
-  Future<DeliveryAddress> getOrderPlaceAddress() {
-    return _remoteSource.getOrderPlaceAddress();
+  Future<DeliveryAddress> getCustomerShoppingCartAddress() {
+    return _remoteSource.getCustomerShoppingCartAddress();
   }
 }

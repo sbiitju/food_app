@@ -25,6 +25,7 @@ class _CheckOutViewState extends State<CheckOutView> {
   @override
   void initState() {
     controller.setDeliveryAddress();
+    controller.getCustomerShoppingCartAddress();
     super.initState();
   }
 
@@ -45,8 +46,26 @@ class _CheckOutViewState extends State<CheckOutView> {
           centerTitle: true,
           title: MediumTextView(text: "My Cart"),
         ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            width: getScreenWidth(context),
+            decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                shape: BoxShape.rectangle,
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
+            child: MaterialButton(
+              onPressed: () {
+                Get.dialog(OrderPlacePopUp());
+              },
+              child: BigTextView(text: "Confirm Order"),
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CustomizedContainer(
               maxWidth: getScreenWidth(context),
@@ -73,6 +92,8 @@ class _CheckOutViewState extends State<CheckOutView> {
                         ),
                         controller.hasAddress.value
                             ? Obx(() {
+                                debugPrint(controller
+                                    .customerShoppingCartAddress.value?.name);
                                 return CheckOutMapHead(
                                   deliveryAddress:
                                       controller.deliveryAddress.value!,
@@ -143,26 +164,6 @@ class _CheckOutViewState extends State<CheckOutView> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Container(
-                  width: getScreenWidth(context),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.rectangle,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10))),
-                  child: MaterialButton(
-                    onPressed: () {
-                      Get.dialog(OrderPlacePopUp());
-                    },
-                    child: BigTextView(text: "Confirm Order"),
-                  ),
-                ),
-              ),
-            )
           ],
         )));
   }

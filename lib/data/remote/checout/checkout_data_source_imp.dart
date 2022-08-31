@@ -8,7 +8,7 @@ import '../../../graphql/query/getCustomerShoppingCartReceivingAddressesQuery.da
 
 class CheckOutDataSourceImp implements CheckOutDataSource {
   @override
-  Future<DeliveryAddress> getOrderPlaceAddress() async {
+  Future<DeliveryAddress> getCustomerShoppingCartAddress() async {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));

@@ -10,6 +10,7 @@ class CheckOutController extends GetxController {
   final CheckOutRepo _repository = Get.find(tag: (CheckOutRepo).toString());
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
+  Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
 
   late var paymentMethodList = <PaymentUiModel>[
     PaymentUiModel(("assest/a.webp"), "Cash On Delivery", false),
@@ -44,7 +45,11 @@ class CheckOutController extends GetxController {
     orderPlaceList.value = orderPlaceList.value.map((e) => e).toList();
   }
 
-  getOrderPlaceAddress() {}
+  getCustomerShoppingCartAddress() {
+    _repository
+        .getCustomerShoppingCartAddress()
+        .then((value) => customerShoppingCartAddress.value = value);
+  }
 
   setDeliveryAddress() {
     deliveryAddress.value = DeliveryAddress(

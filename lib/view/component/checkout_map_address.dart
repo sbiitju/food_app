@@ -19,11 +19,11 @@ class CheckOutMapHead extends StatelessWidget {
   Widget build(BuildContext context) {
     _kLake = CameraPosition(
       target: deliveryAddress.latLng,
-      zoom: 14.5,
+      zoom: 15,
     );
     return ConstrainedBox(
       constraints: BoxConstraints(
-          maxHeight: getScreenHeight(context) / 4,
+          maxHeight: getScreenHeight(context) / 3,
           minWidth: getScreenWidth(context)),
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -32,14 +32,29 @@ class CheckOutMapHead extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 3,
-              child: GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _kLake,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-                // markers: Set<Marker>.of(markers.values),
+              flex: 4,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    mapType: MapType.normal,
+                    liteModeEnabled: true,
+                    myLocationEnabled: true,
+                    initialCameraPosition: _kLake,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    // markers: Set<Marker>.of(markers.values),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 45.0,
+                      ),
+                      child: Icon(Icons.location_on,
+                          color: Theme.of(context).primaryColor, size: 50),
+                    ),
+                  ),
+                ],
               ),
             ),
             Flexible(
