@@ -4,10 +4,12 @@ import 'package:food_app/view/checkout/model/order_place_address_model.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../data/repo/cart/cart_repo.dart';
 import 'model/payment_ui_model.dart';
 
 class CheckOutController extends GetxController {
   final CheckOutRepo _repository = Get.find(tag: (CheckOutRepo).toString());
+  final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
   Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
@@ -24,6 +26,10 @@ class CheckOutController extends GetxController {
   ].obs;
 
   RxBool hasAddress = true.obs;
+
+  placeRegularOrder() {
+    _repository.placeRegularOrder(23, 90, "fingerPrint");
+  }
 
   setPaymentMethod(PaymentUiModel paymentUiModel) {
     for (var element in paymentMethodList) {

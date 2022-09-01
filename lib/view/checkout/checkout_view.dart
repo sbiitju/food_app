@@ -75,7 +75,9 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   controller.hasAddress.value
                                       ? TextButton(
                                           child: const Text("Change"),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.dialog(OrderPlacePopUp());
+                                          },
                                         )
                                       : const SizedBox()
                                 ],
@@ -178,7 +180,10 @@ class _CheckOutViewState extends State<CheckOutView> {
                             const BorderRadius.all(Radius.circular(10))),
                     child: MaterialButton(
                       onPressed: () {
-                        Get.dialog(OrderPlacePopUp());
+                        controller.placeRegularOrder();
+                        controller.cartRepository.cart.value = null;
+                        controller.cartRepository.totalAmount.value = 0;
+                        controller.cartRepository.totalItem.value = 0;
                       },
                       child: BigTextView(text: "Confirm Order"),
                     ),

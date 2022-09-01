@@ -16,4 +16,9 @@ class CheckOutRepoImp implements CheckOutRepo {
   @override
   Future<List<PaymentUiModel>> getPaymentMethods(double lat, double lon) =>
       _remoteSource.getPaymentMethods(lat, lon);
+
+  @override
+  Future<String> placeRegularOrder(double lat, double lon, String fingerPrint) {
+    return _remoteSource.placeRegularOrder(lat, lon, fingerPrint);
+  }
 }
