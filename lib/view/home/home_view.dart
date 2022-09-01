@@ -9,7 +9,6 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/category_items_model.dart';
-import '../cart/model/cart_popup_model.dart';
 
 class HomeView extends StatefulWidget {
   LatLng latLng;
@@ -78,11 +77,12 @@ class _HomeViewState extends State<HomeView> {
                         );
                       }),
                     ),
-                    controller.isCartPopUpShowing.value
-                        ? CartNavigationCard(
-                            cartPopUpModel: CartPopUpModel(10, 1000),
-                          )
-                        : SizedBox(),
+                    Obx(() {
+                      return Visibility(
+                        visible: controller.cartRepository.cart.value != null,
+                        child: CartNavigationCard(),
+                      );
+                    })
                   ],
                 )
               : Container(

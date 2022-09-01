@@ -38,13 +38,14 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
 
   @override
   Future getPaymentMethods(double lat, double lon) async {
-    QueryResult result = await BaseDataSource.client.value.query(
-        QueryOptions(document: gql(GetPaymentQuery().getPayment), variables: {
-      "coordinate": {
-        "type": "Point",
-        "coordinates": [lon, lat]
-      }
-    }));
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(GetPaymentQuery().getPaymentMethod),
+        variables: {
+          "coordinate": {
+            "type": "Point",
+            "coordinates": [lon, lat]
+          }
+        }));
   }
 
   @override

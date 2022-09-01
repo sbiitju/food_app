@@ -6,7 +6,6 @@ import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
 
 import '../cart/cart_component/cart_navigation.dart';
-import '../cart/model/cart_popup_model.dart';
 import 'category_tab_layout.dart';
 import 'menu_categories.dart';
 
@@ -38,6 +37,12 @@ class _OutletViewState extends State<OutletView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      if (controller.cartRepository.cart.value == null) {
+        debugPrint("cart data");
+      } else {
+        debugPrint(
+            "cart data ${controller.cartRepository.cart.value!.outletName.toString()}");
+      }
       return Scaffold(
         body: (controller.listOfItems.isNotEmpty &&
                 controller.outlet.value != null)
@@ -156,10 +161,8 @@ class _OutletViewState extends State<OutletView> {
                     ],
                   ),
                   Visibility(
-                    visible: controller.isCartPopUpShowing.value,
-                    child: CartNavigationCard(
-                      cartPopUpModel: CartPopUpModel(10, 1000),
-                    ),
+                    visible: controller.cartRepository.cart.value != null,
+                    child: CartNavigationCard(),
                   )
                 ],
               )

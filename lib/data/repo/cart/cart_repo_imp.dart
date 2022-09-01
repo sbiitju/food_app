@@ -9,8 +9,19 @@ class CartRepoImp implements CartRepo {
       Get.find(tag: (CartDataSource).toString());
 
   @override
-  Future<Cart> getCart() {
-    return _remoteSource.getCart("");
+  Rx<Cart?> cart = Rx(null);
+
+  @override
+  Rx<double> totalAmount = Rx(0.0);
+
+  @override
+  Rx<int> totalItem = Rx(0);
+
+  @override
+  Future<Cart> getCart() async {
+    return _remoteSource
+        .getCart("fingerPrint")
+        .then((value) => cart.value = value);
   }
 
   @override

@@ -1,7 +1,7 @@
 class GetPaymentQuery {
-  String getPayment = """
- query getPayment(\$coordinate: Point!){
-  getPaymentMethods(coordinate: \$coordinate,allowNagad: true) {
+  String getPaymentMethod = """
+ query getPaymentMethod(\$coordinate: Point!){
+  getPaymentMethods(coordinate: \$coordinate) {
     message
     statusCode
     result {

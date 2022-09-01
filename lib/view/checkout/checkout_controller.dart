@@ -12,11 +12,7 @@ class CheckOutController extends GetxController {
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
   Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
 
-  late var paymentMethodList = <PaymentUiModel>[
-    PaymentUiModel(("assest/a.webp"), "Cash On Delivery", false),
-    PaymentUiModel(("assest/a.webp"), "Online Payment", false),
-    PaymentUiModel(("assest/ic_mobile_banking.png"), "Mobile Payment", false),
-  ].obs;
+  late var paymentMethodList = <PaymentUiModel>[].obs;
 
   late var orderPlaceList = <OrderPlaceAddress>[
     OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
@@ -35,6 +31,12 @@ class CheckOutController extends GetxController {
     }
     paymentUiModel.isSelected = !paymentUiModel.isSelected;
     paymentMethodList.value = paymentMethodList.value.map((e) => e).toList();
+  }
+
+  getPaymentMethods() {
+    _repository
+        .getPaymentMethods(23, 90)
+        .then((value) => paymentMethodList.value = value);
   }
 
   setAddress(OrderPlaceAddress orderPlaceAddress) {

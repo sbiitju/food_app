@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/data/model/cart/cart.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
 
+import '../../data/repo/cart/cart_repo.dart';
+
 class CartUpdateButton extends StatefulWidget {
-  const CartUpdateButton({Key? key}) : super(key: key);
+  CartUpdateButton({required this.itemPrice, Key? key}) : super(key: key);
+  final double itemPrice;
 
   @override
   State<CartUpdateButton> createState() => _CartUpdateButtonState();
 }
 
 class _CartUpdateButtonState extends State<CartUpdateButton> {
+  final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
+
   var controller = Get.find<CartController>();
   int counter = 0;
   var isCounterZero = true;
@@ -24,6 +30,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
         counter--;
       }
     });
+    updateCart(0);
   }
 
   void increment() {
@@ -32,6 +39,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
       counter++;
       isCounterZero = false;
     });
+    updateCart(1);
   }
 
   @override
@@ -51,6 +59,8 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
                 child: MaterialButton(
                     onPressed: () {
                       if (checkLoginStatus()) {
+                        cartRepository.cart.value =
+                            Cart("outletName", "restaurantName", "", [], []);
                         increment();
                       } else {
                         showDialog(
@@ -95,5 +105,27 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
               ),
       ),
     );
+  }
+
+  void updateCart(int i) {
+    switch (i) {
+      case 0:
+        if (cartRepository.totalItem.value == 1) {
+          cartRepository.totalItem.value = 0;
+          cartRepository.totalAmount.value -= widget.itemPrice;
+        } else if (cartRepository.totalItem.value > 1) {
+          cartRepository.totalItem.value--;
+          cartRepository.totalAmount.value -= widget.itemPrice;
+        }
+        if (cartRepository.totalItem.value == 0 &&
+            cartRepository.totalAmount.value == 0) {
+          cartRepository.totalItem.value = 0;
+          cartRepository.cart.value = null;
+        }
+        break;
+      case 1:
+        cartRepository.totalItem.value++;
+        cartRepository.totalAmount.value += widget.itemPrice;
+    }
   }
 }

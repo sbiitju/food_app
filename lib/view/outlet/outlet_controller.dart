@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../data/model/category_items_model.dart';
 import '../../data/model/outlet_info_model.dart';
 import '../../data/repo/base_repo.dart';
+import '../../data/repo/cart/cart_repo.dart';
 import '../../util/ItemModel.dart';
 
 class OutletController extends BaseController {
@@ -17,6 +18,7 @@ class OutletController extends BaseController {
   double outletInfoHeight = 252 - kToolbarHeight;
   List<double> breackPoints = [];
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
+  final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
 
   void getOutlet(outletId) {
     _repository.getOutlet(outletId).then((value) {

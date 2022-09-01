@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/view/component/cart_add_button.dart';
 
 import '../../data/model/item_info_model.dart';
-import '../../data/model/outlet_model.dart';
 
 class ItemsCard extends StatefulWidget {
   List<ItemInfo> itemInfo;
@@ -65,11 +64,12 @@ class _ItemsCardState extends State<ItemsCard> {
                         children: [
                           SizedBox(
                               height: 100, child: Image.asset("assest/a.webp")),
-                          const Positioned(
+                          Positioned(
                             top: 75,
                             left: 10,
                             right: 10,
-                            child: CartUpdateButton(),
+                            child: CartUpdateButton(
+                                itemPrice: widget.itemInfo[index].basePrice),
                           )
                         ],
                       ),
