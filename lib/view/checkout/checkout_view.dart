@@ -47,125 +47,146 @@ class _CheckOutViewState extends State<CheckOutView> {
           centerTitle: true,
           title: MediumTextView(text: "My Cart"),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Container(
-            width: getScreenWidth(context),
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                shape: BoxShape.rectangle,
-                borderRadius: const BorderRadius.all(Radius.circular(10))),
-            child: MaterialButton(
-              onPressed: () {
-                Get.dialog(OrderPlacePopUp());
-              },
-              child: BigTextView(text: "Confirm Order"),
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        body: Stack(
           children: [
-            CustomizedContainer(
-              maxWidth: getScreenWidth(context),
-              maxHeight: getScreenHeight(context) / 2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            BigTextView(text: "DELIVERY ADDRESS"),
-                            controller.hasAddress.value
-                                ? TextButton(
-                                    child: const Text("Change"),
-                                    onPressed: () {},
-                                  )
-                                : const SizedBox()
-                          ],
-                        ),
-                        controller.hasAddress.value
-                            ? Obx(() {
-                                debugPrint(controller
-                                    .customerShoppingCartAddress.value?.name);
-                                return CheckOutMapHead(
-                                  deliveryAddress:
-                                      controller.deliveryAddress.value!,
-                                );
-                              })
-                            : Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                textBaseline: TextBaseline.alphabetic,
+            Align(
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CustomizedContainer(
+                    maxWidth: getScreenWidth(context),
+                    maxHeight: getScreenHeight(context) / 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  BigTextView(text: "Please add your address"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  SmallTextView(
-                                      text:
-                                          "Let's get the food delivered where you want it!"),
-                                  SizedBox(
-                                    width: getScreenWidth(context),
-                                    child: MaterialButton(
-                                      color: Theme.of(context).primaryColor,
-                                      onPressed: () {},
-                                      child: Text("Add new Address"),
-                                    ),
-                                  )
+                                  BigTextView(text: "DELIVERY ADDRESS"),
+                                  controller.hasAddress.value
+                                      ? TextButton(
+                                          child: const Text("Change"),
+                                          onPressed: () {},
+                                        )
+                                      : const SizedBox()
                                 ],
                               ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Wrap(
-                      runSpacing: 10,
-                      children: [
-                        BigTextView(
-                          text: "PAYMENT METHOD",
+                              controller.hasAddress.value
+                                  ? Obx(() {
+                                      debugPrint(controller
+                                          .customerShoppingCartAddress
+                                          .value
+                                          ?.name);
+                                      return CheckOutMapHead(
+                                        deliveryAddress:
+                                            controller.deliveryAddress.value!,
+                                      );
+                                    })
+                                  : Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: [
+                                        BigTextView(
+                                            text: "Please add your address"),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        SmallTextView(
+                                            text:
+                                                "Let's get the food delivered where you want it!"),
+                                        SizedBox(
+                                          width: getScreenWidth(context),
+                                          child: MaterialButton(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            onPressed: () {},
+                                            child: Text("Add new Address"),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                            ],
+                          ),
                         ),
-                        Obx(() {
-                          return ListView.separated(
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  height: 5,
-                                );
-                              },
-                              itemCount: controller.paymentMethodList.length,
-                              itemBuilder: (context, index) {
-                                return PaymentMethod(
-                                  paymentUiModel:
-                                      controller.paymentMethodList[index],
-                                  checkedListener: (value) {
-                                    controller.setPaymentMethod(value);
-                                  },
-                                );
-                              });
-                        }),
-                      ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Wrap(
+                            runSpacing: 10,
+                            children: [
+                              BigTextView(
+                                text: "PAYMENT METHOD",
+                              ),
+                              Obx(() {
+                                return ListView.separated(
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) {
+                                      return const SizedBox(
+                                        height: 5,
+                                      );
+                                    },
+                                    itemCount:
+                                        controller.paymentMethodList.length,
+                                    itemBuilder: (context, index) {
+                                      return PaymentMethod(
+                                        paymentUiModel:
+                                            controller.paymentMethodList[index],
+                                        checkedListener: (value) {
+                                          controller.setPaymentMethod(value);
+                                        },
+                                      );
+                                    });
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 15),
+                  child: Container(
+                    width: getScreenWidth(context),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: MaterialButton(
+                      onPressed: () {
+                        Get.dialog(OrderPlacePopUp());
+                      },
+                      child: BigTextView(text: "Confirm Order"),
                     ),
                   ),
                 ),
               ),
-            ),
+            )
           ],
-        )));
+        ));
   }
 }

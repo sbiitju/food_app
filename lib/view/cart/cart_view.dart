@@ -5,11 +5,11 @@ import 'package:food_app/view/cart/cart_component/item_list.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
-import 'package:food_app/view/checkout/checkout_view.dart';
 import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
 
 import '../../data/model/cart/cart.dart';
+import '../checkout/checkout_view.dart';
 
 class MyCartView extends StatefulWidget {
   const MyCartView({Key? key}) : super(key: key);
@@ -72,124 +72,130 @@ class _MyCartViewState extends State<MyCartView> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 90.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Container(
-                                  height: 100,
-                                  width: getScreenWidth(context),
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).backgroundColor,
-                                      border: Border.all(
-                                          color:
-                                              Theme.of(context).dividerColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Center(
-                                    child: Container(
-                                      height: 70,
-                                      width: 200,
-                                      decoration: BoxDecoration(
-                                          color:
-                                              Theme.of(context).backgroundColor,
-                                          border: Border.all(
-                                              color: Theme.of(context)
-                                                  .dividerColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.ac_unit),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SmallTextView(
-                                                    text: "Delivery Time"),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  cart.deliveryTime,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleMedium,
-                                                )
-                                              ],
-                                            )
-                                          ],
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 90.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Container(
+                                    height: 100,
+                                    width: getScreenWidth(context),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).backgroundColor,
+                                        border: Border.all(
+                                            color:
+                                                Theme.of(context).dividerColor),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 200,
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .dividerColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.ac_unit),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SmallTextView(
+                                                      text: "Delivery Time"),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    cart.deliveryTime,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium,
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: CartItemList(
-                                      itemListModelList: cart.listOfItems)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: CartInvoiceList(
-                                      invoiceModelList: cart.listOfInvoice)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        color: Theme.of(context).backgroundColor,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 20),
-                          child: Container(
-                            width: getScreenWidth(context),
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                shape: BoxShape.rectangle,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10))),
-                            child: MaterialButton(
-                              onPressed: () {
-                                Get.to(CheckOutView());
-                              },
-                              child: Text(
-                                "Review Payment and Address",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: CartItemList(
+                                        itemListModelList: cart.listOfItems)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: CartInvoiceList(
+                                        invoiceModelList: cart.listOfInvoice)),
+                              ],
                             ),
                           ),
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            child: Container(
+                              width: getScreenWidth(context),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10))),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  Get.to(CheckOutView());
+                                },
+                                child: Text(
+                                  "Review Payment and Address",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

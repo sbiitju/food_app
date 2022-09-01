@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_view.dart';
 import 'package:get/get.dart';
 
@@ -15,10 +14,8 @@ class CartNavigationCard extends StatelessWidget {
 
     return Container(
       color: Theme.of(context).backgroundColor,
-      height: 80,
-      width: getScreenWidth(context),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
         child: Container(
           decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,

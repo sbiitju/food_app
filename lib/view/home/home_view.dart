@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
 import 'package:food_app/view/home/home_controller.dart';
@@ -51,7 +52,8 @@ class _HomeViewState extends State<HomeView> {
               ? Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Container(
+                    Align(
+                      alignment: Alignment.topCenter,
                       child: Obx(() {
                         return RefreshIndicator(
                           onRefresh: refresh,
@@ -77,15 +79,19 @@ class _HomeViewState extends State<HomeView> {
                         );
                       }),
                     ),
-                    Obx(() {
-                      return Visibility(
-                        visible: controller.cartRepository.cart.value != null,
-                        child: CartNavigationCard(),
-                      );
-                    })
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Obx(() {
+                        return Visibility(
+                          visible: controller.cartRepository.cart.value != null,
+                          child: CartNavigationCard(),
+                        );
+                      }),
+                    )
                   ],
                 )
               : Container(
+                  height: getScreenHeight(context),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
