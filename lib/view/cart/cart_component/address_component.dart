@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
-import 'package:food_app/view/checkout/model/order_place_address_model.dart';
+
+import '../model/order_place_address_model.dart';
 
 class OrderAddressComponent extends StatelessWidget {
   final OrderPlaceAddress orderPlaceAddress;

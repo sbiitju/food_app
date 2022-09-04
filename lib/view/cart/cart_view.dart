@@ -9,7 +9,7 @@ import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
 
 import '../../data/model/cart/cart.dart';
-import '../checkout/checkout_view.dart';
+import 'cart_component/checkout_view.dart';
 
 class MyCartView extends StatefulWidget {
   const MyCartView({Key? key}) : super(key: key);

@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/view/checkout/checkout_controller.dart';
+import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
-
-import 'edit_address_bottomsheet.dart';
 
 class OrderPlacePopUp extends StatelessWidget {
   OrderPlacePopUp({Key? key}) : super(key: key);
-  final controller = Get.find<CheckOutController>();
+  final controller = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +43,7 @@ class OrderPlacePopUp extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.all(const Radius.circular(10))),
               child: MaterialButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                      backgroundColor: Theme.of(context).backgroundColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10))),
-                      context: context,
-                      builder: (context) {
-                        return EditAddressBottomSheet(
-                          orderPlaceAddressList:
-                              controller.orderPlaceList.value,
-                        );
-                      });
-                },
+                onPressed: () {},
                 child: const Text("Track Order"),
               ),
             )

@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../util/function.dart';
-import '../../cart/cart_component/big_textview.dart';
-import '../checkout_controller.dart';
 import '../model/order_place_address_model.dart';
 import 'address_component.dart';
+import 'big_textview.dart';
 
 class EditAddressBottomSheet extends StatelessWidget {
   final List<OrderPlaceAddress> orderPlaceAddressList;
-  final controller = Get.find<CheckOutController>();
+  final controller = Get.find<CartController>();
 
   EditAddressBottomSheet({
     required this.orderPlaceAddressList,

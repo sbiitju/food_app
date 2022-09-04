@@ -175,3 +175,15 @@ List<InvoiceModel> getDemoInvoiceList() {
   list.add(InvoiceModel(costName: "Shahin Bashar", costAmount: "200"));
   return list;
 }
+
+showBottomDialog(BuildContext context, Widget widget) {
+  showModalBottomSheet(
+      backgroundColor: Theme.of(context).backgroundColor,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(10), topLeft: Radius.circular(10))),
+      context: context,
+      builder: (context) {
+        return widget;
+      });
+}

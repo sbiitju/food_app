@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/view/checkout/model/payment_ui_model.dart';
+
+import '../model/payment_ui_model.dart';
 
 class PaymentMethod extends StatelessWidget {
   const PaymentMethod(

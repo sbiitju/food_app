@@ -1,6 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'delivery_address_model.dart';
+import '../../cart/model/delivery_address_model.dart';
 
 class OrderPlaceAddress {
   final String tagName;

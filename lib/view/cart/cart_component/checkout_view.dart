@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
-import 'package:food_app/view/checkout/checkout_controller.dart';
+import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:food_app/view/component/customized_container.dart';
 import 'package:get/get.dart';
 
-import '../cart/cart_component/medium_text_view.dart';
-import '../cart/cart_component/small_text_view.dart';
-import '../component/checkout_map_address.dart';
-import 'component/payment_method.dart';
+import '../../component/checkout_map_address.dart';
+import 'edit_address_bottomsheet.dart';
+import 'medium_text_view.dart';
+import 'payment_method.dart';
+import 'small_text_view.dart';
 
 class CheckOutView extends StatefulWidget {
   const CheckOutView({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class CheckOutView extends StatefulWidget {
 }
 
 class _CheckOutViewState extends State<CheckOutView> {
-  final controller = Get.find<CheckOutController>();
+  final controller = Get.find<CartController>();
 
   @override
   void initState() {
@@ -74,7 +75,15 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   controller.hasAddress.value
                                       ? TextButton(
                                           child: const Text("Change"),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showBottomDialog(
+                                                context,
+                                                EditAddressBottomSheet(
+                                                  orderPlaceAddressList:
+                                                      controller
+                                                          .orderPlaceList.value,
+                                                ));
+                                          },
                                         )
                                       : const SizedBox()
                                 ],
