@@ -49,11 +49,6 @@ class MapViewState extends State<MapView> {
       target: LatLng(arg.latitude, arg.longitude),
       zoom: 14.5,
     );
-    Marker marker = Marker(
-      position: LatLng(arg.latitude, arg.longitude),
-      infoWindow: const InfoWindow(title: "", snippet: '*'),
-      markerId: markerId,
-    );
     updateCameraPosition(CameraPosition position) {
       latlon = position.target;
       myController
@@ -151,7 +146,12 @@ class MapViewState extends State<MapView> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeView(latlon)),
+                                  builder: (context) => HomeView(
+                                      latlon,
+                                      myController.address.value.areaName +
+                                          "," +
+                                          myController.address.value.cityName +
+                                          ", ${myController.address.value.districtName}")),
                               (Route<dynamic> route) => false,
                             );
                           },

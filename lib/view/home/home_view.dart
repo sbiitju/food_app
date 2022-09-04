@@ -12,9 +12,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../data/model/category_items_model.dart';
 
 class HomeView extends StatefulWidget {
-  LatLng latLng;
+  final LatLng latLng;
+  final String locationName;
 
-  HomeView(this.latLng, {Key? key}) : super(key: key);
+  const HomeView(this.latLng, this.locationName, {Key? key}) : super(key: key);
 
   static const RouteName = "Home";
 
@@ -46,57 +47,85 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: controller.checking.value
-              ? Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Obx(() {
-                        return RefreshIndicator(
-                          onRefresh: refresh,
-                          child: ListView.builder(
-                              controller: scrollController,
-                              itemCount: controller.listOutletId.length + 1,
-                              itemBuilder: (context, index) {
-                                return index < controller.listOutletId.length
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          Get.to(OutletView(controller
-                                              .listOutletId[index].id));
-                                        },
-                                        child: ResturentCard(
-                                            controller.listOutletId[index]))
-                                    : const Center(
-                                        child: Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
-                                        child: CircularProgressIndicator(),
-                                      ));
-                              }),
-                        );
-                      }),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Obx(() {
-                        return Visibility(
-                          visible: controller.cartRepository.cart.value != null,
-                          child: CartNavigationCard(),
-                        );
-                      }),
-                    )
-                  ],
-                )
-              : Container(
-                  height: getScreenHeight(context),
-                  child: Center(
-                    child: CircularProgressIndicator(),
+    return controller.checking.value
+        ? Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).backgroundColor,
+              title: Row(
+                children: [
+                  Icon(Icons.location_on,
+                      color: Theme.of(context).primaryColor, size: 30),
+                  SizedBox(
+                    width: 10,
                   ),
-                )),
-    );
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Deliver To",
+                        style: Theme.of(context).textTheme.titleSmall,
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        widget.locationName,
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            body: SafeArea(
+                child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Obx(() {
+                    return RefreshIndicator(
+                      onRefresh: refresh,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: controller.listOutletId.length + 1,
+                          itemBuilder: (context, index) {
+                            return index < controller.listOutletId.length
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Get.to(OutletView(
+                                          controller.listOutletId[index].id));
+                                    },
+                                    child: ResturentCard(
+                                        controller.listOutletId[index]))
+                                : const Center(
+                                    child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: CircularProgressIndicator(),
+                                  ));
+                          }),
+                    );
+                  }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Obx(() {
+                    return Visibility(
+                      visible: controller.cartRepository.cart.value != null,
+                      child: CartNavigationCard(),
+                    );
+                  }),
+                )
+              ],
+            )),
+          )
+        : Container(
+            height: getScreenHeight(context),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
   }
 
   Future<void> refresh() async {

@@ -20,7 +20,7 @@ Route onGenerateRoute(settings) {
       _nextPage = SplashScreen();
       break;
     case HomeView.RouteName:
-      _nextPage = HomeView(LatLng(0, 0));
+      _nextPage = HomeView(LatLng(0, 0), "");
       break;
     default:
       _nextPage = Container();
