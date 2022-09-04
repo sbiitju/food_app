@@ -68,6 +68,7 @@ class _ItemsCardState extends State<ItemsCard> {
                             top: 75,
                             left: 10,
                             right: 10,
+                            bottom: 5,
                             child: CartUpdateButton(
                                 itemPrice: widget.itemInfo[index].basePrice),
                           )

@@ -1,10 +1,11 @@
+import 'package:customizable_counter/customizable_counter.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/cart/cart.dart';
-import 'package:food_app/util/function.dart';
-import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
 
+import '../../data/model/cart/cart.dart';
 import '../../data/repo/cart/cart_repo.dart';
+import '../../util/function.dart';
+import '../cart/cart_controller.dart';
 
 class CartUpdateButton extends StatefulWidget {
   CartUpdateButton({required this.itemPrice, Key? key}) : super(key: key);
@@ -44,65 +45,29 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 140,
-      height: 45,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.circular(10),
-            shape: BoxShape.rectangle,
-            border:
-                Border.all(color: Theme.of(context).primaryColor, width: 2)),
-        child: isCounterZero
-            ? Center(
-                child: MaterialButton(
-                    onPressed: () {
-                      if (checkLoginStatus()) {
-                        cartRepository.cart.value =
-                            Cart("outletName", "restaurantName", "", [], []);
-                        increment();
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return loginCheckingDialog(context);
-                            });
-                      }
-                    },
-                    child: Text(
-                      "Add",
-                      style: TextStyle(
-                          color: Colors.deepOrangeAccent, fontSize: 20),
-                    )))
-            : Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: IconButton(
-                        onPressed: decrement,
-                        icon: Icon(
-                          Icons.minimize_rounded,
-                          size: 20,
-                          color: Colors.black,
-                        )),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    counter.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  IconButton(
-                      onPressed: increment,
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      )),
-                ],
-              ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 5),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: CustomizableCounter(
+          backgroundColor: Colors.white30,
+          onCountChange: (value) {
+            if (checkLoginStatus()) {
+              cartRepository.cart.value =
+                  Cart("outletName", "restaurantName", "", [], []);
+              if (value > counter) {
+                increment();
+              } else
+                decrement();
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return loginCheckingDialog(context);
+                  });
+            }
+          },
+        ),
       ),
     );
   }
