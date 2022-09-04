@@ -50,11 +50,12 @@ class _HomeViewState extends State<HomeView> {
     return controller.checking.value
         ? Scaffold(
             appBar: AppBar(
+              elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
               title: Row(
                 children: [
-                  Icon(Icons.location_on,
-                      color: Theme.of(context).primaryColor, size: 30),
+                  Icon(Icons.location_on_outlined,
+                      color: Theme.of(context).primaryColor, size: 32),
                   SizedBox(
                     width: 10,
                   ),
