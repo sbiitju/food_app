@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:food_app/data/repo/checkout/checkout_repo.dart';
 import 'package:food_app/view/checkout/model/delivery_address_model.dart';
 import 'package:food_app/view/checkout/model/order_place_address_model.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/repo/cart/cart_repo.dart';
+import 'component/order_place_popup.dart';
 import 'model/payment_ui_model.dart';
 
 class CheckOutController extends GetxController {
@@ -28,7 +30,16 @@ class CheckOutController extends GetxController {
   RxBool hasAddress = true.obs;
 
   placeRegularOrder() {
-    _repository.placeRegularOrder(23, 90, "fingerPrint");
+    _repository.placeRegularOrder(23, 90, "fingerPrint").then((value) {
+      if (value.isNotEmpty) {
+        cartRepository.totalAmount.value = 0;
+        cartRepository.totalItem.value = 0;
+        cartRepository.cart.value = null;
+        Get.dialog(OrderPlacePopUp());
+      }else{
+        Get.snackbar("Error", "Something is wrong");
+      }
+    });
   }
 
   setPaymentMethod(PaymentUiModel paymentUiModel) {

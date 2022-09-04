@@ -1,13 +1,9 @@
 class PlaceOrderQuery {
   String placeRegularOrder = """
-  mutation {
+  mutation placeRegularOrder(\$coordinate: Point!) {
   placeRegularOrder(
     fingerprint: "string"
-    currentLocation:{
-        type: Point,
-        coordinates: [90, 23]
-    },
-    vendor: "string"
+    currentLocation:\$coordinate,
   ) {
     message
     statusCode

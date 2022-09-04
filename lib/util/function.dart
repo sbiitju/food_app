@@ -47,7 +47,7 @@ Route onGenerateRoute(settings) {
 
 bool checkLoginStatus() {
   var status = getStorage.read(TOKEN) as String?;
-  return !(status == null || status.isEmpty);
+  return (status == null || status.isEmpty);
 }
 
 Future<bool> isValidateNumber(String number) async {
@@ -62,7 +62,7 @@ Future<void> saveToken(String token) async {
 }
 
 Future<String> getToken() async {
-  final token = getStorage.read(TOKEN);
+  final token = getStorage.read(TOKEN) ?? "";
   debugPrint("MyToken" + token);
   return token;
 }

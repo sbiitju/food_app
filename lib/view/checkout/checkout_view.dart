@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 import 'package:food_app/view/checkout/checkout_controller.dart';
-import 'package:food_app/view/checkout/component/order_place_popup.dart';
 import 'package:food_app/view/component/customized_container.dart';
 import 'package:get/get.dart';
 
@@ -75,9 +74,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   controller.hasAddress.value
                                       ? TextButton(
                                           child: const Text("Change"),
-                                          onPressed: () {
-                                            Get.dialog(OrderPlacePopUp());
-                                          },
+                                          onPressed: () {},
                                         )
                                       : const SizedBox()
                                 ],
@@ -181,9 +178,6 @@ class _CheckOutViewState extends State<CheckOutView> {
                     child: MaterialButton(
                       onPressed: () {
                         controller.placeRegularOrder();
-                        controller.cartRepository.cart.value = null;
-                        controller.cartRepository.totalAmount.value = 0;
-                        controller.cartRepository.totalItem.value = 0;
                       },
                       child: BigTextView(text: "Confirm Order"),
                     ),

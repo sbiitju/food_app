@@ -38,9 +38,7 @@ class CheckOutDataSourceImp implements CheckOutDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(PlaceOrderQuery().placeRegularOrder),
         variables: {
-          "device": {},
-          "fingerprint": fingerPrint,
-          "currentLocation": {
+          "coordinate": {
             "type": "Point",
             "coordinates": [lon, lat]
           }
