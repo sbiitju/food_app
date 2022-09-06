@@ -31,7 +31,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
         counter--;
       }
     });
-    updateCart(0);
+    removeCart(0);
   }
 
   void increment() {
@@ -40,7 +40,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
       counter++;
       isCounterZero = false;
     });
-    updateCart(1);
+    addCart(1);
   }
 
   @override
@@ -51,14 +51,16 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
         alignment: Alignment.topCenter,
         child: CustomizableCounter(
           backgroundColor: Colors.white30,
+          onIncrement: (value) {
+            addCart(value.toInt());
+          },
+          onDecrement: (value) {
+            removeCart(value.toInt());
+          },
           onCountChange: (value) {
             if (checkLoginStatus()) {
               cartRepository.cart.value =
                   Cart("outletName", "restaurantName", "", [], []);
-              if (value > counter) {
-                increment();
-              } else
-                decrement();
             } else {
               showDialog(
                   context: context,
@@ -72,25 +74,23 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
     );
   }
 
-  void updateCart(int i) {
-    switch (i) {
-      case 0:
-        if (cartRepository.totalItem.value == 1) {
-          cartRepository.totalItem.value = 0;
-          cartRepository.totalAmount.value -= widget.itemPrice;
-        } else if (cartRepository.totalItem.value > 1) {
-          cartRepository.totalItem.value--;
-          cartRepository.totalAmount.value -= widget.itemPrice;
-        }
-        if (cartRepository.totalItem.value == 0 &&
-            cartRepository.totalAmount.value == 0) {
-          cartRepository.totalItem.value = 0;
-          cartRepository.cart.value = null;
-        }
-        break;
-      case 1:
-        cartRepository.totalItem.value++;
-        cartRepository.totalAmount.value += widget.itemPrice;
+  void addCart(int i) {
+    cartRepository.totalItem.value++;
+    cartRepository.totalAmount.value += widget.itemPrice;
+  }
+
+  void removeCart(int i) {
+    if (cartRepository.totalItem.value == 1) {
+      cartRepository.totalItem.value = 0;
+      cartRepository.totalAmount.value -= widget.itemPrice;
+    } else if (cartRepository.totalItem.value > 1) {
+      cartRepository.totalItem.value--;
+      cartRepository.totalAmount.value -= widget.itemPrice;
+    }
+    if (cartRepository.totalItem.value == 0 &&
+        cartRepository.totalAmount.value == 0) {
+      cartRepository.totalItem.value = 0;
+      cartRepository.cart.value = null;
     }
   }
 }
