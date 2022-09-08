@@ -135,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
                         child: Container(
                             height: 50,
                             width: getScreenWidth(context),
-                            child: Center(child: Text("Log Out"))),
+                            child: Center(child: Text(""))),
                         onPressed: () {
                           Get.off(SplashScreen());
                         },
