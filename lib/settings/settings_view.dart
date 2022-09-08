@@ -12,13 +12,18 @@ class SettingsView extends GetView<Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Settings"),
+          elevation: 0,
+          title: Text(AppLocalizations.of(context)!.settingsText,
+              style: Theme.of(context).textTheme.titleSmall),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 65),
@@ -46,11 +51,32 @@ class SettingsView extends GetView<Controller> {
                                   saveLanguageSettings(false);
                                   Get.updateLocale(Locale("en"));
                                   Navigator.pop(context);
+                                  controller.isBanglaModeOn.value = false;
                                 },
-                                child: Text(
-                                  "English",
-                                  textAlign: TextAlign.left,
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                child: Row(
+                                  children: [
+                                    Obx(() {
+                                      return Radio(
+                                        value: false,
+                                        groupValue:
+                                            controller.isBanglaModeOn.value,
+                                        onChanged: (value) {
+                                          saveLanguageSettings(false);
+                                          Get.updateLocale(Locale("en"));
+                                          Navigator.pop(context);
+                                          controller.isBanglaModeOn.value =
+                                              false;
+                                        },
+                                      );
+                                    }),
+                                    Text(
+                                      "English",
+                                      textAlign: TextAlign.left,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(
@@ -61,10 +87,31 @@ class SettingsView extends GetView<Controller> {
                                   saveLanguageSettings(true);
                                   Get.updateLocale(Locale("bn"));
                                   Navigator.pop(context);
+                                  controller.isBanglaModeOn.value = true;
                                 },
-                                child: Text(
-                                  "বাংলা",
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                child: Row(
+                                  children: [
+                                    Obx(() {
+                                      return Radio(
+                                        value: true,
+                                        groupValue:
+                                            controller.isBanglaModeOn.value,
+                                        onChanged: (value) {
+                                          saveLanguageSettings(true);
+                                          Get.updateLocale(Locale("bn"));
+                                          Navigator.pop(context);
+                                          controller.isBanglaModeOn.value =
+                                              true;
+                                        },
+                                      );
+                                    }),
+                                    Text(
+                                      "বাংলা",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
                                 ),
                               )
                             ],
@@ -108,32 +155,65 @@ class SettingsView extends GetView<Controller> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              MaterialButton(
-                                onPressed: () {
-                                  saveThemeSettings(false);
-                                  Get.changeThemeMode(ThemeMode.light);
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Light Mode",
-                                  textAlign: TextAlign.left,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              ),
+                              MaterialButton(onPressed: () {
+                                saveThemeSettings(false);
+                                controller.isDarkModeOn.value = false;
+                                Get.changeThemeMode(ThemeMode.light);
+                                Navigator.pop(context);
+                              }, child: Obx(() {
+                                return Row(
+                                  children: [
+                                    Radio(
+                                        value: false,
+                                        groupValue:
+                                            controller.isDarkModeOn.value,
+                                        onChanged: (value) {
+                                          saveThemeSettings(false);
+                                          controller.isDarkModeOn.value = false;
+                                          Get.changeThemeMode(ThemeMode.light);
+                                          Navigator.pop(context);
+                                        }),
+                                    Text(
+                                      "Light Mode",
+                                      textAlign: TextAlign.left,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
+                                );
+                              })),
                               SizedBox(
                                 height: 5,
                               ),
-                              MaterialButton(
-                                onPressed: () {
-                                  saveThemeSettings(true);
-                                  Get.changeThemeMode(ThemeMode.dark);
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "Dark Mode",
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              )
+                              MaterialButton(onPressed: () {
+                                saveThemeSettings(true);
+                                Get.changeThemeMode(ThemeMode.dark);
+                                controller.isDarkModeOn.value = true;
+                                Navigator.pop(context);
+                              }, child: Obx(() {
+                                return Row(
+                                  children: [
+                                    Radio(
+                                        value: true,
+                                        groupValue:
+                                            controller.isDarkModeOn.value,
+                                        onChanged: (onChanged) {
+                                          saveThemeSettings(true);
+                                          Get.changeThemeMode(ThemeMode.dark);
+                                          Navigator.pop(context);
+                                          controller.isDarkModeOn.value = true;
+                                        }),
+                                    Text(
+                                      "Dark Mode",
+                                      textAlign: TextAlign.left,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
+                                );
+                              }))
                             ],
                           ),
                         ),
@@ -142,6 +222,7 @@ class SettingsView extends GetView<Controller> {
               },
               child: Container(
                 width: getScreenWidth(context),
+                height: 70,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 65),

@@ -31,19 +31,20 @@ class MapViewState extends State<MapView> {
 
   @override
   void initState() {
-    debugPrint("Map is called");
-    myController.isServiceAvailable.value = myController.getZone(
-        widget.position.latitude, widget.position.longitude);
+    myController
+        .getZone(widget.position.latitude, widget.position.longitude)
+        .then((value) => myController.isServiceAvailable.value = value);
+    myController
+        .getReverseGeoCode(widget.position.latitude, widget.position.longitude)
+        .then((value) => myController.address.value = value);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("MapBuild function is Called");
     var latlon = LatLng(widget.position.latitude, widget.position.longitude);
     Set<Marker> markers = {};
-    const MarkerId markerId = MarkerId("My Location");
     var arg = widget.position;
     myPosition =
         CameraPosition(target: LatLng(arg.latitude, arg.longitude), zoom: 14.5);
@@ -57,9 +58,9 @@ class MapViewState extends State<MapView> {
           .getReverseGeoCode(
               position.target.latitude, position.target.longitude)
           .then((value) => myController.address.value = value);
-      myController.isServiceAvailable.value = myController.getZone(
-          position.target.latitude, position.target.longitude);
-      print(position);
+      myController
+          .getZone(position.target.latitude, position.target.longitude)
+          .then((value) => myController.isServiceAvailable.value = value);
     }
 
     testWidget = Scaffold(body: Obx(() {
@@ -104,7 +105,7 @@ class MapViewState extends State<MapView> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 55, left: 10, right: 10),
+              padding: const EdgeInsets.only(bottom: 59, left: 10, right: 10),
               child: Container(
                 width: double.infinity,
                 height: 50,
@@ -134,7 +135,7 @@ class MapViewState extends State<MapView> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
               child: Container(
                 decoration: BoxDecoration(
                     color: myController.isServiceAvailable.value
@@ -161,8 +162,17 @@ class MapViewState extends State<MapView> {
                             );
                           },
                     child: myController.isServiceAvailable.value
-                        ? Text(AppLocalizations.of(context)!.selectLocation)
-                        : const Text("No Service Available")),
+                        ? Text(
+                            AppLocalizations.of(context)!.selectLocation,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(color: Colors.white),
+                          )
+                        : Text(
+                            "No Service Available",
+                            style: Theme.of(context).textTheme.titleSmall,
+                          )),
               ),
             ),
           )

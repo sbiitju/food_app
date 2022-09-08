@@ -6,17 +6,19 @@ import '../../data/repo/base_repo.dart';
 
 class MapController extends BaseController {
   var isServiceAvailable = false.obs;
-  var address = Area("", "", "", "", "").obs;
+  var address = Area("Loading", "..", "", "", "").obs;
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
 
-  bool getZone(lat, lon) {
-    _repository.getZone(lat, lon).then((value) => isServiceAvailable(value));
+  Future<bool> getZone(lat, lon) async {
+    await _repository
+        .getZone(lat, lon)
+        .then((value) => isServiceAvailable(value));
     return isServiceAvailable.value;
   }
 
-  Future<Area> getReverseGeoCode(lat, lon) {
-    _repository.getZone(lat, lon);
+  Future<Area> getReverseGeoCode(lat, lon) async {
+    await _repository.getZone(lat, lon);
     return _repository.getReverseGeoCode(lat, lon);
   }
 }
