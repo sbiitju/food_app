@@ -1,11 +1,10 @@
 # Food App
 
+Food App is a simple food delivery app developed by using Flutter SDK for browsing food catalogs and
+placing orders to restaurants. This app was designed by following MVVM architecture. For
+communicating with the backend using GraphQL here we use GraphQL flutter library.
 
-Food App is a simple food delivery app developed by using Flutter SDK for browsing food catalogs and placing orders to restaurants. This app was designed by following MVVM architecture. For communicating with the backend using GraphQL here we use GraphQL flutter library.
-
-
-[Try Sample APK](https://drive.google.com/file/d/1B9FAuS-0nNCnJUYlx8CKZCnNCYF1tNKB/view?usp=sharing)
-
+[Try Sample APK](https://drive.google.com/file/d/1wlNr2hzeF_N4oPsdCDBKPcHEbILk4xWf/view?usp=sharing)
 
 ### Sample
 
@@ -13,21 +12,25 @@ Splash Screen | Map Screen
 -------------|-----------------
 ![alt text](screenshots/splash.jpg "Splash Screen") | ![alt text](screenshots/map.jpg "Map Screen")
 
-
-Map Screen (Dark Mode)| Map Screen
+Map Screen (Dark Mode)| Home Screen
 -------------|-----------------
-![alt text](screenshots/map_dark_mode.png "Map Screen Dark Mode") | ![alt text](screenshots/map.jpg "Map Screen")
+![alt text](screenshots/map_dark_mode.png "Map Screen Dark Mode") | ![alt text](screenshots/home.jpg "Home Screen")
 
-
-
-Home Screen | Restaurant/Shop Screen
+Restaurant/Shop Screen (Dark) | Restaurant/Shop Screen
 -------------|-----------------
-![alt text](screenshots/home.jpg "Home Screen") | ![alt text](screenshots/food_catalogs.jpg "Restaurant/Shop Screen")
+![alt text](screenshots/food_catelogs_dark_mode.png "Restaurant/Shop Screen (Dark)") | ![alt text](screenshots/food_catalogs.jpg "Restaurant/Shop Screen")
 
 Login Screen | OTP Screen
 -------------|-----------------
 ![alt text](screenshots/login.jpg "Login Screen") | ![alt text](screenshots/otp.jpg "OTP Screen")
 
+Cart Screen | Checkout Screen
+-------------|-----------------
+![alt text](screenshots/cart.png "Cart Screen") | ![alt text](screenshots/checkout.png "Checkout Screen")
+
+Change Language Screen | Change Theme Screen
+-------------|-----------------
+![alt text](screenshots/theme.png "Change Theme Screen") | ![alt text](screenshots/language.png "Change Language Screen")
 
 ### Features:
 
@@ -38,7 +41,6 @@ Login Screen | OTP Screen
 * Placing order to Restaurant/Shop.
 * Light and Dark Theme Support.
 
-
 ### Used libraries:
 
 * [Flutter SDK](https://flutter.dev/)
@@ -46,7 +48,6 @@ Login Screen | OTP Screen
 * [Graphql Flutter](https://pub.dev/packages/graphql_flutter)
 * [Get](https://pub.dev/packages/get)
 * [Get Storage](https://pub.dev/packages/get_storage)
-
 
 ### License
 
