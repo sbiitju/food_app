@@ -16,7 +16,7 @@ Splash Screen | Map Screen
 
 Map Screen (Dark Mode)| Map Screen
 -------------|-----------------
-![alt text](screenshots/map_dark_mode.jpg "Map Screen Dark Mode") | ![alt text](screenshots/map.jpg "Map Screen")
+![alt text](screenshots/map_dark_mode.png "Map Screen Dark Mode") | ![alt text](screenshots/map.jpg "Map Screen")
 
 
 
