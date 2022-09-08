@@ -79,7 +79,10 @@ class MapViewState extends State<MapView> {
               top: MediaQuery.of(context).size.height - 150,
               left: MediaQuery.of(context).size.width - 60,
               child: IconButton(
-                icon: const Icon(Icons.my_location),
+                icon: Icon(
+                  Icons.my_location,
+                  color: Theme.of(context).primaryColor,
+                ),
                 onPressed: () {
                   setState(() {
                     _controller.future.then((value) => {

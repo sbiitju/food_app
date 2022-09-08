@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:food_app/settings/settings_view.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
 import 'package:food_app/view/home/home_controller.dart';
 import 'package:food_app/view/outlet/outlet_view.dart';
+import 'package:food_app/view/splash/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -65,7 +67,7 @@ class _HomeViewState extends State<HomeView> {
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall!
-                            .copyWith(color: Theme.of(context).backgroundColor),
+                            .copyWith(color: Colors.white),
                         textAlign: TextAlign.left,
                       ),
                       Text(
@@ -74,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
-                            .copyWith(color: Theme.of(context).backgroundColor),
+                            .copyWith(color: Colors.white),
                       ),
                     ],
                   ),
@@ -83,34 +85,63 @@ class _HomeViewState extends State<HomeView> {
             ),
             drawer: Drawer(
               width: 200,
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: Stack(
                 children: [
-                  DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: (getToken() != null)
-                        ? Center(
-                            child: Text("Login"),
-                          )
-                        : Column(
-                            children: [],
-                          ),
+                  ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: (getToken() != null)
+                            ? Center(
+                                child: Text("Login"),
+                              )
+                            : Column(
+                                children: [],
+                              ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: Theme.of(context).dividerColor,
+                        )),
+                        child: ListTile(
+                          title: Center(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.settings),
+                              Text(
+                                AppLocalizations.of(context)!.settingsText,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ],
+                          )),
+                          onTap: () {
+                            Get.to(SettingsView());
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                    )),
-                    child: ListTile(
-                      title: Center(child: Text("Settings")),
-                      onTap: () {
-                        Get.to(SettingsView());
-                      },
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        child: Container(
+                            height: 50,
+                            width: getScreenWidth(context),
+                            child: Center(child: Text("Log Out"))),
+                        onPressed: () {
+                          Get.off(SplashScreen());
+                        },
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

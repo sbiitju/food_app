@@ -6,5 +6,10 @@
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
   "settingsFontSize": "Font Size",
+  "settingsText": "Settings",
+  "changeLanguage": "Change Language",
+  "appLanguage": "Application Language",
+  "changeTheme": "Change Theme",
+  "applicationTheme": "Application Theme",
   "selectLocation": "Select Location"
 }

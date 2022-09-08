@@ -10,6 +10,8 @@ import '../view/home/home_view.dart';
 import '../view/splash/splash_view.dart';
 
 var TOKEN = "token";
+var LANGUAGE = "language";
+var THEME = "theme";
 var getStorage = GetStorage();
 
 Route onGenerateRoute(settings) {
@@ -61,10 +63,28 @@ Future<void> saveToken(String token) async {
   getStorage.write(TOKEN, token);
 }
 
+Future<void> saveLanguageSettings(bool status) async {
+  getStorage.write(LANGUAGE, status);
+}
+
+Future<void> saveThemeSettings(bool status) async {
+  getStorage.write(THEME, status);
+}
+
 Future<String> getToken() async {
   final token = getStorage.read(TOKEN) ?? "";
   debugPrint("MyToken" + token);
   return token;
+}
+
+Future<bool> isDarkMode() async {
+  final status = getStorage.read(THEME) ?? false;
+  return status;
+}
+
+Future<bool> isBangla() async {
+  final status = getStorage.read(LANGUAGE) ?? false;
+  return status;
 }
 
 Widget loginCheckingDialog(context) {

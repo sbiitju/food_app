@@ -6,5 +6,10 @@
   "settingsTheme": "থিম",
   "settingsLanguage": "ভাষা",
   "settingsFontSize": "অক্ষরের আকার",
+  "settingsText": "সেটিংস",
+  "changeLanguage": "ভাষা পরিবর্তন করুন",
+  "appLanguage": "এপের ভাষা",
+  "changeTheme": "থিম পরিবর্তন করুন",
+  "applicationTheme": "এপের থিম",
   "selectLocation": "জায়গা নির্ধারন করুন"
 }
