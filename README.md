@@ -13,9 +13,12 @@ Splash Screen | Map Screen
 -------------|-----------------
 ![alt text](screenshots/splash.jpg "Splash Screen") | ![alt text](screenshots/map.jpg "Map Screen")
 
-Map Screen (Dark Mode)
-!-----------------
-![alt text](screenshots/map_dark_mode.jpg "Map Screen Dark Mode")
+
+Map Screen (Dark Mode)| Map Screen
+-------------|-----------------
+![alt text](screenshots/map_dark_mode.jpg "Map Screen Dark Mode") | ![alt text](screenshots/map.jpg "Map Screen")
+
+
 
 Home Screen | Restaurant/Shop Screen
 -------------|-----------------
