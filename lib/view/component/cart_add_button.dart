@@ -8,7 +8,7 @@ import '../../util/function.dart';
 import '../cart/cart_controller.dart';
 
 class CartUpdateButton extends StatefulWidget {
-  CartUpdateButton({required this.itemPrice, Key? key}) : super(key: key);
+  const CartUpdateButton({required this.itemPrice, Key? key}) : super(key: key);
   final double itemPrice;
 
   @override

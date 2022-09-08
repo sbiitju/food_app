@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/settings/settings_view.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
@@ -51,14 +52,9 @@ class _HomeViewState extends State<HomeView> {
         ? Scaffold(
             appBar: AppBar(
               elevation: 0,
-              backgroundColor: Theme.of(context).backgroundColor,
+              titleSpacing: 0,
               title: Row(
                 children: [
-                  Icon(Icons.location_on_outlined,
-                      color: Theme.of(context).primaryColor, size: 32),
-                  SizedBox(
-                    width: 10,
-                  ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -66,15 +62,54 @@ class _HomeViewState extends State<HomeView> {
                     children: [
                       Text(
                         "Deliver To",
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(color: Theme.of(context).backgroundColor),
                         textAlign: TextAlign.left,
                       ),
                       Text(
                         widget.locationName,
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: Theme.of(context).backgroundColor),
                       ),
                     ],
+                  ),
+                ],
+              ),
+            ),
+            drawer: Drawer(
+              width: 200,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: (getToken() != null)
+                        ? Center(
+                            child: Text("Login"),
+                          )
+                        : Column(
+                            children: [],
+                          ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: Theme.of(context).dividerColor,
+                    )),
+                    child: ListTile(
+                      title: Center(child: Text("Settings")),
+                      onTap: () {
+                        Get.to(SettingsView());
+                      },
+                    ),
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:food_app/view/map/map_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class MapViewState extends State<MapView> {
 
   @override
   void initState() {
+    debugPrint("Map is called");
     myController.isServiceAvailable.value = myController.getZone(
         widget.position.latitude, widget.position.longitude);
 
@@ -38,7 +40,7 @@ class MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Build function is Called");
+    debugPrint("MapBuild function is Called");
     var latlon = LatLng(widget.position.latitude, widget.position.longitude);
     Set<Marker> markers = {};
     const MarkerId markerId = MarkerId("My Location");
@@ -156,7 +158,7 @@ class MapViewState extends State<MapView> {
                             );
                           },
                     child: myController.isServiceAvailable.value
-                        ? const Text("Select Location")
+                        ? Text(AppLocalizations.of(context)!.selectLocation)
                         : const Text("No Service Available")),
               ),
             ),

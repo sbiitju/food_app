@@ -7,6 +7,8 @@ import '../util/ItemModel.dart';
 
 class Controller extends BaseController {
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
+  RxBool isDarkModeOn = false.obs;
+  RxBool isBangla = false.obs;
 
   Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
 

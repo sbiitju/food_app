@@ -24,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    debugPrint("Splash Screen is called ");
     super.initState();
     controller.getServiceConfiguration().then((value) {
       isApiCallCompleted = value;

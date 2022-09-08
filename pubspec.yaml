@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   lottie: ^1.3.0
   get: ^4.6.5
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
   google_maps_flutter: ^2.1.7
   geolocator: ^8.2.1
   graphql_flutter: ^5.1.0
@@ -51,6 +54,8 @@ dependencies:
   phone_number: ^0.12.0+2
   sms_autofill: ^2.2.0
   customizable_counter: ^1.0.4
+  fluttertoast: ^8.0.8
+
 
 
 
@@ -63,6 +68,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.2.0
   build_runner: ^2.1.11
+  dart_code_metrics: any
   flutter_app_name: ^0.1.1
 
 flutter_app_name:
@@ -80,7 +86,7 @@ flutter_app_name:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
