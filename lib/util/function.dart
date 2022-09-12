@@ -63,6 +63,10 @@ Future<void> saveToken(String token) async {
   getStorage.write(TOKEN, token);
 }
 
+Future<void> removeToken() async {
+  getStorage.remove(TOKEN);
+}
+
 Future<void> saveLanguageSettings(bool status) async {
   getStorage.write(LANGUAGE, status);
 }
@@ -155,7 +159,9 @@ Widget loginCheckingDialog(context) {
                     Navigator.of(context, rootNavigator: true).pop('dialog');
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return AuthPage();
+                      return AuthPage(
+                        function: () {},
+                      );
                     }));
                   },
                   icon: Icon(

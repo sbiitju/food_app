@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/view/auth/auth_view.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
@@ -130,9 +129,7 @@ class _OutletViewState extends State<OutletView> {
                                 child: IconButton(
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor,
-                                    onPressed: () {
-                                      Get.to(AuthPage());
-                                    },
+                                    onPressed: () {},
                                     icon: Icon(
                                       Icons.search_sharp,
                                       color: Theme.of(context).primaryColor,

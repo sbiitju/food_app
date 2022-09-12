@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:food_app/settings/settings_view.dart';
+import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
 import 'package:food_app/view/home/home_controller.dart';
 import 'package:food_app/view/outlet/outlet_view.dart';
-import 'package:food_app/view/splash/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/category_items_model.dart';
+import 'component/home_drawer.dart';
 
 class HomeView extends StatefulWidget {
   final LatLng latLng;
@@ -83,67 +82,12 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
             ),
-            drawer: Drawer(
-              width: 200,
-              child: Stack(
-                children: [
-                  ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      DrawerHeader(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: (getToken() != null)
-                            ? Center(
-                                child: Text("Login"),
-                              )
-                            : Column(
-                                children: [],
-                              ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Theme.of(context).dividerColor,
-                        )),
-                        child: ListTile(
-                          title: Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(Icons.settings),
-                              Text(
-                                AppLocalizations.of(context)!.settingsText,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ],
-                          )),
-                          onTap: () {
-                            Get.to(SettingsView());
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MaterialButton(
-                        child: Container(
-                            height: 50,
-                            width: getScreenWidth(context),
-                            child: Center(child: Text(""))),
-                        onPressed: () {
-                          Get.off(SplashScreen());
-                        },
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            drawer: HomeDrawer(
+              profile: Profile(
+                  "Md. Shahin Bashar",
+                  "01613162522",
+                  "sbiitju@gmail.com",
+                  "https://static.hungrynaki.com/hungrynaki-v4/restaurants/pita_pan/meta/pita_pan_cover_1564222336864.png"),
             ),
             body: SafeArea(
                 child: Stack(
