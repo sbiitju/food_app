@@ -9,9 +9,6 @@ import '../../model/item.dart';
 abstract class CartRepo {
   abstract Rx<Cart?> cart;
 
-  abstract Rx<int> totalItem;
-  abstract Rx<double> totalAmount;
-
   Future<Cart> getCart();
 
   Future addToCart(Item itemInfo, LatLng latLng);

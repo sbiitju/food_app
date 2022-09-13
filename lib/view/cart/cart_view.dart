@@ -132,7 +132,8 @@ class _MyCartViewState extends State<MyCartView> {
                                                     height: 5,
                                                   ),
                                                   Text(
-                                                    cart.deliveryTime,
+                                                    cart.deliveryTime
+                                                        .toString(),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleMedium,
@@ -153,7 +154,8 @@ class _MyCartViewState extends State<MyCartView> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: CartItemList(
-                                        itemListModelList: cart.listOfItems)),
+                                        itemListModelList:
+                                            cart.listOfItems ?? [])),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -161,7 +163,8 @@ class _MyCartViewState extends State<MyCartView> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: CartInvoiceList(
-                                        invoiceModelList: cart.listOfInvoice)),
+                                        invoiceModelList:
+                                            cart.listOfInvoice ?? [])),
                               ],
                             ),
                           ),

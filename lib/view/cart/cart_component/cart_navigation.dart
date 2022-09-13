@@ -10,18 +10,17 @@ class CartNavigationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final item = cartRepository.totalItem > 1 ? "Items" : "Item";
+    // final item = cartRepository.totalItem > 1 ? "Items" : "Item";
 
     return Container(
       color: Theme.of(context).backgroundColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
         child: Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Obx(() {
-            return MaterialButton(
+            decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: MaterialButton(
               onPressed: () {
                 Get.to(MyCartView());
               },
@@ -30,17 +29,11 @@ class CartNavigationCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${cartRepository.totalItem} $item | Tk. ${cartRepository.totalAmount}",
-                      style: TextStyle(color: Colors.white),
-                    ),
                     Text("View Cart", style: TextStyle(color: Colors.white))
                   ],
                 ),
               ),
-            );
-          }),
-        ),
+            )),
       ),
     );
   }

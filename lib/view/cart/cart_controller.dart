@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:get/get.dart';
@@ -29,24 +28,19 @@ class CartController extends GetxController {
   ].obs;
 
   RxBool hasAddress = true.obs;
-  Rx<Cart?> cart = Rx(null);
+  late final Rx<Cart?> cart = _cartRepository.cart;
 
   Future addItem(Item itemInfo, LatLng latLng) {
     return _cartRepository.addToCart(itemInfo, latLng);
   }
 
-  Future getCart() {
-    return _cartRepository.getCart().then((value) {
-      cart.value = value;
-      debugPrint(cart.value?.outletName.toString());
-    });
+  getCart() {
+    _cartRepository.getCart().then((value) {});
   }
 
   placeRegularOrder() {
     _cartRepository.placeRegularOrder(23, 90, "fingerPrint").then((value) {
       if (value.isNotEmpty) {
-        _cartRepository.totalAmount.value = 0;
-        _cartRepository.totalItem.value = 0;
         _cartRepository.cart.value = null;
         Get.dialog(OrderPlacePopUp());
       } else {

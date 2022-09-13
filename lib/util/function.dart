@@ -10,6 +10,7 @@ import '../view/home/home_view.dart';
 import '../view/splash/splash_view.dart';
 
 var TOKEN = "token";
+var FINGERPRINT = "fingerprint";
 var LANGUAGE = "language";
 var THEME = "theme";
 var getStorage = GetStorage();
@@ -62,6 +63,15 @@ Future<bool> isValidateNumber(String number) async {
 
 Future<void> saveToken(String token) async {
   getStorage.write(TOKEN, token);
+}
+
+Future<void> saveFingerPrint(String fingerPrint) async {
+  getStorage.write(FINGERPRINT, fingerPrint);
+}
+
+Future<String> getFingerPrint() async {
+  final fingerPrint = getStorage.read(FINGERPRINT) ?? "";
+  return fingerPrint;
 }
 
 Future<void> removeToken() async {

@@ -14,12 +14,44 @@ class GetCart {
           itemSubtotal
         }
         outlet{
-          id
-          name
-          restaurant{
-            name
-          }
+             id
+                    name
+                    images {
+                        thumbnail
+                    }
+                    restaurant {
+                        id
+                        name
+                    }
+                    deliveryFee
+                    deliveryTime                   
         }
+         items {
+                    id
+                    meta {
+                        name
+                        description
+                    }
+                    quantity
+                    variant{
+                        id
+                        name
+                        additionalPrice
+                    }
+                    toppings{
+                        id
+                        name
+                        quantity
+                        additionalPrice
+                    }
+                    basePrice
+                    price
+                }
+                itemWisePaymentDetails {
+                    title
+                    colorCode
+                    value
+                }
       }
     }
   }

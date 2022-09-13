@@ -4,6 +4,7 @@ import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCustomerShoppingCartReceivingAddressesQuery.dart';
 import 'package:food_app/graphql/query/get_cart_query.dart';
 import 'package:food_app/graphql/query/get_payment_query.dart';
+import 'package:food_app/util/function.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -21,8 +22,8 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCart().getCart),
         variables: {"fingerprint": fingerPrint}));
-    debugPrint("GetCart" + result.toString());
-    return CartParse.parseGetCart();
+    debugPrint(result.data.toString());
+    return Cart.parse(result);
   }
 
   @override
@@ -41,7 +42,8 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
         }
       }
     }));
-    debugPrint("AddToCart" + result.data.toString());
+    saveFingerPrint(
+        result.data!["addItem"]["result"]["fingerprint"].toString());
   }
 
   // @override

@@ -61,8 +61,12 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
           onIncrement: (value) {
             if (controller.loginStatus.value) {
               addCart(value.toInt());
-              cartRepository.cart.value =
-                  Cart("outletName", "restaurantName", "", [], []);
+              cartRepository.cart.value = Cart(
+                  listOfInvoice: null,
+                  deliveryTime: null,
+                  restaurantName: null,
+                  outletName: null,
+                  listOfItems: null);
             } else {
               showDialog(
                   context: context,
@@ -93,23 +97,8 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   void addCart(int i) {
-    cartRepository.totalItem.value++;
-    cartRepository.totalAmount.value += widget.item.basePrice;
     cartRepository.addToCart(widget.item, mapController.latLon.value);
   }
 
-  void removeCart() {
-    if (cartRepository.totalItem.value == 1) {
-      cartRepository.totalItem.value = 0;
-      cartRepository.totalAmount.value -= widget.item.basePrice;
-    } else if (cartRepository.totalItem.value > 1) {
-      cartRepository.totalItem.value--;
-      cartRepository.totalAmount.value -= widget.item.basePrice;
-    }
-    if (cartRepository.totalItem.value == 0 &&
-        cartRepository.totalAmount.value == 0) {
-      cartRepository.totalItem.value = 0;
-      cartRepository.cart.value = null;
-    }
-  }
+  void removeCart() {}
 }

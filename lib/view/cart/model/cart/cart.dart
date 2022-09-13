@@ -1,35 +1,34 @@
-import 'Invoice.dart';
-import 'Item.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+import 'cart_invoice.dart';
+import 'cart_item.dart';
 
 class Cart {
-  final String outletName;
-  final String restaurantName;
-  final String deliveryTime;
-  final List<CartItem> listOfItems;
-  final List<CartInvoice> listOfInvoice;
+  final String? outletName;
+  final String? restaurantName;
+  final String? deliveryTime;
+  final List<CartItem>? listOfItems;
+  final List<CartInvoice>? listOfInvoice;
 
-  Cart(this.outletName, this.restaurantName, this.deliveryTime,
-      this.listOfItems, this.listOfInvoice);
-}
+  Cart(
+      {required this.outletName,
+      required this.restaurantName,
+      required this.deliveryTime,
+      required this.listOfItems,
+      required this.listOfInvoice});
 
-class CartParse {
-  static Cart parseGetCart() {
-    return Cart("outletName", "restaurantName", "25 - 30 mins", [
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-      CartItem("itemName", 3, 100),
-    ], [
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("title", "colorCode", 200),
-      CartInvoice("Last title", "colorCode", 500),
-    ]);
+  factory Cart.parse(QueryResult result) {
+    final resultCart = result.data!["getCart"]["result"]["cart"];
+    return Cart(
+        outletName: resultCart["outlet"]["name"],
+        restaurantName: resultCart["outlet"]["restaurant"]["name"],
+        deliveryTime:
+            "${resultCart["outlet"]["deliveryTime"]} - ${resultCart["outlet"]["deliveryTime"] + 5} mins",
+        listOfItems: (resultCart["items"] as List<dynamic>)
+            .map((e) => CartItem.parse(e))
+            .toList(),
+        listOfInvoice: (resultCart["itemWisePaymentDetails"] as List<dynamic>)
+            .map((e) => CartInvoice.parse(e))
+            .toList());
   }
 }
