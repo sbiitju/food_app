@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/model/cart/Item.dart';
+import '../model/cart/Item.dart';
 import 'medium_text_view.dart';
 
 class ItemCardComponent extends StatelessWidget {

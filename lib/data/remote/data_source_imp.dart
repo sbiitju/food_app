@@ -130,9 +130,10 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCategorizedItems().getCategorizedItems),
         variables: {'outletId': outletId}));
-    debugPrint(result.data.toString());
 
     var modifiedResult = ParseResponse(result).parseListOfCategoryItems();
+    debugPrint("newCategory" + modifiedResult[0].items[0].itemName);
+
     return modifiedResult;
   }
 }

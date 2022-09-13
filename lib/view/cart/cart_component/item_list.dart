@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 
-import '../../../data/model/cart/Item.dart';
+import '../model/cart/Item.dart';
 import 'item_card_component.dart';
 
 class CartItemList extends StatelessWidget {

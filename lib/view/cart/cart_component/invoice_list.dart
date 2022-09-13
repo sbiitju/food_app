@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/cart/Invoice.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
+import 'package:food_app/view/cart/model/cart/Invoice.dart';
 
 import 'invoice_card_component.dart';
 

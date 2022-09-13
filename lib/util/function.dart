@@ -47,9 +47,10 @@ Route onGenerateRoute(settings) {
       });
 }
 
-bool checkLoginStatus() {
-  var status = getStorage.read(TOKEN) as String?;
-  return (status == null || status.isEmpty);
+Future<bool> checkLoginStatus() async {
+  bool status = false;
+  await getToken().then((value) => status = value.isNotEmpty);
+  return status;
 }
 
 Future<bool> isValidateNumber(String number) async {
@@ -160,7 +161,9 @@ Widget loginCheckingDialog(context) {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return AuthPage(
-                        function: () {},
+                        function: () {
+                          Navigator.pop(context);
+                        },
                       );
                     }));
                   },

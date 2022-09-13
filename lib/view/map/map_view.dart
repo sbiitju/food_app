@@ -56,7 +56,7 @@ class MapViewState extends State<MapView> {
       latlon = position.target;
       myController
           .getReverseGeoCode(
-              position.target.latitude, position.target.longitude)
+          position.target.latitude, position.target.longitude)
           .then((value) => myController.address.value = value);
       myController
           .getZone(position.target.latitude, position.target.longitude)
@@ -77,19 +77,28 @@ class MapViewState extends State<MapView> {
             // markers: Set<Marker>.of(markers.values),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height - 150,
-              left: MediaQuery.of(context).size.width - 60,
+              top: MediaQuery
+                  .of(context)
+                  .size
+                  .height - 150,
+              left: MediaQuery
+                  .of(context)
+                  .size
+                  .width - 60,
               child: IconButton(
                 icon: Icon(
                   Icons.my_location,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
                 ),
                 onPressed: () {
                   setState(() {
-                    _controller.future.then((value) => {
-                          value.animateCamera(
-                              CameraUpdate.newCameraPosition(myPosition))
-                        });
+                    _controller.future.then((value) =>
+                    {
+                      value.animateCamera(
+                          CameraUpdate.newCameraPosition(myPosition))
+                    });
                   });
                 },
               )),
@@ -99,7 +108,9 @@ class MapViewState extends State<MapView> {
                 bottom: 45.0,
               ),
               child: Icon(Icons.location_on,
-                  color: Theme.of(context).primaryColor, size: 50),
+                  color: Theme
+                      .of(context)
+                      .primaryColor, size: 50),
             ),
           ),
           Align(
@@ -110,7 +121,9 @@ class MapViewState extends State<MapView> {
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme
+                      .of(context)
+                      .backgroundColor,
                   borderRadius: BorderRadius.circular(10),
                   shape: BoxShape.rectangle,
                 ),
@@ -139,40 +152,52 @@ class MapViewState extends State<MapView> {
               child: Container(
                 decoration: BoxDecoration(
                     color: myController.isServiceAvailable.value
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).scaffoldBackgroundColor,
+                        ? Theme
+                        .of(context)
+                        .primaryColor
+                        : Theme
+                        .of(context)
+                        .scaffoldBackgroundColor,
                     borderRadius:
-                        const BorderRadius.all(const Radius.circular(10))),
+                    const BorderRadius.all(const Radius.circular(10))),
                 width: double.infinity,
                 height: 50,
                 child: MaterialButton(
                     onPressed: !myController.isServiceAvailable.value
                         ? null
                         : () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeView(
-                                      latlon,
-                                      myController.address.value.areaName +
-                                          "," +
-                                          myController.address.value.cityName +
-                                          ", ${myController.address.value.districtName}")),
-                              (Route<dynamic> route) => false,
-                            );
-                          },
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomeView(
+                                    latlon,
+                                    myController.address.value.areaName +
+                                        "," +
+                                        myController.address.value.cityName +
+                                        ", ${myController.address.value
+                                            .districtName}")),
+                            (Route<dynamic> route) => false,
+
+                      );
+                      myController.latLon.value = latlon;
+                    },
                     child: myController.isServiceAvailable.value
                         ? Text(
-                            AppLocalizations.of(context)!.selectLocation,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(color: Colors.white),
-                          )
+                      AppLocalizations.of(context)!.selectLocation,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(color: Colors.white),
+                    )
                         : Text(
-                            "No Service Available",
-                            style: Theme.of(context).textTheme.titleSmall,
-                          )),
+                      "No Service Available",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleSmall,
+                    )),
               ),
             ),
           )

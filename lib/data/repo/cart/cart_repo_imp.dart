@@ -1,10 +1,12 @@
 import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
 import '../../../view/cart/model/payment_ui_model.dart';
-import '../../model/cart/cart.dart';
+import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
@@ -22,13 +24,13 @@ class CartRepoImp implements CartRepo {
   @override
   Future<Cart> getCart() async {
     return _remoteSource
-        .getCart("fingerPrint")
+        .getCart("0921d40e-53f3-45cb-8423-6ddd63c27db2")
         .then((value) => cart.value = value);
   }
 
   @override
-  Future addToCart() {
-    return _remoteSource.addToCart();
+  Future addToCart(Item itemInfo, LatLng latLng) {
+    return _remoteSource.addToCart(itemInfo, latLng);
   }
 
   @override

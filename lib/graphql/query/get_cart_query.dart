@@ -8,7 +8,18 @@ class GetCart {
       fingerprint
       isSync
       cart{
-        orderFoodNote
+         payment{
+          deliveryCharge
+          finalTotal
+          itemSubtotal
+        }
+        outlet{
+          id
+          name
+          restaurant{
+            name
+          }
+        }
       }
     }
   }

@@ -1,7 +1,7 @@
 class AddItemQuery {
   String addItemQuery = """
-  mutation AddItem(\$point: Point! \$itemInput:ShoppingCartItemInput!) {
-    addItem (coordinate: \$point item: \$itemInput) {
+  mutation AddItem(\$coordinate: Point! ,\$item:ShoppingCartItemInput!) {
+    addItem (coordinate: \$coordinate,item: \$item) {
         message
         statusCode
         result {

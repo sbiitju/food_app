@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view/component/cart_add_button.dart';
 
-import '../../data/model/item_info_model.dart';
+import '../../data/model/item.dart';
 
 class ItemsCard extends StatefulWidget {
-  List<ItemInfo> itemInfo;
+  List<Item> itemInfo;
 
   ItemsCard(this.itemInfo, {Key? key}) : super(key: key);
 
@@ -69,8 +69,8 @@ class _ItemsCardState extends State<ItemsCard> {
                             left: 10,
                             right: 10,
                             bottom: 5,
-                            child: CartUpdateButton(
-                                itemPrice: widget.itemInfo[index].basePrice),
+                            child:
+                                CartUpdateButton(item: widget.itemInfo[index]),
                           )
                         ],
                       ),

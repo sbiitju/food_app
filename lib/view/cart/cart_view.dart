@@ -5,10 +5,10 @@ import 'package:food_app/view/cart/cart_component/item_list.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
+import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
 
-import '../../data/model/cart/cart.dart';
 import 'cart_component/checkout_view.dart';
 
 class MyCartView extends StatefulWidget {

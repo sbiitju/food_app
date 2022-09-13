@@ -18,6 +18,10 @@ thumbnail
 }
 
 }
+ variants{
+          id
+          name
+        }
 }
 
 }

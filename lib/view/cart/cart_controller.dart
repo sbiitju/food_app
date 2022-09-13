@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../data/model/cart/cart.dart';
+import '../../data/model/item.dart';
 import 'cart_component/order_place_popup.dart';
 import 'model/delivery_address_model.dart';
 import 'model/order_place_address_model.dart';
@@ -14,6 +15,7 @@ class CartController extends GetxController {
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
   Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
+  var loginStatus = false.obs;
 
   late var paymentMethodList = <PaymentUiModel>[].obs;
 
@@ -29,8 +31,8 @@ class CartController extends GetxController {
   RxBool hasAddress = true.obs;
   Rx<Cart?> cart = Rx(null);
 
-  Future addItem() {
-    return _cartRepository.addToCart();
+  Future addItem(Item itemInfo, LatLng latLng) {
+    return _cartRepository.addToCart(itemInfo, latLng);
   }
 
   Future getCart() {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../data/model/cart/Invoice.dart';
+import '../model/cart/Invoice.dart';
 
 class InvoiceCardComponent extends StatelessWidget {
   final int index;
