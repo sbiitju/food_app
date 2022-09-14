@@ -8,6 +8,16 @@ class GetCart {
       fingerprint
       isSync
       cart{
+       receiver {
+                   id
+                    category
+                    receiverName
+                    location
+                    address
+                    countryCode
+                    phone
+                  
+                }
          payment{
           deliveryCharge
           finalTotal
@@ -15,8 +25,8 @@ class GetCart {
         }
         outlet{
              id
-                    name
-                    images {
+             name
+             images {
                         thumbnail
                     }
                     restaurant {

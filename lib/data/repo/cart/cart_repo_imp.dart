@@ -26,8 +26,10 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future addToCart(Item itemInfo, LatLng latLng) {
-    return _remoteSource.addToCart(itemInfo, latLng);
+  Future addToCart(Item itemInfo, LatLng latLng) async {
+    String? fingerPrint;
+    await getFingerPrint().then((value) => fingerPrint = value);
+    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint!);
   }
 
   @override

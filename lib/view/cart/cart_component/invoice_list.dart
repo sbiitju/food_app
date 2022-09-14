@@ -22,7 +22,10 @@ class CartInvoiceList extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Wrap(
           children: [
-            BigTextView(text: "Invoice"),
+            Text(
+              "Invoice",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
             const SizedBox(
               height: 10,
             ),

@@ -34,6 +34,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     refresh();
+    controller.getCart();
     controller.getHpOutletList(
         widget.latLng.latitude, widget.latLng.longitude, _index);
     super.initState();

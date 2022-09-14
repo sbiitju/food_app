@@ -8,7 +8,6 @@ class BaseDataSource {
     headerKey: "authorization",
     getToken: () async {
       final token = await getToken();
-      debugPrint("BaseDataSource");
       return 'Bearer $token';
     },
   );

@@ -8,7 +8,7 @@ import '../../model/item.dart';
 abstract class CartDataSource {
   Future<Cart> getCart(String fingerPrint);
 
-  Future addToCart(Item itemInfo, LatLng latLng);
+  Future addToCart(Item itemInfo, LatLng latLng, String fingerPrint);
 
   Future getCustomerShoppingCartReceivingAddresses();
 

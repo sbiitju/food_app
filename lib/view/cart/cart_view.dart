@@ -9,7 +9,9 @@ import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:food_app/view/component/outlet_info.dart';
 import 'package:get/get.dart';
 
-import 'cart_component/checkout_view.dart';
+import 'cart_component/big_textview.dart';
+import 'cart_component/delivery_address.dart';
+import 'cart_component/payment_method.dart';
 
 class MyCartView extends StatefulWidget {
   const MyCartView({Key? key}) : super(key: key);
@@ -24,6 +26,9 @@ class _MyCartViewState extends State<MyCartView> {
   @override
   void initState() {
     controller.getCart();
+    controller.setDeliveryAddress();
+    controller.getCustomerShoppingCartAddress();
+    controller.getPaymentMethods();
     super.initState();
   }
 
@@ -97,53 +102,7 @@ class _MyCartViewState extends State<MyCartView> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10))),
                                     child: Center(
-                                      child: Container(
-                                        height: 70,
-                                        width: 200,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .backgroundColor,
-                                            border: Border.all(
-                                                color: Theme.of(context)
-                                                    .dividerColor),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.ac_unit),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  SmallTextView(
-                                                      text: "Delivery Time"),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                    cart.deliveryTime
-                                                        .toString(),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium,
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      child: getDeliveryTimeCard(context, cart),
                                     ),
                                   ),
                                 ),
@@ -165,6 +124,10 @@ class _MyCartViewState extends State<MyCartView> {
                                     child: CartInvoiceList(
                                         invoiceModelList:
                                             cart.listOfInvoice ?? [])),
+                                DeliveryAddress(
+                                  cartReceiver: cart.cartReceiver,
+                                ),
+                                getPaymentCard(context),
                               ],
                             ),
                           ),
@@ -173,6 +136,7 @@ class _MyCartViewState extends State<MyCartView> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
+                          color: Theme.of(context).backgroundColor,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 15),
@@ -185,10 +149,10 @@ class _MyCartViewState extends State<MyCartView> {
                                       Radius.circular(10))),
                               child: MaterialButton(
                                 onPressed: () {
-                                  Get.to(CheckOutView());
+                                  controller.placeRegularOrder();
                                 },
                                 child: Text(
-                                  "Review Payment and Address",
+                                  "Confirm Order",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -205,5 +169,88 @@ class _MyCartViewState extends State<MyCartView> {
               ),
             );
     });
+  }
+
+  Widget getPaymentCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            border: Border.all(color: Theme.of(context).dividerColor),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: Wrap(
+              runSpacing: 10,
+              children: [
+                BigTextView(
+                  text: "PAYMENT METHOD",
+                ),
+                Obx(() {
+                  return ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 5,
+                        );
+                      },
+                      itemCount: controller.paymentMethodList.length,
+                      itemBuilder: (context, index) {
+                        return PaymentMethod(
+                          paymentUiModel: controller.paymentMethodList[index],
+                          checkedListener: (value) {
+                            controller.setPaymentMethod(value);
+                          },
+                        );
+                      });
+                }),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getDeliveryTimeCard(BuildContext context, Cart cart) {
+    return Container(
+      height: 70,
+      width: 150,
+      decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          border: Border.all(color: Theme.of(context).dividerColor),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.ac_unit),
+            SizedBox(
+              width: 15,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SmallTextView(text: "Delivery Time"),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  cart.deliveryTime.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

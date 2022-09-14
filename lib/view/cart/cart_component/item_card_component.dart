@@ -18,7 +18,10 @@ class ItemCardComponent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: MediumTextView(text: itemListModelList[index].itemName),
+          child: Text(
+            itemListModelList[index].itemName,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
         MediumTextView(text: itemListModelList[index].price.toString()),
       ],

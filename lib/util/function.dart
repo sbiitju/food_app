@@ -88,7 +88,6 @@ Future<void> saveThemeSettings(bool status) async {
 
 Future<String> getToken() async {
   final token = getStorage.read(TOKEN) ?? "";
-  debugPrint("MyToken" + token);
   return token;
 }
 

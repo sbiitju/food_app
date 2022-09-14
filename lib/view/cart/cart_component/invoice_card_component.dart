@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../model/cart/cart_invoice.dart';
 
@@ -17,9 +18,15 @@ class InvoiceCardComponent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: Text(invoiceModelList[index].title),
+          child: Text(
+            invoiceModelList[index].title,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ),
-        Text(invoiceModelList[index].amount.toString()),
+        Text(
+          invoiceModelList[index].amount.toString(),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ],
     );
   }

@@ -27,7 +27,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
   }
 
   @override
-  Future addToCart(Item itemInfo, LatLng latLon) async {
+  Future addToCart(Item itemInfo, LatLng latLon, String fingerPrint) async {
     QueryResult result = await BaseDataSource.client.value.query(
         QueryOptions(document: gql(AddItemQuery().addItemQuery), variables: {
       "coordinate": {
@@ -35,7 +35,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
         "coordinates": [latLon.longitude, latLon.latitude]
       },
       "item": {
-        "fingerprint": "db4ef760-c223-47bb-b8fe-1704ed2775c6",
+        "fingerprint": fingerPrint,
         "item": {
           "id": itemInfo.id,
           "variant": {"id": itemInfo.variants![0].variantId}

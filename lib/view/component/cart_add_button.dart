@@ -1,6 +1,5 @@
 import 'package:customizable_counter/customizable_counter.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:food_app/view/map/map_controller.dart';
 import 'package:get/get.dart';
 
@@ -61,12 +60,6 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
           onIncrement: (value) {
             if (controller.loginStatus.value) {
               addCart(value.toInt());
-              cartRepository.cart.value = Cart(
-                  listOfInvoice: null,
-                  deliveryTime: null,
-                  restaurantName: null,
-                  outletName: null,
-                  listOfItems: null);
             } else {
               showDialog(
                   context: context,
