@@ -5,6 +5,7 @@ import 'package:food_app/graphql/query/getCustomerShoppingCartReceivingAddresses
 import 'package:food_app/graphql/query/get_cart_query.dart';
 import 'package:food_app/graphql/query/get_payment_query.dart';
 import 'package:food_app/util/function.dart';
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -101,5 +102,22 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
         }));
     debugPrint("PlaceOrder" + result.toString());
     return result.toString();
+  }
+
+  @override
+  Future<List<CartPaymentMethod>> getPaymentMethods(
+      double lat, double lon) async {
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(GetPaymentQuery().getPaymentMethod),
+        variables: {
+          "coordinate": {
+            "type": "Point",
+            "coordinates": [lon, lat]
+          }
+        }));
+    debugPrint(result.toString());
+    return (result.data!["getPaymentMethods"]["result"] as List<dynamic>)
+        .map((e) => CartPaymentMethod.parse(e))
+        .toList();
   }
 }

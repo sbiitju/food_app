@@ -1,5 +1,6 @@
 import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -50,5 +51,11 @@ class CartRepoImp implements CartRepo {
   @override
   Future<String> placeRegularOrder(double lat, double lon, String fingerPrint) {
     return _remoteSource.placeRegularOrder(lat, lon, fingerPrint);
+  }
+
+  @override
+  Future<List<CartPaymentMethod>> getPaymentMethods() {
+    //Todo: need to fetch lat lon from local
+    return _remoteSource.getPaymentMethods(0.0, 0.0);
   }
 }

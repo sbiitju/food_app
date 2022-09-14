@@ -1,3 +1,4 @@
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -20,4 +21,6 @@ abstract class CartRepo {
   Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon);
 
   Future<String> placeRegularOrder(double lat, double lon, String fingerPrint);
+
+  Future<List<CartPaymentMethod>> getPaymentMethods();
 }

@@ -5,6 +5,11 @@ class GetPaymentQuery {
     message
     statusCode
     result {
+    id
+    type
+    title
+    icon
+    
       vendor{
         id
       }

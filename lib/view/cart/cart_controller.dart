@@ -59,8 +59,10 @@ class CartController extends GetxController {
 
   getPaymentMethods() {
     _cartRepository
-        .getPaymentMethod(23, 90)
-        .then((value) => paymentMethodList.value = value);
+        .getPaymentMethods().then((value) {
+      paymentMethodList.value = value.map((e) =>
+          PaymentUiModel("assest/a.webp", e.title ?? "", false)).toList();
+    });
   }
 
   setAddress(OrderPlaceAddress orderPlaceAddress) {

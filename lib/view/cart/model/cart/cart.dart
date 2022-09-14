@@ -11,6 +11,7 @@ class Cart {
   final List<CartItem>? listOfItems;
   final List<CartInvoice>? listOfInvoice;
   final CartReceiver? cartReceiver;
+  
 
   Cart(
       {this.outletName,
