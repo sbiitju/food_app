@@ -44,6 +44,8 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
     }));
     saveFingerPrint(
         result.data!["addItem"]["result"]["fingerprint"].toString());
+    debugPrint(result.toString());
+    getFingerPrint().then((value) => debugPrint(value));
   }
 
   // @override
