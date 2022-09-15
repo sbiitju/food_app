@@ -43,13 +43,18 @@ class HomeDrawer extends GetView<Controller> {
                                 Text(profile.name,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium),
+                                        .titleMedium
+                                        ?.copyWith(color: Colors.white)),
                                 Text(profile.mobileNumber,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(color: Colors.white)),
                                 Text(profile.email,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(color: Colors.white)),
                               ],
                             ),
                           )
@@ -95,7 +100,8 @@ class HomeDrawer extends GetView<Controller> {
                       child: SizedBox(
                         width: getScreenWidth(context),
                         child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 8),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 5),
                             decoration: BoxDecoration(
                                 border: Border.all(
                               color: Theme.of(context).dividerColor,

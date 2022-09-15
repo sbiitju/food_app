@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food_app/view/cart/cart_view.dart';
 import 'package:get/get.dart';
 
-import '../../../data/repo/cart/cart_repo.dart';
-
 class CartNavigationCard extends StatelessWidget {
-  CartNavigationCard({Key? key}) : super(key: key);
-  final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
+  CartNavigationCard(
+      {Key? key, required this.totalAmount, required this.totalItems})
+      : super(key: key);
+  final String? totalAmount;
+  final String? totalItems;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,13 @@ class CartNavigationCard extends StatelessWidget {
                 Get.to(MyCartView());
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text(
+                        "$totalItems ${int.parse(totalItems.toString()) > 0 ? "item" : "items"} | $totalAmount",
+                        style: TextStyle(color: Colors.white)),
                     Text("View Cart", style: TextStyle(color: Colors.white))
                   ],
                 ),

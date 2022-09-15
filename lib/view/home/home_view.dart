@@ -125,7 +125,12 @@ class _HomeViewState extends State<HomeView> {
                   child: Obx(() {
                     return Visibility(
                       visible: controller.cartRepository.cart.value != null,
-                      child: CartNavigationCard(),
+                      child: CartNavigationCard(
+                          totalItems: controller
+                              .cartRepository.cart.value?.listOfItems?.length
+                              .toString(),
+                          totalAmount: controller.cartRepository.cart.value
+                              ?.listOfInvoice?.last.amount),
                     );
                   }),
                 )
