@@ -10,8 +10,10 @@ class Controller extends BaseController {
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   RxBool isDarkModeOn = false.obs;
   RxBool isBanglaModeOn = false.obs;
+  RxBool isLogedIn = false.obs;
 
   Controller() {
+    getToken().then((value) => isLogedIn.value = value.isNotEmpty);
     isDarkMode().then((value) => isDarkModeOn.value = value);
     isBangla().then((value) => isBanglaModeOn.value = value);
   }

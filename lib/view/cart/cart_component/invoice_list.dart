@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/cart/Invoice.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 
+import '../model/cart/cart_invoice.dart';
 import 'invoice_card_component.dart';
 
 class CartInvoiceList extends StatelessWidget {
@@ -22,7 +22,10 @@ class CartInvoiceList extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Wrap(
           children: [
-            BigTextView(text: "Invoice"),
+            Text(
+              "Invoice",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
             const SizedBox(
               height: 10,
             ),

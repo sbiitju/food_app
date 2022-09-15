@@ -1,4 +1,3 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class Outlet {
   String? id;

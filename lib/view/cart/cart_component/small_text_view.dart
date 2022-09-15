@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SmallTextView extends StatelessWidget {
-  String text;
-  Function()? onPressed;
+  final String text;
+  final Function()? onPressed;
 
-  SmallTextView({Key? key, required this.text, this.onPressed})
+  const SmallTextView({Key? key, required this.text, this.onPressed})
       : super(key: key);
 
   @override

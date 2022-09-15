@@ -5,20 +5,22 @@ import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/big_textview.dart';
 import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
-import 'package:food_app/view/cart/model/delivery_address_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class CheckOutMapHead extends StatelessWidget {
-  final DeliveryAddress deliveryAddress;
+import '../cart/model/cart/cart_reciver.dart';
 
-  CheckOutMapHead({Key? key, required this.deliveryAddress}) : super(key: key);
+class CheckOutMapHead extends StatelessWidget {
+  CartReceiver? cartReceiver;
+
+  CheckOutMapHead({Key? key, required this.cartReceiver}) : super(key: key);
   late CameraPosition _kLake;
   final Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(cartReceiver?.latLang.toString());
     _kLake = CameraPosition(
-      target: deliveryAddress.latLng,
+      target: cartReceiver?.latLang ?? LatLng(0, 0),
       zoom: 15,
     );
     return ConstrainedBox(
@@ -69,18 +71,22 @@ class CheckOutMapHead extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      MediumTextView(text: deliveryAddress.name),
+                      MediumTextView(text: cartReceiver?.receiverName ?? ""),
                       BigTextView(text: "EDIT")
                     ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  MediumTextView(text: deliveryAddress.number),
+                  MediumTextView(
+                      text:
+                          "${cartReceiver?.receiverCountryCode}${cartReceiver?.receiverPhone}"),
                   const SizedBox(
                     height: 10,
                   ),
-                  Flexible(child: SmallTextView(text: deliveryAddress.address))
+                  Flexible(
+                      child: SmallTextView(
+                          text: cartReceiver?.receiverAddress ?? ""))
                 ],
               ),
             )

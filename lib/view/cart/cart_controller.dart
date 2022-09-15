@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../data/model/cart/cart.dart';
+import '../../data/model/item.dart';
 import 'cart_component/order_place_popup.dart';
 import 'model/delivery_address_model.dart';
 import 'model/order_place_address_model.dart';
@@ -14,8 +14,9 @@ class CartController extends GetxController {
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
   Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
+  var loginStatus = false.obs;
 
-  late var paymentMethodList = <PaymentUiModel>[].obs;
+  late final paymentMethodList = <PaymentUiModel>[].obs;
 
   late var orderPlaceList = <OrderPlaceAddress>[
     OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
@@ -27,44 +28,46 @@ class CartController extends GetxController {
   ].obs;
 
   RxBool hasAddress = true.obs;
-  Rx<Cart?> cart = Rx(null);
+  late final Rx<Cart?> cart = _cartRepository.cart;
 
-  Future addItem() {
-    return _cartRepository.addToCart();
+  Future addItem(Item itemInfo, LatLng latLng) {
+    return _cartRepository.addToCart(itemInfo, latLng);
   }
 
-  Future getCart() {
-    return _cartRepository.getCart().then((value) {
-      cart.value = value;
-      debugPrint(cart.value?.outletName.toString());
+  Future getCart() async {
+    _cartRepository.getCart().then((value) {
+      _cartRepository.cart.value = value;
     });
   }
 
   placeRegularOrder() {
-    _cartRepository.placeRegularOrder(23, 90, "fingerPrint").then((value) {
+    _cartRepository.placeRegularOrder().then((value) {
       if (value.isNotEmpty) {
-        _cartRepository.totalAmount.value = 0;
-        _cartRepository.totalItem.value = 0;
         _cartRepository.cart.value = null;
-        Get.dialog(OrderPlacePopUp());
+        Get.dialog(OrderPlacePopUp(
+          orderUid: value,
+        ));
       } else {
         Get.snackbar("Error", "Something is wrong");
       }
     });
   }
 
-  setPaymentMethod(PaymentUiModel paymentUiModel) {
-    for (var element in paymentMethodList) {
-      element.isSelected = false;
-    }
-    paymentUiModel.isSelected = !paymentUiModel.isSelected;
-    paymentMethodList.value = paymentMethodList.value.map((e) => e).toList();
+  Future setPaymentMethod(PaymentUiModel payment) async {
+    paymentMethodList.value = paymentMethodList.value.map((e) {
+      e.isSelected = payment.type == e.type;
+      return e;
+    }).toList();
+    return _cartRepository.setPaymentMethod(payment.type);
   }
 
   getPaymentMethods() {
-    _cartRepository
-        .getPaymentMethod(23, 90)
-        .then((value) => paymentMethodList.value = value);
+    _cartRepository.getPaymentMethods().then((value) {
+      paymentMethodList.value = value
+          .map((e) => PaymentUiModel(e.icon ?? "", e.title ?? "",
+              e.type == cart.value?.paymentMethodType, e.type ?? ""))
+          .toList();
+    });
   }
 
   setAddress(OrderPlaceAddress orderPlaceAddress) {

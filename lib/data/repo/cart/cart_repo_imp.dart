@@ -1,10 +1,13 @@
 import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../util/function.dart';
+import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
-import '../../../view/cart/model/payment_ui_model.dart';
-import '../../model/cart/cart.dart';
+import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
@@ -14,21 +17,18 @@ class CartRepoImp implements CartRepo {
   Rx<Cart?> cart = Rx(null);
 
   @override
-  Rx<double> totalAmount = Rx(0.0);
-
-  @override
-  Rx<int> totalItem = Rx(0);
-
-  @override
   Future<Cart> getCart() async {
+    String? fingerPrint;
+    await getFingerPrint().then((value) => fingerPrint = value);
     return _remoteSource
-        .getCart("fingerPrint")
+        .getCart(fingerPrint ?? "")
         .then((value) => cart.value = value);
   }
 
   @override
-  Future addToCart() {
-    return _remoteSource.addToCart();
+  Future addToCart(Item itemInfo, LatLng latLng) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint);
   }
 
   @override
@@ -43,11 +43,20 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon) =>
-      _remoteSource.getPaymentMethod(lat, lon);
+  Future<String> placeRegularOrder() async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.placeRegularOrder(fingerPrint);
+  }
 
   @override
-  Future<String> placeRegularOrder(double lat, double lon, String fingerPrint) {
-    return _remoteSource.placeRegularOrder(lat, lon, fingerPrint);
+  Future<List<CartPaymentMethod>> getPaymentMethods() {
+    //Todo: need to fetch lat lon from local
+    return _remoteSource.getPaymentMethods(0.0, 0.0);
+  }
+
+  @override
+  Future setPaymentMethod(String paymentType) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.setPaymentMethod(fingerPrint, paymentType);
   }
 }

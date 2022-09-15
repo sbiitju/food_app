@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MediumTextView extends StatelessWidget {
-  String text;
-  Function? onPressed;
+  final String text;
+  final Function? onPressed;
 
-  MediumTextView({Key? key, required this.text, this.onPressed})
+  const MediumTextView({Key? key, required this.text, this.onPressed})
       : super(key: key);
 
   @override

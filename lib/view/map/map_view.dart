@@ -149,17 +149,19 @@ class MapViewState extends State<MapView> {
                     onPressed: !myController.isServiceAvailable.value
                         ? null
                         : () {
+                            myController.rawAddress.value = myController
+                                    .address.value.areaName +
+                                "," +
+                                myController.address.value.cityName +
+                                ", ${myController.address.value.districtName}";
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomeView(
-                                      latlon,
-                                      myController.address.value.areaName +
-                                          "," +
-                                          myController.address.value.cityName +
-                                          ", ${myController.address.value.districtName}")),
+                                      latlon, myController.rawAddress.value)),
                               (Route<dynamic> route) => false,
                             );
+                            myController.latLon.value = latlon;
                           },
                     child: myController.isServiceAvailable.value
                         ? Text(

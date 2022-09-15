@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BigTextView extends StatelessWidget {
   String text;
   Function? onPressed;
@@ -10,7 +11,7 @@ class BigTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }

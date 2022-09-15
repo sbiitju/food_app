@@ -1,9 +1,9 @@
-import 'item_info_model.dart';
+import 'package:food_app/data/model/item.dart';
 
 class CategoryItems {
   String? id;
   String? name;
-  var items = <ItemInfo>[];
+  var items = <Item>[];
 
   CategoryItems(this.id, this.name, this.items);
 }

@@ -4,14 +4,18 @@ import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCustomerShoppingCartReceivingAddressesQuery.dart';
 import 'package:food_app/graphql/query/get_cart_query.dart';
 import 'package:food_app/graphql/query/get_payment_query.dart';
+import 'package:food_app/util/function.dart';
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../graphql/add_item/add_item_query.dart';
 import '../../../graphql/query/place_order_query.dart';
+import '../../../graphql/query/set_payment_query.dart';
+import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
 import '../../../view/cart/model/order_place_address_model.dart';
-import '../../../view/cart/model/payment_ui_model.dart';
-import '../../model/cart/cart.dart';
+import '../../model/item.dart';
 
 class CartDataSourceImp extends BaseDataSource implements CartDataSource {
   @override
@@ -19,25 +23,32 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCart().getCart),
         variables: {"fingerprint": fingerPrint}));
-    debugPrint("GetCart" + result.toString());
-    return CartParse.parseGetCart();
+    debugPrint(result.data.toString());
+    saveFingerPrint(result.data!["getCart"]["result"]["fingerprint"]);
+
+    return Cart.parse(result);
   }
 
   @override
-  Future addToCart() async {
-    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
-        document: gql(AddItemQuery().addItemQuery),
-        variables: const {
-          "coordinate": {
-            "type": "Point",
-            "coordinates": [90.4078, 23.7925]
-          },
-          "item": {
-            "fingerprint": "ngdhds",
-            "item": {"id": "5ca4ad2db19d90e0ad9a6eac"}
-          }
-        }));
-    debugPrint("AddToCart" + result.data.toString());
+  Future addToCart(Item itemInfo, LatLng latLon, String fingerPrint) async {
+    QueryResult result = await BaseDataSource.client.value.query(
+        QueryOptions(document: gql(AddItemQuery().addItemQuery), variables: {
+      "coordinate": {
+        "type": "Point",
+        "coordinates": [latLon.longitude, latLon.latitude]
+      },
+      "item": {
+        "fingerprint": fingerPrint,
+        "item": {
+          "id": itemInfo.id,
+          "variant": {"id": itemInfo.variants![0].variantId}
+        }
+      }
+    }));
+    saveFingerPrint(
+        result.data!["addItem"]["result"]["fingerprint"].toString());
+    debugPrint(result.toString());
+    getFingerPrint().then((value) => debugPrint(value));
   }
 
   // @override
@@ -54,13 +65,16 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
 
   @override
   Future getCustomerShoppingCartReceivingAddresses() async {
+    // ignore: unused_local_variable
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
+
   }
 
   @override
   Future<DeliveryAddress> getCustomerShoppingCartAddress() async {
+    // ignore: unused_local_variable
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
@@ -68,7 +82,17 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
   }
 
   @override
-  Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon) async {
+  Future<String> placeRegularOrder(String fingerPrint) async {
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(PlaceOrderQuery().placeRegularOrder),
+        variables: {"fingerprint": fingerPrint}));
+    debugPrint("PlaceOrder" + result.toString());
+    return result.data!["placeRegularOrder"]["result"]["orderUid"].toString();
+  }
+
+  @override
+  Future<List<CartPaymentMethod>> getPaymentMethods(
+      double lat, double lon) async {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetPaymentQuery().getPaymentMethod),
         variables: {
@@ -77,21 +101,22 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
             "coordinates": [lon, lat]
           }
         }));
-    return PaymentUiModel.parsingPaymentUiModelList(result);
+    debugPrint("Payment Method" + result.toString());
+    return (result.data!["getPaymentMethods"]["result"] as List<dynamic>)
+        .map((e) => CartPaymentMethod.parse(e))
+        .toList();
   }
 
   @override
-  Future<String> placeRegularOrder(
-      double lat, double lon, String fingerPrint) async {
+  Future setPaymentMethod(String fingerPrint, String paymentType) async {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
-        document: gql(PlaceOrderQuery().placeRegularOrder),
+        document: gql(SetPaymentQuery().setPaymentMethod),
         variables: {
-          "coordinate": {
-            "type": "Point",
-            "coordinates": [lon, lat]
+          "paymentMethod": {
+            "fingerprint": fingerPrint,
+            "paymentType": paymentType
           }
         }));
-    debugPrint("PlaceOrder" + result.toString());
-    return result.toString();
+    saveFingerPrint(result.data!["setPaymentMethod"]["result"]["fingerprint"]);
   }
 }

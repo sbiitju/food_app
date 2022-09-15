@@ -12,6 +12,10 @@ class HomeController extends BaseController {
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
 
+  getCart() {
+    cartRepository.getCart();
+  }
+
   Future<List<Outlet>> getHpOutletList(lat, lon, index) async {
     _repository
         .getHPOutletList(lat, lon, index)

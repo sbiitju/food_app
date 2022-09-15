@@ -10,6 +10,7 @@ import '../view/home/home_view.dart';
 import '../view/splash/splash_view.dart';
 
 var TOKEN = "token";
+var FINGERPRINT = "fingerprint";
 var LANGUAGE = "language";
 var THEME = "theme";
 var getStorage = GetStorage();
@@ -47,9 +48,10 @@ Route onGenerateRoute(settings) {
       });
 }
 
-bool checkLoginStatus() {
-  var status = getStorage.read(TOKEN) as String?;
-  return (status == null || status.isEmpty);
+Future<bool> checkLoginStatus() async {
+  bool status = false;
+  await getToken().then((value) => status = value.isNotEmpty);
+  return status;
 }
 
 Future<bool> isValidateNumber(String number) async {
@@ -63,6 +65,19 @@ Future<void> saveToken(String token) async {
   getStorage.write(TOKEN, token);
 }
 
+Future<void> saveFingerPrint(String fingerPrint) async {
+  getStorage.write(FINGERPRINT, fingerPrint);
+}
+
+Future<String> getFingerPrint() async {
+  final fingerPrint = getStorage.read(FINGERPRINT) ?? "";
+  return fingerPrint;
+}
+
+Future<void> removeToken() async {
+  getStorage.remove(TOKEN);
+}
+
 Future<void> saveLanguageSettings(bool status) async {
   getStorage.write(LANGUAGE, status);
 }
@@ -73,7 +88,6 @@ Future<void> saveThemeSettings(bool status) async {
 
 Future<String> getToken() async {
   final token = getStorage.read(TOKEN) ?? "";
-  debugPrint("MyToken" + token);
   return token;
 }
 
@@ -155,7 +169,11 @@ Widget loginCheckingDialog(context) {
                     Navigator.of(context, rootNavigator: true).pop('dialog');
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return AuthPage();
+                      return AuthPage(
+                        function: () {
+                          Navigator.pop(context);
+                        },
+                      );
                     }));
                   },
                   icon: Icon(

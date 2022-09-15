@@ -1,24 +1,25 @@
+import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
-import '../../../view/cart/model/payment_ui_model.dart';
-import '../../model/cart/cart.dart';
+import '../../model/item.dart';
 
 abstract class CartRepo {
   abstract Rx<Cart?> cart;
 
-  abstract Rx<int> totalItem;
-  abstract Rx<double> totalAmount;
-
   Future<Cart> getCart();
 
-  Future addToCart();
+  Future addToCart(Item itemInfo, LatLng latLng);
 
   Future getCustomerShoppingCartReceivingAddresses();
 
   Future<DeliveryAddress> getCustomerShoppingCartAddress();
 
-  Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon);
+  Future<String> placeRegularOrder();
 
-  Future<String> placeRegularOrder(double lat, double lon, String fingerPrint);
+  Future<List<CartPaymentMethod>> getPaymentMethods();
+
+  Future setPaymentMethod(String paymentType);
 }
