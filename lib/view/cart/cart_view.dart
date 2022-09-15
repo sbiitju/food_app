@@ -149,7 +149,8 @@ class _MyCartViewState extends State<MyCartView> {
                                       Radius.circular(10))),
                               child: MaterialButton(
                                 onPressed: () {
-                                  controller.placeRegularOrder();
+                                  controller.getCart().then(
+                                      (_) => controller.placeRegularOrder());
                                 },
                                 child: Text(
                                   "Confirm Order",
@@ -201,7 +202,9 @@ class _MyCartViewState extends State<MyCartView> {
                         return PaymentMethod(
                           paymentUiModel: controller.paymentMethodList[index],
                           checkedListener: (value) {
-                            controller.setPaymentMethod(value);
+                            controller
+                                .setPaymentMethod(value)
+                                .then((value) => controller.getCart());
                           },
                         );
                       });

@@ -3,7 +3,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/cart/cart_payment_method.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
-import '../../../view/cart/model/payment_ui_model.dart';
 import '../../model/item.dart';
 
 abstract class CartDataSource {
@@ -15,9 +14,9 @@ abstract class CartDataSource {
 
   Future<DeliveryAddress> getCustomerShoppingCartAddress();
 
-  Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon);
-
-  Future<String> placeRegularOrder(double lat, double lon, String fingerPrint);
+  Future<String> placeRegularOrder(String fingerPrint);
 
   Future<List<CartPaymentMethod>> getPaymentMethods(double lat, double lon);
+
+  Future setPaymentMethod(String fingerPrint, String paymentType);
 }

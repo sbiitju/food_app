@@ -18,7 +18,6 @@ class ParseResponse {
     for (var e in list) {
       Outlet? outlet;
       var listOfCusins = <String?>[];
-      var listOfOutletTags = <String?>[];
       try {
         for (var i in e["cuisines"]) {
           listOfCusins.add(i["name"].toString());

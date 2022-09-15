@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 
-import '../data/repo/base_repo.dart';
 
 abstract class BaseController extends GetxController {
-  final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   final logoutController = false.obs;
 
   //Reload the page

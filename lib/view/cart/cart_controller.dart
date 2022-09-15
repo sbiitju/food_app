@@ -16,7 +16,7 @@ class CartController extends GetxController {
   Rx<DeliveryAddress?> customerShoppingCartAddress = Rx(null);
   var loginStatus = false.obs;
 
-  late var paymentMethodList = <PaymentUiModel>[].obs;
+  late final paymentMethodList = <PaymentUiModel>[].obs;
 
   late var orderPlaceList = <OrderPlaceAddress>[
     OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
@@ -34,34 +34,39 @@ class CartController extends GetxController {
     return _cartRepository.addToCart(itemInfo, latLng);
   }
 
-  getCart() {
-    _cartRepository.getCart().then((value) {});
+  Future getCart() async {
+    _cartRepository.getCart().then((value) {
+      _cartRepository.cart.value = value;
+    });
   }
 
   placeRegularOrder() {
-    _cartRepository.placeRegularOrder(23, 90, "fingerPrint").then((value) {
+    _cartRepository.placeRegularOrder().then((value) {
       if (value.isNotEmpty) {
         _cartRepository.cart.value = null;
-        Get.dialog(OrderPlacePopUp());
+        Get.dialog(OrderPlacePopUp(
+          orderUid: value,
+        ));
       } else {
         Get.snackbar("Error", "Something is wrong");
       }
     });
   }
 
-  setPaymentMethod(PaymentUiModel paymentUiModel) {
-    for (var element in paymentMethodList) {
-      element.isSelected = false;
-    }
-    paymentUiModel.isSelected = !paymentUiModel.isSelected;
-    paymentMethodList.value = paymentMethodList.value.map((e) => e).toList();
+  Future setPaymentMethod(PaymentUiModel payment) async {
+    paymentMethodList.value = paymentMethodList.value.map((e) {
+      e.isSelected = payment.type == e.type;
+      return e;
+    }).toList();
+    return _cartRepository.setPaymentMethod(payment.type);
   }
 
   getPaymentMethods() {
-    _cartRepository
-        .getPaymentMethods().then((value) {
-      paymentMethodList.value = value.map((e) =>
-          PaymentUiModel("assest/a.webp", e.title ?? "", false)).toList();
+    _cartRepository.getPaymentMethods().then((value) {
+      paymentMethodList.value = value
+          .map((e) => PaymentUiModel(e.icon ?? "", e.title ?? "",
+              e.type == cart.value?.paymentMethodType, e.type ?? ""))
+          .toList();
     });
   }
 

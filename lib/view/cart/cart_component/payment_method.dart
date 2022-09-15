@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../model/payment_ui_model.dart';
 
@@ -16,10 +17,14 @@ class PaymentMethod extends StatelessWidget {
         checkedListener(paymentUiModel);
       },
       child: Container(
+        height: 48,
         decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            border: Border.all(color: Theme.of(context).dividerColor)),
+            border: Border.all(
+                color: paymentUiModel.isSelected
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).dividerColor)),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
@@ -27,12 +32,10 @@ class PaymentMethod extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    width: 30,
-                    height: 30,
-                    paymentUiModel.iconImage,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  SizedBox(
+                      width: 40,
+                      height: 25,
+                      child: SvgPicture.network(paymentUiModel.iconImage)),
                   const SizedBox(
                     width: 5,
                   ),

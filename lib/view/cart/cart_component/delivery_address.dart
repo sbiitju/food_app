@@ -41,7 +41,7 @@ class DeliveryAddress extends StatelessWidget {
                                 context,
                                 EditAddressBottomSheet(
                                   orderPlaceAddressList:
-                                      controller.orderPlaceList.value,
+                                      controller.orderPlaceList,
                                 ));
                           },
                         )

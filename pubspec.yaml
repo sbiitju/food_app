@@ -55,6 +55,7 @@ dependencies:
   sms_autofill: ^2.2.0
   customizable_counter: ^1.0.4
   fluttertoast: ^8.0.8
+  flutter_svg: ^1.1.5
 
 
 
@@ -66,10 +67,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_serializable: ^6.2.0
-  build_runner: ^2.1.11
   dart_code_metrics: any
-  flutter_app_name: ^0.1.1
 
 flutter_app_name:
   name: "Food App"

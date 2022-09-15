@@ -23,7 +23,7 @@ class CartReceiver {
         receiverAddress: resultReceiver["address"],
         receiverPhone: resultReceiver["phone"],
         receiverCountryCode: resultReceiver["countryCode"],
-        latLang: LatLng(resultReceiver["location"]["coordinates"][1],
-            resultReceiver["location"]["coordinates"][0]));
+        latLang: LatLng(resultReceiver["location"]["coordinates"][1].toDouble(),
+            resultReceiver["location"]["coordinates"][0].toDouble()));
   }
 }

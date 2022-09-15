@@ -11,7 +11,7 @@ class Cart {
   final List<CartItem>? listOfItems;
   final List<CartInvoice>? listOfInvoice;
   final CartReceiver? cartReceiver;
-  
+  final String? paymentMethodType;
 
   Cart(
       {this.outletName,
@@ -19,7 +19,8 @@ class Cart {
       this.deliveryTime,
       this.listOfItems,
       this.listOfInvoice,
-      this.cartReceiver});
+      this.cartReceiver,
+      this.paymentMethodType});
 
   factory Cart.parse(QueryResult result) {
     final resultCart = result.data!["getCart"]["result"]["cart"];
@@ -34,6 +35,7 @@ class Cart {
         listOfInvoice: (resultCart["itemWisePaymentDetails"] as List<dynamic>)
             .map((e) => CartInvoice.parse(e))
             .toList(),
-        cartReceiver: CartReceiver.parse(resultCart["receiver"]));
+        cartReceiver: CartReceiver.parse(resultCart["receiver"]),
+        paymentMethodType: resultCart["payment"]["type"]);
   }
 }

@@ -6,11 +6,8 @@ import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
-import 'package:food_app/view/outlet/outlet_controller.dart';
-import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../get/controller.dart';
 import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
@@ -38,7 +35,6 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
   @override
   Future<List<Item>> getItems(String id) async {
     List<Item> listOfItem = <Item>[];
-    OutletController controller = Get.find<OutletController>();
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GraphQlQuery().getItems), variables: {'outletId': id}));
     debugPrint("ServiceConfig$result");
@@ -62,6 +58,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<Area> getReverseGeoCode(double lat, double lon) async {
+    // ignore: unused_local_variable
     var params = {
       "coordinate": {
         "type": "Point",
@@ -115,7 +112,6 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
 
   @override
   Future<OutletInfoModel> getOutlet(String outletID) async {
-    Controller controller = Controller();
     debugPrint("OutletInfo" + "Got it");
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(OutletQuery().getOutlet),

@@ -6,7 +6,7 @@ import '../model/cart/cart_item.dart';
 import 'item_card_component.dart';
 
 class CartItemList extends StatelessWidget {
-  List<CartItem> itemListModelList;
+  final List<CartItem> itemListModelList;
 
   CartItemList({Key? key, required this.itemListModelList}) : super(key: key);
 

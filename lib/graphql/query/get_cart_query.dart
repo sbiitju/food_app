@@ -19,6 +19,7 @@ class GetCart {
                   
                 }
          payment{
+         type
           deliveryCharge
           finalTotal
           itemSubtotal

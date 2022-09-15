@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../util/function.dart';
 import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/delivery_address_model.dart';
-import '../../../view/cart/model/payment_ui_model.dart';
 import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
@@ -28,9 +27,8 @@ class CartRepoImp implements CartRepo {
 
   @override
   Future addToCart(Item itemInfo, LatLng latLng) async {
-    String? fingerPrint;
-    await getFingerPrint().then((value) => fingerPrint = value);
-    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint!);
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint);
   }
 
   @override
@@ -45,17 +43,20 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future<List<PaymentUiModel>> getPaymentMethod(double lat, double lon) =>
-      _remoteSource.getPaymentMethod(lat, lon);
-
-  @override
-  Future<String> placeRegularOrder(double lat, double lon, String fingerPrint) {
-    return _remoteSource.placeRegularOrder(lat, lon, fingerPrint);
+  Future<String> placeRegularOrder() async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.placeRegularOrder(fingerPrint);
   }
 
   @override
   Future<List<CartPaymentMethod>> getPaymentMethods() {
     //Todo: need to fetch lat lon from local
     return _remoteSource.getPaymentMethods(0.0, 0.0);
+  }
+
+  @override
+  Future setPaymentMethod(String paymentType) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.setPaymentMethod(fingerPrint, paymentType);
   }
 }
