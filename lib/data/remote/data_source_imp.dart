@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/data/model/outlet_model.dart';
+import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+import '../../graphql/query/get_customer_profile.dart';
 import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
@@ -131,5 +133,13 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
     debugPrint("newCategory" + modifiedResult[0].items[0].itemName);
 
     return modifiedResult;
+  }
+
+  @override
+  Future<Profile> getCustomerProfile() async {
+    QueryResult result = await BaseDataSource.client.value.query(
+        QueryOptions(document: gql(GetCustomerProfile().getCustomerProfile)));
+    debugPrint("Profile " + result.data.toString());
+    return Profile.parse(result);
   }
 }

@@ -4,6 +4,7 @@ import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
+import '../model/profile_model.dart';
 
 abstract class GraphQlDataSource {
   Future<bool> getServiceConfiguration(String versionNumber);
@@ -21,4 +22,6 @@ abstract class GraphQlDataSource {
   Future<bool> getZone(double lat, double lon);
 
   Future<List<Outlet>> getHPOutletList(double lat, double lon, int index);
+
+  Future<Profile> getCustomerProfile();
 }

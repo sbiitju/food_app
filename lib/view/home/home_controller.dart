@@ -2,18 +2,24 @@ import 'package:food_app/get/base_controller.dart';
 import 'package:get/get.dart';
 
 import '../../data/model/outlet_model.dart';
+import '../../data/model/profile_model.dart';
 import '../../data/repo/base_repo.dart';
 import '../../data/repo/cart/cart_repo.dart';
 
 class HomeController extends BaseController {
   var listOutletId = <Outlet>[].obs;
   var checking = false.obs;
+  final Rx<Profile?> profile = Rx(null);
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
 
   getCart() {
     cartRepository.getCart();
+  }
+
+  getProfile() async {
+    profile.value = await _repository.getCustomerProfile();
   }
 
   Future<List<Outlet>> getHpOutletList(lat, lon, index) async {

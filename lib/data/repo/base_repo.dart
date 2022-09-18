@@ -4,6 +4,7 @@ import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
+import '../model/profile_model.dart';
 
 abstract class BaseRepo {
   Future<bool> getServiceConfiguration(String versionNumber);
@@ -21,4 +22,6 @@ abstract class BaseRepo {
   Future<List<Outlet>> getHPOutletList(double lat, double lon, int index);
 
   Future<OutletInfoModel> getOutlet(String outletID);
+
+  Future<Profile> getCustomerProfile();
 }

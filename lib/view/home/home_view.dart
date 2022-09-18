@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
@@ -35,6 +34,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     refresh();
     controller.getCart();
+    controller.getProfile();
     controller.getHpOutletList(
         widget.latLng.latitude, widget.latLng.longitude, _index);
     super.initState();
@@ -51,92 +51,89 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return controller.checking.value
-        ? Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              titleSpacing: 0,
-              title: Row(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Deliver To",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        widget.locationName,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            drawer: HomeDrawer(
-              profile: Profile(
-                  "Md. Shahin Bashar",
-                  "01613162522",
-                  "sbiitju@gmail.com",
-                  "https://static.hungrynaki.com/hungrynaki-v4/restaurants/pita_pan/meta/pita_pan_cover_1564222336864.png"),
-            ),
-            body: SafeArea(
-                child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Obx(() {
-                    return RefreshIndicator(
-                      onRefresh: refresh,
-                      child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: controller.listOutletId.length + 1,
-                          itemBuilder: (context, index) {
-                            return index < controller.listOutletId.length
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Get.to(OutletView(
-                                          controller.listOutletId[index].id));
-                                    },
-                                    child: ResturentCard(
-                                        controller.listOutletId[index]))
-                                : const Center(
-                                    child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: CircularProgressIndicator(),
-                                  ));
-                          }),
-                    );
-                  }),
+        ? Obx(() => Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                titleSpacing: 0,
+                title: Row(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Deliver To",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          widget.locationName,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Obx(() {
-                    return Visibility(
-                      visible: controller.cartRepository.cart.value != null,
-                      child: CartNavigationCard(
-                          totalItems: controller
-                              .cartRepository.cart.value?.listOfItems?.length
-                              .toString(),
-                          totalAmount: controller.cartRepository.cart.value
-                              ?.listOfInvoice?.last.amount),
-                    );
-                  }),
-                )
-              ],
-            )),
-          )
+              ),
+              drawer: (controller.profile.value == null)
+                  ? SizedBox()
+                  : HomeDrawer(profile: controller.profile.value!),
+              body: SafeArea(
+                  child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Obx(() {
+                      return RefreshIndicator(
+                        onRefresh: refresh,
+                        child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: controller.listOutletId.length + 1,
+                            itemBuilder: (context, index) {
+                              return index < controller.listOutletId.length
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Get.to(OutletView(
+                                            controller.listOutletId[index].id));
+                                      },
+                                      child: ResturentCard(
+                                          controller.listOutletId[index]))
+                                  : const Center(
+                                      child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 5),
+                                      child: CircularProgressIndicator(),
+                                    ));
+                            }),
+                      );
+                    }),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Obx(() {
+                      return Visibility(
+                        visible: controller.cartRepository.cart.value != null,
+                        child: CartNavigationCard(
+                            totalItems: controller
+                                .cartRepository.cart.value?.listOfItems?.length
+                                .toString(),
+                            totalAmount: controller.cartRepository.cart.value
+                                ?.listOfInvoice?.last.amount),
+                      );
+                    }),
+                  )
+                ],
+              )),
+            ))
         : Container(
             height: getScreenHeight(context),
             child: Center(
