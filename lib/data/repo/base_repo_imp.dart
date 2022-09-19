@@ -4,6 +4,7 @@ import 'package:food_app/data/repo/base_repo.dart';
 import 'package:get/get.dart';
 
 import '../../util/ItemModel.dart';
+import '../../view/cart/model/order_place_address_model.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';

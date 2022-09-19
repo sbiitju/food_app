@@ -18,14 +18,7 @@ class CartController extends GetxController {
 
   late final paymentMethodList = <PaymentUiModel>[].obs;
 
-  late var orderPlaceList = <OrderPlaceAddress>[
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-  ].obs;
+  late var orderPlaceList = <OrderPlaceAddress>[].obs;
 
   RxBool hasAddress = true.obs;
   late final Rx<Cart?> cart = _cartRepository.cart;
@@ -74,14 +67,13 @@ class CartController extends GetxController {
     for (var element in orderPlaceList) {
       element.isSelected = false;
     }
-    orderPlaceAddress.isSelected = !orderPlaceAddress.isSelected;
+    orderPlaceAddress.isSelected = !orderPlaceAddress.isSelected!;
     orderPlaceList.value = orderPlaceList.value.map((e) => e).toList();
   }
 
-  getCustomerShoppingCartAddress() {
-    _cartRepository
-        .getCustomerShoppingCartAddress()
-        .then((value) => customerShoppingCartAddress.value = value);
+  getCustomerShoppingCartAddress() async {
+    orderPlaceList.value =
+        await _cartRepository.getCustomerShoppingCartAddress();
   }
 
   setDeliveryAddress() {

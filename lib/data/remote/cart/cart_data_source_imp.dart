@@ -13,7 +13,6 @@ import '../../../graphql/add_item/add_item_query.dart';
 import '../../../graphql/query/place_order_query.dart';
 import '../../../graphql/query/set_payment_query.dart';
 import '../../../view/cart/model/cart/cart.dart';
-import '../../../view/cart/model/delivery_address_model.dart';
 import '../../../view/cart/model/order_place_address_model.dart';
 import '../../model/item.dart';
 
@@ -69,16 +68,18 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
-
   }
 
   @override
-  Future<DeliveryAddress> getCustomerShoppingCartAddress() async {
-    // ignore: unused_local_variable
+  Future<List<OrderPlaceAddress>> getCustomerShoppingCartAddress() async {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
-    return ParseOrderPlaceAddress.parseOrderPlaceAddress();
+    debugPrint(result.toString());
+    return (result.data!["getCustomerShoppingCartReceivingAddresses"]["result"]
+            as List<dynamic>)
+        .map((e) => OrderPlaceAddress.parse(e))
+        .toList();
   }
 
   @override

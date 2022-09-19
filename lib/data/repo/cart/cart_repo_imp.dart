@@ -6,12 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../util/function.dart';
 import '../../../view/cart/model/cart/cart.dart';
-import '../../../view/cart/model/delivery_address_model.dart';
+import '../../../view/cart/model/order_place_address_model.dart';
 import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
-  Get.find(tag: (CartDataSource).toString());
+      Get.find(tag: (CartDataSource).toString());
 
   @override
   Rx<Cart?> cart = Rx(null);
@@ -28,18 +28,13 @@ class CartRepoImp implements CartRepo {
   @override
   Future addToCart(Item itemInfo, LatLng latLng) async {
     String? fingerPrint = await getFingerPrint();
-    _remoteSource.addToCart(itemInfo, latLng, fingerPrint).then((value) =>
-        getCart());
+    _remoteSource
+        .addToCart(itemInfo, latLng, fingerPrint)
+        .then((value) => getCart());
   }
 
   @override
-  Future getCustomerShoppingCartReceivingAddresses() {
-    // TODO: implement getCustomerShoppingCartReceivingAddresses
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DeliveryAddress> getCustomerShoppingCartAddress() {
+  Future<List<OrderPlaceAddress>> getCustomerShoppingCartAddress() {
     return _remoteSource.getCustomerShoppingCartAddress();
   }
 

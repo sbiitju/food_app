@@ -35,7 +35,11 @@ class DeliveryAddress extends StatelessWidget {
                   BigTextView(text: "DELIVERY ADDRESS"),
                   controller.hasAddress.value
                       ? TextButton(
-                          child: const Text("Change"),
+                          child: Text(
+                            "Change",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
                           onPressed: () {
                             showBottomDialog(
                                 context,

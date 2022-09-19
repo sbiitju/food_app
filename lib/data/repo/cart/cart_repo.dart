@@ -3,7 +3,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../view/cart/model/cart/cart.dart';
-import '../../../view/cart/model/delivery_address_model.dart';
+import '../../../view/cart/model/order_place_address_model.dart';
 import '../../model/item.dart';
 
 abstract class CartRepo {
@@ -13,9 +13,7 @@ abstract class CartRepo {
 
   Future addToCart(Item itemInfo, LatLng latLng);
 
-  Future getCustomerShoppingCartReceivingAddresses();
-
-  Future<DeliveryAddress> getCustomerShoppingCartAddress();
+  Future<List<OrderPlaceAddress>> getCustomerShoppingCartAddress();
 
   Future<String> placeRegularOrder();
 

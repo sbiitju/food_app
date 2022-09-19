@@ -57,7 +57,7 @@ class ParseResponse {
             item["id"] ?? "",
             item["meta"]["name"],
             item["basePrice"].toDouble(),
-            item["meta"]["images"] ?? "",
+            item["meta"]["image"] ?? "",
             item["meta"]["description"] ?? "",
             variants));
       }

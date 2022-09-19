@@ -37,12 +37,6 @@ class _OutletViewState extends State<OutletView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.cartRepository.cart.value == null) {
-        debugPrint("cart data");
-      } else {
-        debugPrint(
-            "cart data ${controller.cartRepository.cart.value!.outletName.toString()}");
-      }
       return Scaffold(
         body: (controller.listOfItems.isNotEmpty &&
                 controller.outlet.value != null)
@@ -159,11 +153,10 @@ class _OutletViewState extends State<OutletView> {
                     ],
                   ),
                   Visibility(
-                    visible: controller.cartRepository.cart.value?.outletName !=
-                        null,
+                    visible: controller.cartRepository.cart.value != null,
                     child: CartNavigationCard(
                         totalItems: controller
-                            .cartRepository.cart.value?.quantity
+                            .cartRepository.cart.value?.listOfItems?.length
                             .toString(),
                         totalAmount: controller.cartRepository.cart.value
                             ?.listOfInvoice?.last.amount),

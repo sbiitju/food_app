@@ -2,7 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/cart/cart_payment_method.dart';
-import '../../../view/cart/model/delivery_address_model.dart';
+import '../../../view/cart/model/order_place_address_model.dart';
 import '../../model/item.dart';
 
 abstract class CartDataSource {
@@ -12,7 +12,7 @@ abstract class CartDataSource {
 
   Future getCustomerShoppingCartReceivingAddresses();
 
-  Future<DeliveryAddress> getCustomerShoppingCartAddress();
+  Future<List<OrderPlaceAddress>> getCustomerShoppingCartAddress();
 
   Future<String> placeRegularOrder(String fingerPrint);
 

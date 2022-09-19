@@ -7,9 +7,11 @@ import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
+import 'package:food_app/view/cart/model/order_place_address_model.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../graphql/query/get_customer_profile.dart';
+import '../../graphql/query/get_customer_shopping_cart_address.dart';
 import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
