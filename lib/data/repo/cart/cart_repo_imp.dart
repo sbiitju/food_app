@@ -11,7 +11,7 @@ import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
-      Get.find(tag: (CartDataSource).toString());
+  Get.find(tag: (CartDataSource).toString());
 
   @override
   Rx<Cart?> cart = Rx(null);
@@ -28,7 +28,8 @@ class CartRepoImp implements CartRepo {
   @override
   Future addToCart(Item itemInfo, LatLng latLng) async {
     String? fingerPrint = await getFingerPrint();
-    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint);
+    _remoteSource.addToCart(itemInfo, latLng, fingerPrint).then((value) =>
+        getCart());
   }
 
   @override

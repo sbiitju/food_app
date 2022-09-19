@@ -8,6 +8,7 @@ class Cart {
   final String? outletName;
   final String? restaurantName;
   final String? deliveryTime;
+  final String? quantity;
   final List<CartItem>? listOfItems;
   final List<CartInvoice>? listOfInvoice;
   final CartReceiver? cartReceiver;
@@ -17,6 +18,7 @@ class Cart {
       {this.outletName,
       this.restaurantName,
       this.deliveryTime,
+      this.quantity,
       this.listOfItems,
       this.listOfInvoice,
       this.cartReceiver,
@@ -29,6 +31,7 @@ class Cart {
         restaurantName: resultCart["outlet"]["restaurant"]["name"],
         deliveryTime:
             "${resultCart["outlet"]["deliveryTime"]}-${resultCart["outlet"]["deliveryTime"] + 5} mins",
+        quantity: resultCart["outlet"]["restaurant"]["quantity"],
         listOfItems: (resultCart["items"] as List<dynamic>)
             .map((e) => CartItem.parse(e))
             .toList(),

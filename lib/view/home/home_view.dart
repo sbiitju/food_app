@@ -117,11 +117,13 @@ class _HomeViewState extends State<HomeView> {
                   alignment: Alignment.bottomCenter,
                   child: Obx(() {
                     return Visibility(
-                      visible: controller.cartRepository.cart.value != null,
+                      visible:
+                          controller.cartRepository.cart.value?.outletName !=
+                              null,
                       child: CartNavigationCard(
-                          totalItems: controller
-                              .cartRepository.cart.value?.listOfItems?.length
-                              .toString(),
+                          totalItems:
+                              controller.cartRepository.cart.value?.quantity ??
+                                  "0",
                           totalAmount: controller.cartRepository.cart.value
                               ?.listOfInvoice?.last.amount),
                     );

@@ -4,10 +4,13 @@ import 'package:food_app/get/controller.dart';
 import 'package:food_app/settings/settings_view.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/auth/auth_view.dart';
+import 'package:food_app/view/home/home_view.dart';
+import 'package:food_app/view/map/map_controller.dart';
 import 'package:get/get.dart';
 
 class HomeDrawer extends GetView<Controller> {
   HomeDrawer({Key? key}) : super(key: key);
+  final MapController mapController = Get.find<MapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +115,15 @@ class HomeDrawer extends GetView<Controller> {
                             child: Center(
                                 child: MaterialButton(
                                     onPressed: () {
+                                      controller.isLogedIn.value = false;
+                                      controller.profile.value = null;
                                       removeToken();
                                       Get.to(AuthPage(
                                         function: () {
-                                          controller.isLogedIn.value = false;
-                                          Navigator.pop(context);
+                                          debugPrint("Checking");
+                                          Get.off(HomeView(
+                                              mapController.latLon.value,
+                                              mapController.rawAddress.value));
                                         },
                                       ));
                                     },

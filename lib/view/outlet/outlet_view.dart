@@ -159,10 +159,11 @@ class _OutletViewState extends State<OutletView> {
                     ],
                   ),
                   Visibility(
-                    visible: controller.cartRepository.cart.value != null,
+                    visible: controller.cartRepository.cart.value?.outletName !=
+                        null,
                     child: CartNavigationCard(
                         totalItems: controller
-                            .cartRepository.cart.value?.listOfItems?.length
+                            .cartRepository.cart.value?.quantity
                             .toString(),
                         totalAmount: controller.cartRepository.cart.value
                             ?.listOfInvoice?.last.amount),

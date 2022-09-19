@@ -18,9 +18,10 @@ class Profile {
     final profile = result.data!["getCustomerProfile"]["result"];
 
     return Profile._(
-        name: profile["name"],
+        name: profile["name"] ?? "",
         mobileNumber: "${profile["countryCode"]}${profile["phone"]}",
-        email: profile["primaryEmail"],
-        profileImageUrl: profile["avatar"] ?? "");
+        email: profile["primaryEmail"] ?? "",
+        profileImageUrl: profile["avatar"] ??
+            "https://ui-avatars.com/api/?name=${profile["name"] ?? ""}");
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:get/get.dart';
 
+import '../../home/home_view.dart';
 import '../../map/map_controller.dart';
 
 class OrderPlacePopUp extends StatelessWidget {
@@ -53,7 +54,8 @@ class OrderPlacePopUp extends StatelessWidget {
                       const BorderRadius.all(const Radius.circular(10))),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Get.off(HomeView(mapController.latLon.value,
+                      mapController.rawAddress.value));
                 },
                 child: Text(
                   "Track Order",

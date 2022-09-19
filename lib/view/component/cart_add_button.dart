@@ -40,7 +40,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
       counter++;
       isCounterZero = false;
     });
-    addCart(1);
+    addCart();
   }
 
   @override
@@ -59,7 +59,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
           backgroundColor: Theme.of(context).primaryColor.withOpacity(0.25),
           onIncrement: (value) {
             if (controller.loginStatus.value) {
-              addCart(value.toInt());
+              addCart();
             } else {
               showDialog(
                   context: context,
@@ -77,7 +77,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
     );
   }
 
-  void addCart(int i) {
+  void addCart() {
     cartRepository.addToCart(widget.item, mapController.latLon.value);
   }
 
