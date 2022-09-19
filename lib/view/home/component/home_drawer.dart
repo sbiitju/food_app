@@ -6,16 +6,11 @@ import 'package:food_app/util/function.dart';
 import 'package:food_app/view/auth/auth_view.dart';
 import 'package:get/get.dart';
 
-import '../../../data/model/profile_model.dart';
-
 class HomeDrawer extends GetView<Controller> {
-  final Profile profile;
-
-  HomeDrawer({Key? key, required this.profile}) : super(key: key);
+  HomeDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
     return Obx(() => Drawer(
           width: 200,
           child: Stack(
@@ -36,22 +31,25 @@ class HomeDrawer extends GetView<Controller> {
                               children: [
                                 CircleAvatar(
                                     radius: 30,
-                                    backgroundImage:
-                                        NetworkImage(profile.profileImageUrl)),
+                                    backgroundImage: NetworkImage(controller
+                                            .profile.value?.profileImageUrl ??
+                                        "")),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(profile.name,
+                                Text(controller.profile.value?.name ?? "",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(color: Colors.white)),
-                                Text(profile.mobileNumber,
+                                Text(
+                                    controller.profile.value?.mobileNumber ??
+                                        "",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall
                                         ?.copyWith(color: Colors.white)),
-                                Text(profile.email,
+                                Text(controller.profile.value?.email ?? "",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall
@@ -61,7 +59,10 @@ class HomeDrawer extends GetView<Controller> {
                           )
                         : Center(
                             child: MaterialButton(
-                              child: Text("Login/Sign Up"),
+                              child: Text(
+                                "Login/Sign Up",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               onPressed: () => Get.off(AuthPage(
                                 function: () {
                                   Navigator.pop(context);

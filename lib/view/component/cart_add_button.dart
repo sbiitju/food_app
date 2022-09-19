@@ -56,7 +56,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
       child: Align(
         alignment: Alignment.topCenter,
         child: CustomizableCounter(
-          backgroundColor: Colors.white30,
+          backgroundColor: Theme.of(context).primaryColor.withOpacity(0.25),
           onIncrement: (value) {
             if (controller.loginStatus.value) {
               addCart(value.toInt());
@@ -71,19 +71,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
           onDecrement: (value) {
             removeCart();
           },
-          onCountChange: (value) {
-            // if (loginStatus) {
-            //   cartRepository.cart.value =
-            //       Cart("outletName", "restaurantName", "", [], []);
-            // } else {
-            //   removeCart();
-            //   showDialog(
-            //       context: context,
-            //       builder: (context) {
-            //         return loginCheckingDialog(context);
-            //       });
-            // }
-          },
+          onCountChange: (value) {},
         ),
       ),
     );

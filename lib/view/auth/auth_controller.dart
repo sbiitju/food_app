@@ -17,6 +17,8 @@ class AuthController extends GetxController {
   }
 
   Future<VerifyResponse> verifyOTP(phoneNumber, otp) async {
-    return await _repository.verifyOtp(phoneNumber, otp);
+    VerifyResponse verifyResponse =
+        await _repository.verifyOtp(phoneNumber, otp);
+    return verifyResponse;
   }
 }

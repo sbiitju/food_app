@@ -63,11 +63,16 @@ class _ItemsCardState extends State<ItemsCard> {
                       child: Stack(
                         children: [
                           SizedBox(
-                              height: 100, child: Image.asset("assest/a.webp")),
+                              height: 100,
+                              child: Image.network(
+                                widget.itemInfo[index].thumbnail ?? "",
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Image.asset("assest/a.webp"),
+                              )),
                           Positioned(
                             top: 75,
-                            left: 10,
-                            right: 10,
+                            left: 5,
+                            right: 5,
                             bottom: 5,
                             child:
                                 CartUpdateButton(item: widget.itemInfo[index]),

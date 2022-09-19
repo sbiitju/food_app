@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/category_items_model.dart';
 import 'component/home_drawer.dart';
+import 'home_item_shimmer.dart';
 
 class HomeView extends StatefulWidget {
   final LatLng latLng;
@@ -34,7 +35,6 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     refresh();
     controller.getCart();
-    controller.getProfile();
     controller.getHpOutletList(
         widget.latLng.latitude, widget.latLng.longitude, _index);
     super.initState();
@@ -51,95 +51,86 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return controller.checking.value
-        ? Obx(() => Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                titleSpacing: 0,
-                title: Row(
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Deliver To",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          widget.locationName,
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              drawer: (controller.profile.value == null)
-                  ? SizedBox()
-                  : HomeDrawer(profile: controller.profile.value!),
-              body: SafeArea(
-                  child: Stack(
-                alignment: Alignment.bottomCenter,
+        ? Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              titleSpacing: 0,
+              title: Row(
                 children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Obx(() {
-                      return RefreshIndicator(
-                        onRefresh: refresh,
-                        child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: controller.listOutletId.length + 1,
-                            itemBuilder: (context, index) {
-                              return index < controller.listOutletId.length
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        Get.to(OutletView(
-                                            controller.listOutletId[index].id));
-                                      },
-                                      child: ResturentCard(
-                                          controller.listOutletId[index]))
-                                  : const Center(
-                                      child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 5),
-                                      child: CircularProgressIndicator(),
-                                    ));
-                            }),
-                      );
-                    }),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Deliver To",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(color: Colors.white),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        widget.locationName,
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: Colors.white),
+                      ),
+                    ],
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Obx(() {
-                      return Visibility(
-                        visible: controller.cartRepository.cart.value != null,
-                        child: CartNavigationCard(
-                            totalItems: controller
-                                .cartRepository.cart.value?.listOfItems?.length
-                                .toString(),
-                            totalAmount: controller.cartRepository.cart.value
-                                ?.listOfInvoice?.last.amount),
-                      );
-                    }),
-                  )
                 ],
-              )),
-            ))
-        : Container(
-            height: getScreenHeight(context),
-            child: Center(
-              child: CircularProgressIndicator(),
+              ),
             ),
-          );
+            drawer: HomeDrawer(),
+            body: SafeArea(
+                child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Obx(() {
+                    return RefreshIndicator(
+                      onRefresh: refresh,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: controller.listOutletId.length + 1,
+                          itemBuilder: (context, index) {
+                            return index < controller.listOutletId.length
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Get.to(OutletView(
+                                          controller.listOutletId[index].id));
+                                    },
+                                    child: ResturentCard(
+                                        controller.listOutletId[index]))
+                                : Container(
+                                    height: getScreenHeight(context),
+                                    child: HomeCardShimmer(),
+                                  );
+                          }),
+                    );
+                  }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Obx(() {
+                    return Visibility(
+                      visible: controller.cartRepository.cart.value != null,
+                      child: CartNavigationCard(
+                          totalItems: controller
+                              .cartRepository.cart.value?.listOfItems?.length
+                              .toString(),
+                          totalAmount: controller.cartRepository.cart.value
+                              ?.listOfInvoice?.last.amount),
+                    );
+                  }),
+                )
+              ],
+            )),
+          )
+        : HomeCardShimmer();
   }
 
   Future<void> refresh() async {

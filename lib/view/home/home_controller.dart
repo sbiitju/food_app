@@ -9,6 +9,7 @@ import '../../data/repo/cart/cart_repo.dart';
 class HomeController extends BaseController {
   var listOutletId = <Outlet>[].obs;
   var checking = false.obs;
+  final RxBool isShowingShimmerEffect = RxBool(true);
   final Rx<Profile?> profile = Rx(null);
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
@@ -16,10 +17,6 @@ class HomeController extends BaseController {
 
   getCart() {
     cartRepository.getCart();
-  }
-
-  getProfile() async {
-    profile.value = await _repository.getCustomerProfile();
   }
 
   Future<List<Outlet>> getHpOutletList(lat, lon, index) async {
