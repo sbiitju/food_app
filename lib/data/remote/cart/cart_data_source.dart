@@ -19,4 +19,6 @@ abstract class CartDataSource {
   Future<List<CartPaymentMethod>> getPaymentMethods(double lat, double lon);
 
   Future setPaymentMethod(String fingerPrint, String paymentType);
+
+  Future setDeliveryAddress(String fingerPrint, String deliveryAddressId);
 }

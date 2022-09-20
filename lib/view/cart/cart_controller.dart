@@ -33,6 +33,12 @@ class CartController extends GetxController {
     });
   }
 
+  Future setDeliveryAddress(String deliveryAddressId) async {
+    _cartRepository
+        .setDeliveryAddress(deliveryAddressId)
+        .then((value) => getCart());
+  }
+
   placeRegularOrder() {
     _cartRepository.placeRegularOrder().then((value) {
       if (value.isNotEmpty) {
@@ -74,10 +80,5 @@ class CartController extends GetxController {
   getCustomerShoppingCartAddress() async {
     orderPlaceList.value =
         await _cartRepository.getCustomerShoppingCartAddress();
-  }
-
-  setDeliveryAddress() {
-    deliveryAddress.value = DeliveryAddress(
-        "Md. Imam Hossain", "01613163", LatLng(23, 90), "address");
   }
 }

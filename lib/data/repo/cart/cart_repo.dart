@@ -20,4 +20,6 @@ abstract class CartRepo {
   Future<List<CartPaymentMethod>> getPaymentMethods();
 
   Future setPaymentMethod(String paymentType);
+
+  Future setDeliveryAddress(String deliveryAddressId);
 }

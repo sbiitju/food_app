@@ -11,6 +11,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../graphql/add_item/add_item_query.dart';
 import '../../../graphql/query/place_order_query.dart';
+import '../../../graphql/query/set_delivery_address.dart';
 import '../../../graphql/query/set_payment_query.dart';
 import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/order_place_address_model.dart';
@@ -119,5 +120,19 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
           }
         }));
     saveFingerPrint(result.data!["setPaymentMethod"]["result"]["fingerprint"]);
+  }
+
+  @override
+  Future setDeliveryAddress(
+      String fingerPrint, String deliveryAddressId) async {
+    QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
+        document: gql(SetDeliveryAddress().setDeliveryAddress),
+        variables: {
+          "fingerprint": fingerPrint,
+          "receivingAddressId": deliveryAddressId
+        }));
+    saveFingerPrint(
+        result.data!["setDeliveryAddress"]["result"]["fingerprint"]);
+    debugPrint("SetAddress" + result.toString());
   }
 }

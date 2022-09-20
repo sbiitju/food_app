@@ -55,4 +55,10 @@ class CartRepoImp implements CartRepo {
     String? fingerPrint = await getFingerPrint();
     return _remoteSource.setPaymentMethod(fingerPrint, paymentType);
   }
+
+  @override
+  Future setDeliveryAddress(String deliveryAddressId) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.setDeliveryAddress(fingerPrint, deliveryAddressId);
+  }
 }

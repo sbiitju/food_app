@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/util/function.dart';
-import 'package:food_app/view/cart/cart_component/small_text_view.dart';
+import 'package:food_app/view/cart/cart_controller.dart';
+import 'package:food_app/view/cart/cart_view.dart';
+import 'package:get/get.dart';
 
 import '../model/order_place_address_model.dart';
 
 class OrderAddressComponent extends StatelessWidget {
   final OrderPlaceAddress orderPlaceAddress;
   final Function(OrderPlaceAddress orderPlaceAddress) checkedListener;
+  final CartController controller = Get.find<CartController>();
 
-  const OrderAddressComponent(
+  OrderAddressComponent(
       {required this.orderPlaceAddress,
       required this.checkedListener,
       Key? key})
@@ -19,7 +22,12 @@ class OrderAddressComponent extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         checkedListener(orderPlaceAddress);
-        
+        controller
+            .setDeliveryAddress(orderPlaceAddress.addressid!)
+            .then((value) {
+          Navigator.pop(context);
+          Get.to(MyCartView());
+        });
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -61,10 +69,13 @@ class OrderAddressComponent extends StatelessWidget {
                         height: 5,
                       ),
                       Text(orderPlaceAddress.receiverName ?? ""),
-                      SmallTextView(
-                        text: orderPlaceAddress.receiverNumber ?? "",
+                      Text(
+                        orderPlaceAddress.receiverNumber ?? "",
                       ),
-                      Text(orderPlaceAddress.address ?? "")
+                      Text(
+                        orderPlaceAddress.address ?? "",
+                        maxLines: 1,
+                      )
                     ],
                   ),
                 ),
