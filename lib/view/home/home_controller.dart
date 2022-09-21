@@ -18,7 +18,7 @@ class HomeController extends BaseController {
   final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
   final RxList<OrderStatus> orderStatus = RxList.empty();
 
-  getRunningOrder() async {
+  Future getRunningOrder() async {
     orderStatus.value = await _repository.getRunningOrder();
     debugPrint("OrderStatus" + orderStatus.toString());
   }

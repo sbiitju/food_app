@@ -74,44 +74,34 @@ class HomeDrawer extends GetView<Controller> {
                             ),
                           ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: Theme.of(context).dividerColor,
+                  ListTile(
+                    title: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.settings),
+                        Text(
+                          AppLocalizations.of(context)!.settingsText,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
                     )),
-                    child: ListTile(
-                      title: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.settings),
-                          Text(
-                            AppLocalizations.of(context)!.settingsText,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      )),
-                      onTap: () {
-                        Get.to(SettingsView());
-                      },
-                    ),
+                    onTap: () {
+                      Get.to(SettingsView());
+                    },
                   ),
+                  Divider()
                 ],
               ),
               controller.isLogedIn.value
                   ? Align(
                       alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: getScreenWidth(context),
-                        child: Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                              color: Theme.of(context).dividerColor,
-                            )),
-                            height: 50,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Divider(),
+                          SizedBox(
+                            width: getScreenWidth(context),
                             child: Center(
                                 child: MaterialButton(
                                     onPressed: () {
@@ -127,7 +117,9 @@ class HomeDrawer extends GetView<Controller> {
                                         },
                                       ));
                                     },
-                                    child: Text("Log Out")))),
+                                    child: Text("Log Out"))),
+                          ),
+                        ],
                       ),
                     )
                   : SizedBox()

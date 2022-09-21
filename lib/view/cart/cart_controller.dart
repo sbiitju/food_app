@@ -1,5 +1,6 @@
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:food_app/view/cart/model/cart/cart.dart';
+import 'package:food_app/view/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -9,7 +10,7 @@ import 'model/delivery_address_model.dart';
 import 'model/order_place_address_model.dart';
 import 'model/payment_ui_model.dart';
 
-class CartController extends GetxController {
+class CartController extends HomeController {
   final CartRepo _cartRepository = Get.find(tag: (CartRepo).toString());
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
@@ -39,7 +40,7 @@ class CartController extends GetxController {
         .then((value) => getCart());
   }
 
-  placeRegularOrder() {
+  Future placeRegularOrder() async {
     _cartRepository.placeRegularOrder().then((value) {
       if (value.isNotEmpty) {
         _cartRepository.cart.value = null;

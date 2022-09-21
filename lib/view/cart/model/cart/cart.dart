@@ -5,6 +5,7 @@ import 'cart_item.dart';
 import 'cart_reciver.dart';
 
 class Cart {
+  final String? outletId;
   final String? outletName;
   final String? restaurantName;
   final String? deliveryTime;
@@ -15,7 +16,8 @@ class Cart {
   final String? paymentMethodType;
 
   Cart(
-      {this.outletName,
+      {this.outletId,
+      this.outletName,
       this.restaurantName,
       this.deliveryTime,
       this.quantity,
@@ -27,6 +29,7 @@ class Cart {
   factory Cart.parse(QueryResult result) {
     final resultCart = result.data!["getCart"]["result"]["cart"];
     return Cart(
+        outletId: resultCart["outlet"]["id"],
         outletName: resultCart["outlet"]["name"],
         restaurantName: resultCart["outlet"]["restaurant"]["name"],
         deliveryTime:
