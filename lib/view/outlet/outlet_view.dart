@@ -153,7 +153,9 @@ class _OutletViewState extends State<OutletView> {
                     ],
                   ),
                   Visibility(
-                    visible: controller.cartRepository.cart.value != null,
+                    visible:
+                        controller.cartRepository.cart.value?.restaurantName !=
+                            null,
                     child: CartNavigationCard(
                         totalItems: controller
                             .cartRepository.cart.value?.listOfItems?.length

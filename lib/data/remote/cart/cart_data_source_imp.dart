@@ -76,7 +76,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
     QueryResult result = await BaseDataSource.client.value.query(QueryOptions(
         document: gql(GetCustomerShoppingCartReceivingAddresses()
             .getCustomerShoppingCartReceivingAddresses)));
-    debugPrint(result.toString());
+    debugPrint("getCustomerShoppingCartAddress" + result.toString());
     return (result.data!["getCustomerShoppingCartReceivingAddresses"]["result"]
             as List<dynamic>)
         .map((e) => OrderPlaceAddress.parse(e))

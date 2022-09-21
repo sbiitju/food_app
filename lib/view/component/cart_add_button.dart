@@ -50,6 +50,24 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    print("deactivate");
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 5),
@@ -78,7 +96,9 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   void addCart() {
-    cartRepository.addToCart(widget.item, mapController.latLon.value);
+    cartRepository
+        .addToCart(widget.item, mapController.latLon.value)
+        .then((value) => controller.getCart());
   }
 
   void removeCart() {}

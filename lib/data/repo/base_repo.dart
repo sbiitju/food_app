@@ -1,7 +1,7 @@
+import 'package:food_app/data/model/order_status.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 
 import '../../util/ItemModel.dart';
-import '../../view/cart/model/order_place_address_model.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
@@ -25,4 +25,8 @@ abstract class BaseRepo {
   Future<OutletInfoModel> getOutlet(String outletID);
 
   Future<Profile> getCustomerProfile();
+
+  Future<List<OrderStatus>> getRunningOrder();
+
+  Stream<List<OrderStatus?>?> subscribeRunningOrder();
 }

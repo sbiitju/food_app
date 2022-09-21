@@ -1,10 +1,10 @@
+import 'package:food_app/data/model/order_status.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/data/repo/base_repo.dart';
 import 'package:get/get.dart';
 
 import '../../util/ItemModel.dart';
-import '../../view/cart/model/order_place_address_model.dart';
 import '../model/area_model.dart';
 import '../model/category_items_model.dart';
 import '../model/outlet_info_model.dart';
@@ -57,5 +57,15 @@ class BaseRepoImp implements BaseRepo {
   @override
   Future<Profile> getCustomerProfile() {
     return _remoteSource.getCustomerProfile();
+  }
+
+  @override
+  Future<List<OrderStatus>> getRunningOrder() {
+    return _remoteSource.getRunningOrder();
+  }
+
+  @override
+  Stream<List<OrderStatus?>?> subscribeRunningOrder() {
+    return _remoteSource.subscribeRunningOrder();
   }
 }

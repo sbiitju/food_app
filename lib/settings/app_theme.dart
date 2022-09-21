@@ -5,20 +5,20 @@ class AppThemes {
       scaffoldBackgroundColor: Colors.grey.shade900,
       cardColor: Colors.grey.shade900,
       backgroundColor: Colors.grey.shade900,
-      primaryColor: const Color(0xFFFC8019),
+      primaryColor: Colors.green,
       iconTheme: const IconThemeData(color: Colors.white),
       textTheme: const TextTheme(overline: TextStyle(color: Colors.white)),
       colorScheme: const ColorScheme.dark());
 
   static final lightTheme = ThemeData(
-      primaryColor: const Color(0xFFFC8019),
+      primaryColor: Colors.green,
       cardColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       backgroundColor: Colors.white,
       iconTheme: const IconThemeData(color: Colors.black),
       textTheme: const TextTheme(overline: TextStyle(color: Colors.black)),
       colorScheme: ThemeData.light().colorScheme.copyWith(
-            primary: const Color(0xfffc8019),
+            primary: Colors.green,
             background: const Color(0xf0f0f0),
           ));
 }

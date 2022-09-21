@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:food_app/data/model/order_status.dart';
 import 'package:food_app/get/base_controller.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,12 @@ class HomeController extends BaseController {
 
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
+  final RxList<OrderStatus> orderStatus = RxList.empty();
+
+  getRunningOrder() async {
+    orderStatus.value = await _repository.getRunningOrder();
+    debugPrint("OrderStatus" + orderStatus.toString());
+  }
 
   getCart() {
     cartRepository.getCart();

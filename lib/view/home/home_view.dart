@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/category_items_model.dart';
 import 'component/home_drawer.dart';
+import 'component/order_status_bottom_sheet.dart';
 import 'home_item_shimmer.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     refresh();
+    controller.getRunningOrder();
     controller.getCart();
     controller.getHpOutletList(
         widget.latLng.latitude, widget.latLng.longitude, _index);
@@ -116,19 +118,36 @@ class _HomeViewState extends State<HomeView> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Obx(() {
-                    return Visibility(
-                      visible:
-                          controller.cartRepository.cart.value?.outletName !=
-                              null,
-                      child: CartNavigationCard(
-                          totalItems:
-                              controller.cartRepository.cart.value?.quantity ??
-                                  "0",
-                          totalAmount: controller.cartRepository.cart.value
-                              ?.listOfInvoice?.last.amount),
-                    );
+                    return controller
+                                .cartRepository.cart.value?.restaurantName !=
+                            null
+                        ? CartNavigationCard(
+                            totalItems: controller.cartRepository.cart.value
+                                    ?.listOfItems?.length
+                                    .toString() ??
+                                "0",
+                            totalAmount: controller.cartRepository.cart.value
+                                ?.listOfInvoice?.last.amount)
+                        : SizedBox();
                   }),
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom:
+                          (controller.cartRepository.cart.value?.outletName ==
+                                  null)
+                              ? 10
+                              : 70),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Obx(() {
+                      return controller.orderStatus.isNotEmpty
+                          ? OrderStatusBottomSheet(
+                              listOfOrderStatus: controller.orderStatus)
+                          : SizedBox();
+                    }),
+                  ),
+                ),
               ],
             )),
           )

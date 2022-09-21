@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:food_app/data/model/order_status.dart';
 import 'package:food_app/data/model/outlet_model.dart';
 import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/data/remote/data_source.dart';
 import 'package:food_app/graphql/graphql.dart';
 import 'package:food_app/graphql/query/getCatagorizedItemsQuery.dart';
 import 'package:food_app/graphql/query/getOutletQuery.dart';
-import 'package:food_app/view/cart/model/order_place_address_model.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../graphql/query/get_customer_profile.dart';
-import '../../graphql/query/get_customer_shopping_cart_address.dart';
+import '../../graphql/query/get_running_order_query.dart';
 import '../../graphql/query/graphql_query.dart';
 import '../../util/ItemModel.dart';
 import '../model/area_model.dart';
@@ -143,5 +143,22 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         QueryOptions(document: gql(GetCustomerProfile().getCustomerProfile)));
     debugPrint("Profile " + result.data.toString());
     return Profile.parse(result);
+  }
+
+  @override
+  Future<List<OrderStatus>> getRunningOrder() async {
+    final result = await BaseDataSource.client.value
+        .query(QueryOptions(document: gql(RunningOrder().getRunningOrder)));
+    debugPrint(result.toString());
+    return (result.data!["getRunningOrders"]["result"]["orderInfo"]
+            as List<dynamic>)
+        .map((e) => OrderStatus.parse(e))
+        .toList();
+  }
+
+  @override
+  Stream<List<OrderStatus?>?> subscribeRunningOrder() async* {
+    final result = await BaseDataSource.client.value.subscribe(
+        SubscriptionOptions(document: gql(RunningOrder().subscriptions)));
   }
 }
