@@ -132,8 +132,7 @@ class GraphQlDataSourceImp extends BaseDataSource implements GraphQlDataSource {
         variables: {'outletId': outletId}));
 
     var modifiedResult = ParseResponse(result).parseListOfCategoryItems();
-    debugPrint("newCategory" + modifiedResult[0].items[0].itemName);
-
+    debugPrint("newCategory" + result.toString());
     return modifiedResult;
   }
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/component/cart_add_button.dart';
 
-import '../../data/model/item.dart';
-
 class ItemsCard extends StatefulWidget {
-  List<Item> itemInfo;
+  List<CartItem> itemInfo;
 
   ItemsCard(this.itemInfo, {Key? key}) : super(key: key);
 
@@ -46,7 +45,7 @@ class _ItemsCardState extends State<ItemsCard> {
                               wordSpacing: 2),
                         ),
                         Text(
-                          "Tk ${widget.itemInfo[index].basePrice}",
+                          "Tk ${widget.itemInfo[index].price}",
                           style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
@@ -65,7 +64,7 @@ class _ItemsCardState extends State<ItemsCard> {
                           SizedBox(
                               height: 100,
                               child: Image.network(
-                                widget.itemInfo[index].thumbnail ?? "",
+                                widget.itemInfo[index].thumbnail,
                                 errorBuilder: (context, error, stackTrace) =>
                                     Image.asset("assest/a.webp"),
                               )),

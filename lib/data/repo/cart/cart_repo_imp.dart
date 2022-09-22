@@ -1,5 +1,6 @@
 import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +8,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../util/function.dart';
 import '../../../view/cart/model/cart/cart.dart';
 import '../../../view/cart/model/order_place_address_model.dart';
-import '../../model/item.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
@@ -26,7 +26,7 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future addToCart(Item itemInfo, LatLng latLng) async {
+  Future addToCart(CartItem itemInfo, LatLng latLng) async {
     String? fingerPrint = await getFingerPrint();
     _remoteSource
         .addToCart(itemInfo, latLng, fingerPrint)
@@ -60,5 +60,22 @@ class CartRepoImp implements CartRepo {
   Future setDeliveryAddress(String deliveryAddressId) async {
     String? fingerPrint = await getFingerPrint();
     return _remoteSource.setDeliveryAddress(fingerPrint, deliveryAddressId);
+  }
+
+  @override
+  Future removeItem(String objectId) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.removeItem(fingerPrint, objectId);
+  }
+
+  @override
+  Future subtractItem(String objectId) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.removeItem(fingerPrint, objectId);
+  }
+
+  @override
+  Future resetCart() {
+    return _remoteSource.resetCart();
   }
 }

@@ -1,10 +1,10 @@
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:food_app/view/cart/model/cart/cart.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../data/model/item.dart';
 import 'cart_component/order_place_popup.dart';
 import 'model/delivery_address_model.dart';
 import 'model/order_place_address_model.dart';
@@ -24,7 +24,7 @@ class CartController extends HomeController {
   RxBool hasAddress = true.obs;
   late final Rx<Cart?> cart = _cartRepository.cart;
 
-  Future addItem(Item itemInfo, LatLng latLng) {
+  Future addItem(CartItem itemInfo, LatLng latLng) {
     return _cartRepository.addToCart(itemInfo, latLng);
   }
 
@@ -32,6 +32,11 @@ class CartController extends HomeController {
     _cartRepository.getCart().then((value) {
       _cartRepository.cart.value = value;
     });
+  }
+
+  Future removeItem(String objectId) async {
+    _cartRepository.resetCart();
+    _cartRepository.removeItem(objectId).then((value) => getCart());
   }
 
   Future setDeliveryAddress(String deliveryAddressId) async {
@@ -42,6 +47,7 @@ class CartController extends HomeController {
 
   Future placeRegularOrder() async {
     _cartRepository.placeRegularOrder().then((value) {
+      _cartRepository.cart.value = null;
       if (value.isNotEmpty) {
         _cartRepository.cart.value = null;
         Get.dialog(OrderPlacePopUp(

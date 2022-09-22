@@ -1,23 +1,21 @@
 import 'package:customizable_counter/customizable_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/map/map_controller.dart';
 import 'package:get/get.dart';
 
-import '../../data/model/item.dart';
-import '../../data/repo/cart/cart_repo.dart';
 import '../../util/function.dart';
 import '../cart/cart_controller.dart';
 
 class CartUpdateButton extends StatefulWidget {
   const CartUpdateButton({required this.item, Key? key}) : super(key: key);
-  final Item item;
+  final CartItem item;
 
   @override
   State<CartUpdateButton> createState() => _CartUpdateButtonState();
 }
 
 class _CartUpdateButtonState extends State<CartUpdateButton> {
-  final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
   var controller = Get.find<CartController>();
   var mapController = Get.find<MapController>();
   int counter = 0;
@@ -50,24 +48,6 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("didChangeDependencies");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    print("deactivate");
-    super.deactivate();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 5),
@@ -96,10 +76,12 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   void addCart() {
-    cartRepository
-        .addToCart(widget.item, mapController.latLon.value)
+    controller
+        .addItem(widget.item, mapController.latLon.value)
         .then((value) => controller.getCart());
   }
 
-  void removeCart() {}
+  void removeCart() {
+    controller.removeItem(widget.item.itemId);
+  }
 }

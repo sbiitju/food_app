@@ -43,7 +43,7 @@ class OrderStatusShowingComponent extends GetView<HomeController> {
                                   height: 7,
                                 ),
                                 Text(
-                                  listOfOrderStatus[index].orderUid ?? "",
+                                  "Order ID: ${listOfOrderStatus[index].orderUid}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge

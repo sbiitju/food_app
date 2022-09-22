@@ -1,4 +1,4 @@
-import 'package:food_app/data/model/item.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'area_model.dart';
@@ -46,20 +46,22 @@ class ParseResponse {
         result.data!["getCategorizedItems"]["result"] as List<dynamic>;
     final listOfCategoryItems = <CategoryItems>[];
     for (final category in output) {
-      final items = <Item>[];
+      final items = <CartItem>[];
       final List<Variant> variants = [];
       for (final item in (category["items"] as List<dynamic>)) {
         for (final variant in item["variants"] as List<dynamic>) {
           variants.add(
               Variant(variant["id"], variant["name"], variant["price"] ?? 0.0));
         }
-        items.add(Item(
-            item["id"] ?? "",
-            item["meta"]["name"],
-            item["basePrice"].toDouble(),
-            item["meta"]["image"] ?? "",
-            item["meta"]["description"] ?? "",
-            variants));
+        items.add(CartItem(
+          itemId: item["id"] ?? "",
+          itemName: item["meta"]["name"],
+          price: item["basePrice"].toDouble(),
+          thumbnail: item["meta"]["image"] ?? "",
+          description: item["meta"]["description"] ?? "",
+          variants: variants,
+          itemCount: 0,
+        ));
       }
       listOfCategoryItems
           .add(CategoryItems(category["id"], category["name"], items));
