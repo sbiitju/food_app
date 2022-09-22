@@ -1,7 +1,6 @@
 class CartItem {
   final String itemId;
   final String itemName;
-  final int itemCount;
   final double price;
   final String thumbnail;
   final String description;
@@ -12,7 +11,6 @@ class CartItem {
   CartItem(
       {required this.itemId,
       required this.itemName,
-      required this.itemCount,
       required this.thumbnail,
       required this.description,
       this.variant,
@@ -24,7 +22,6 @@ class CartItem {
     return CartItem(
         itemId: result["id"],
         itemName: result["meta"]["name"],
-        itemCount: result["quantity"],
         price: result["price"].toDouble(),
         variant: Variant(result["variant"]["id"], result["variant"]["name"],
             result["variant"]["additionalPrice"].toDouble()),

@@ -6,12 +6,6 @@ mutation RemoveItem(\$itemInput:ShoppingCartItemInput!) {
         statusCode
         result {
             fingerprint
-            isSync
-            cart {
-                payment {
-                    type
-                }
-            }
         }
     }
 }
@@ -24,12 +18,6 @@ mutation SubtractItem(\$itemInput:ShoppingCartItemInput!) {
         statusCode
         result {
             fingerprint
-            isSync
-            cart {
-                payment {
-                    type
-                }
-            }
         }
     }
 }

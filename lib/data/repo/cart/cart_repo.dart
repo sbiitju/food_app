@@ -23,9 +23,5 @@ abstract class CartRepo {
 
   Future setDeliveryAddress(String deliveryAddressId);
 
-  Future removeItem(String objectId);
-
-  Future subtractItem(String objectId);
-
   Future resetCart();
 }

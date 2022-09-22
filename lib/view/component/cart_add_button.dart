@@ -2,6 +2,7 @@ import 'package:customizable_counter/customizable_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/map/map_controller.dart';
+import 'package:food_app/view/outlet/outlet_controller.dart';
 import 'package:get/get.dart';
 
 import '../../util/function.dart';
@@ -16,27 +17,16 @@ class CartUpdateButton extends StatefulWidget {
 }
 
 class _CartUpdateButtonState extends State<CartUpdateButton> {
-  var controller = Get.find<CartController>();
+  var controller = Get.find<OutletController>();
+  var cartController = Get.find<CartController>();
   var mapController = Get.find<MapController>();
   int counter = 0;
-  var isCounterZero = true;
 
-  void decrement() {
-    setState(() {
-      if (counter == 1) {
-        counter = 0;
-        isCounterZero = true;
-      } else {
-        counter--;
-      }
-    });
-    removeCart();
-  }
+  void decrement() {}
 
   void increment() {
     setState(() {
       counter++;
-      isCounterZero = false;
     });
     addCart();
   }
@@ -67,7 +57,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
             }
           },
           onDecrement: (value) {
-            removeCart();
+            controller.removeItem(widget.item);
           },
           onCountChange: (value) {},
         ),
@@ -76,12 +66,8 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
   }
 
   void addCart() {
-    controller
+    cartController
         .addItem(widget.item, mapController.latLon.value)
-        .then((value) => controller.getCart());
-  }
-
-  void removeCart() {
-    controller.removeItem(widget.item.itemId);
+        .then((value) => cartController.getCart());
   }
 }

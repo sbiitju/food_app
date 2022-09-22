@@ -34,9 +34,8 @@ class CartController extends HomeController {
     });
   }
 
-  Future removeItem(String objectId) async {
+  Future resetCart() async {
     _cartRepository.resetCart();
-    _cartRepository.removeItem(objectId).then((value) => getCart());
   }
 
   Future setDeliveryAddress(String deliveryAddressId) async {
@@ -47,9 +46,10 @@ class CartController extends HomeController {
 
   Future placeRegularOrder() async {
     _cartRepository.placeRegularOrder().then((value) {
-      _cartRepository.cart.value = null;
       if (value.isNotEmpty) {
-        _cartRepository.cart.value = null;
+        _cartRepository.cart.value?.restaurantName = null;
+        _cartRepository.resetCart();
+        getRunningOrder();
         Get.dialog(OrderPlacePopUp(
           orderUid: value,
         ));

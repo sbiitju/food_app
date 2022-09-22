@@ -22,9 +22,5 @@ abstract class CartDataSource {
 
   Future setDeliveryAddress(String fingerPrint, String deliveryAddressId);
 
-  Future removeItem(String fingerPrint, String objectId);
-
-  Future subtractItem(String fingerprint, String objectId);
-
   Future resetCart();
 }

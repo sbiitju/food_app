@@ -60,7 +60,6 @@ class ParseResponse {
           thumbnail: item["meta"]["image"] ?? "",
           description: item["meta"]["description"] ?? "",
           variants: variants,
-          itemCount: 0,
         ));
       }
       listOfCategoryItems

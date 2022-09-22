@@ -8,7 +8,7 @@ import 'cart_reciver.dart';
 class Cart {
   final String? outletId;
   final String? outletName;
-  final String? restaurantName;
+  String? restaurantName;
   final String? deliveryTime;
   final String? quantity;
   final List<CartItem>? listOfItems;

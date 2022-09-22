@@ -63,18 +63,6 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future removeItem(String objectId) async {
-    String? fingerPrint = await getFingerPrint();
-    return _remoteSource.removeItem(fingerPrint, objectId);
-  }
-
-  @override
-  Future subtractItem(String objectId) async {
-    String? fingerPrint = await getFingerPrint();
-    return _remoteSource.removeItem(fingerPrint, objectId);
-  }
-
-  @override
   Future resetCart() {
     return _remoteSource.resetCart();
   }

@@ -54,95 +54,94 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return controller.checking.value
         ? Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              titleSpacing: 0,
-              title: Row(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Deliver To",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        widget.locationName,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            drawer: HomeDrawer(),
-            body: SafeArea(
-                child: Stack(
-              alignment: Alignment.bottomCenter,
+      appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Obx(() {
-                    return RefreshIndicator(
-                      onRefresh: refresh,
-                      child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: controller.listOutletId.length + 1,
-                          itemBuilder: (context, index) {
-                            return index < controller.listOutletId.length
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Get.to(OutletView(
-                                          controller.listOutletId[index].id));
-                                    },
-                                    child: ResturentCard(
-                                        controller.listOutletId[index]))
-                                : Container(
-                                    height: getScreenHeight(context),
-                                    child: HomeCardShimmer(),
-                                  );
-                          }),
-                    );
-                  }),
+                Text(
+                  "Deliver To",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(color: Colors.white),
+                  textAlign: TextAlign.left,
                 ),
-                Obx(() {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom: (controller.cartRepository.cart.value != null)
-                            ? 0
-                            : 70),
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: CartNavigationCard()),
-                  );
-                }),
-                Obx(() {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom:
-                            (controller.cartRepository.cart.value?.outletName ==
-                                    null)
-                                ? 10
-                                : 70),
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: OrderStatusShowingComponent(
-                            listOfOrderStatus: controller.orderStatus)),
-                  );
-                }),
+                Text(
+                  widget.locationName,
+                  textAlign: TextAlign.left,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white),
+                ),
               ],
-            )),
-          )
+            ),
+          ],
+        ),
+      ),
+      drawer: HomeDrawer(),
+      body: SafeArea(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Obx(() {
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: controller.listOutletId.length + 1,
+                        itemBuilder: (context, index) {
+                          return index < controller.listOutletId.length
+                              ? GestureDetector(
+                              onTap: () {
+                                Get.to(OutletView(
+                                    controller.listOutletId[index].id));
+                              },
+                              child: ResturentCard(
+                                  controller.listOutletId[index]))
+                              : Container(
+                            height: getScreenHeight(context),
+                            child: HomeCardShimmer(),
+                          );
+                        }),
+                  );
+                }),
+              ),
+
+              Obx(() =>
+                  Visibility(
+                    visible:
+                    controller.cartRepository.cart.value?.restaurantName !=
+                        null,
+                    child: CartNavigationCard(),
+                  )),
+              Obx(() {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      bottom: (controller.cartRepository.cart.value
+                          ?.restaurantName ==
+                          null)
+                          ? 0
+                          : 70),
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: OrderStatusShowingComponent(
+                          listOfOrderStatus: controller.orderStatus)),
+                );
+              }),
+            ],
+          )),
+    )
         : HomeCardShimmer();
   }
 

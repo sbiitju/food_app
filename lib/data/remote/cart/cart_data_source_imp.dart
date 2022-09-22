@@ -142,17 +142,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
   }
 
   @override
-  Future subtractItem(String fingerPrint, String objectId) async {
-    QueryResult result = await BaseDataSource.client.value.mutate(
-        MutationOptions(
-            document: gql(UpdateItemQuery().subtractItemQuery),
-            variables: {
-          "itemInput": {
-            "fingerprint": fingerPrint,
-            "item": {"id": objectId}
-          }
-        }));
-  }
+  Future subtractItem(String fingerPrint, String objectId) async {}
 
   @override
   Future resetCart() async {

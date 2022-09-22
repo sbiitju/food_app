@@ -54,7 +54,6 @@ class OrderPlacePopUp extends StatelessWidget {
                       const BorderRadius.all(const Radius.circular(10))),
               child: MaterialButton(
                 onPressed: () {
-                  controller.cart.value = null;
                   controller.getRunningOrder().then((value) => Get.off(HomeView(
                       mapController.latLon.value,
                       mapController.rawAddress.value)));
