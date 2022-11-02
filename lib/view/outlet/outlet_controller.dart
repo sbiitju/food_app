@@ -33,20 +33,20 @@ class OutletController extends BaseController {
   void getCategoryItems(outletId) async {
     _repository.getCategoryItems(outletId).then((listOfCategoriesItems) {
       listOfItems.value = listOfCategoriesItems.map((category) {
-        category.items.map((item) {
-          item.quantity = cartRepository.cart.value?.listOfItems
-              ?.where((element) {
-                return element.itemId == item.itemId;
-              })
-              .first
-              .quantity;
-          return item;
+        category.items.forEach((element) {
+          try {
+            element.quantity = cartRepository.cart.value?.listOfItems
+                ?.where((e) {
+                  return element.itemId == e.itemId;
+                })
+                .first
+                .quantity;
+          } catch (e) {
+            e.printError();
+          }
         });
         return category;
       }).toList();
-      Future.delayed(Duration(milliseconds: 100));
-      debugPrint(
-          "MyListOFShahin" + listOfItems[0].items[0].quantity.toString());
       scrollController.addListener(() {
         updateBrerackPoint(scrollController.offset);
       });
@@ -103,3 +103,17 @@ class OutletController extends BaseController {
     }
   }
 }
+/*
+     int? x = 0;
+          try {
+            x = cartRepository.cart.value?.listOfItems
+                ?.where((cartElement) {
+              return element.itemId == cartElement.itemId;
+            }).first
+                .quantity;
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+          element.quantity = x ?? 0;
+        });
+ */
