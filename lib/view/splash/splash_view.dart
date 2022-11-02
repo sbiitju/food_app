@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../get/controller.dart';
 import '../../util/geo_location.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,10 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
   bool isApiCallCompleted = false;
 
   final SplashController controller = Get.find<SplashController>();
+  final Controller base_controller = Get.find<Controller>();
 
   @override
   void initState() {
-    debugPrint("Splash Screen is called ");
+    base_controller.getProfile();
     super.initState();
     controller.getServiceConfiguration().then((value) {
       isApiCallCompleted = value;

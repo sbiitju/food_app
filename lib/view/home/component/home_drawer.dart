@@ -4,14 +4,13 @@ import 'package:food_app/get/controller.dart';
 import 'package:food_app/settings/settings_view.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/auth/auth_view.dart';
+import 'package:food_app/view/home/home_view.dart';
+import 'package:food_app/view/map/map_controller.dart';
 import 'package:get/get.dart';
 
-import '../../../data/model/profile_model.dart';
-
 class HomeDrawer extends GetView<Controller> {
-  final Profile profile;
-
-  HomeDrawer({Key? key, required this.profile}) : super(key: key);
+  HomeDrawer({Key? key}) : super(key: key);
+  final MapController mapController = Get.find<MapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +28,41 @@ class HomeDrawer extends GetView<Controller> {
                     child: controller.isLogedIn.value
                         ? Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 10),
+                                horizontal: 8.0, vertical: 5),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 CircleAvatar(
                                     radius: 30,
-                                    backgroundImage:
-                                        NetworkImage(profile.profileImageUrl)),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(profile.name,
+                                    backgroundImage: NetworkImage(controller
+                                            .profile.value?.profileImageUrl ??
+                                        "")),
+                                Text(controller.profile.value?.name ?? "",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium),
-                                Text(profile.mobileNumber,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
-                                Text(profile.email,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
+                                        .titleMedium
+                                        ?.copyWith(color: Colors.white)),
+                                Text(
+                                    controller.profile.value?.mobileNumber ??
+                                        "",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(color: Colors.white)),
+                                Text(controller.profile.value?.email ?? "",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(color: Colors.white)),
                               ],
                             ),
                           )
                         : Center(
                             child: MaterialButton(
-                              child: Text("Login/Sign Up"),
+                              child: Text(
+                                "Login/Sign Up",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               onPressed: () => Get.off(AuthPage(
                                 function: () {
                                   Navigator.pop(context);
@@ -64,55 +71,52 @@ class HomeDrawer extends GetView<Controller> {
                             ),
                           ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: Theme.of(context).dividerColor,
+                  ListTile(
+                    title: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.settings),
+                        Text(
+                          AppLocalizations.of(context)!.settingsText,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
                     )),
-                    child: ListTile(
-                      title: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.settings),
-                          Text(
-                            AppLocalizations.of(context)!.settingsText,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      )),
-                      onTap: () {
-                        Get.to(SettingsView());
-                      },
-                    ),
+                    onTap: () {
+                      Get.to(SettingsView());
+                    },
                   ),
+                  Divider()
                 ],
               ),
               controller.isLogedIn.value
                   ? Align(
                       alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: getScreenWidth(context),
-                        child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                              color: Theme.of(context).dividerColor,
-                            )),
-                            height: 50,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Divider(),
+                          SizedBox(
+                            width: getScreenWidth(context),
                             child: Center(
                                 child: MaterialButton(
                                     onPressed: () {
+                                      controller.isLogedIn.value = false;
+                                      controller.profile.value = null;
                                       removeToken();
                                       Get.to(AuthPage(
                                         function: () {
-                                          controller.isLogedIn.value = false;
-                                          Navigator.pop(context);
+                                          debugPrint("Checking");
+                                          Get.off(HomeView(
+                                              mapController.latLon.value,
+                                              mapController.rawAddress.value));
                                         },
                                       ));
                                     },
-                                    child: Text("Log Out")))),
+                                    child: Text("Log Out"))),
+                          ),
+                        ],
                       ),
                     )
                   : SizedBox()

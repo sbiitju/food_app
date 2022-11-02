@@ -56,6 +56,7 @@ dependencies:
   customizable_counter: ^1.0.4
   fluttertoast: ^8.0.8
   flutter_svg: ^1.1.5
+  shimmer: ^2.0.0
 
 
 

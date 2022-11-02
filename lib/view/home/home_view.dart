@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/data/model/profile_model.dart';
 import 'package:food_app/util/function.dart';
 import 'package:food_app/view/cart/cart_component/cart_navigation.dart';
 import 'package:food_app/view/component/restuarent_card.dart';
@@ -12,6 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/model/category_items_model.dart';
 import 'component/home_drawer.dart';
+import 'component/order_status_bottom_sheet.dart';
+import 'home_item_shimmer.dart';
 
 class HomeView extends StatefulWidget {
   final LatLng latLng;
@@ -34,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     refresh();
+    controller.getRunningOrder();
     controller.getCart();
     controller.getHpOutletList(
         widget.latLng.latitude, widget.latLng.longitude, _index);
@@ -52,92 +54,95 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return controller.checking.value
         ? Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              titleSpacing: 0,
-              title: Row(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Deliver To",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        widget.locationName,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            drawer: HomeDrawer(
-              profile: Profile(
-                  "Md. Shahin Bashar",
-                  "01613162522",
-                  "sbiitju@gmail.com",
-                  "https://static.hungrynaki.com/hungrynaki-v4/restaurants/pita_pan/meta/pita_pan_cover_1564222336864.png"),
-            ),
-            body: SafeArea(
-                child: Stack(
-              alignment: Alignment.bottomCenter,
+      appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Obx(() {
-                    return RefreshIndicator(
-                      onRefresh: refresh,
-                      child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: controller.listOutletId.length + 1,
-                          itemBuilder: (context, index) {
-                            return index < controller.listOutletId.length
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Get.to(OutletView(
-                                          controller.listOutletId[index].id));
-                                    },
-                                    child: ResturentCard(
-                                        controller.listOutletId[index]))
-                                : const Center(
-                                    child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: CircularProgressIndicator(),
-                                  ));
-                          }),
-                    );
-                  }),
+                Text(
+                  "Deliver To",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(color: Colors.white),
+                  textAlign: TextAlign.left,
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Obx(() {
-                    return Visibility(
-                      visible: controller.cartRepository.cart.value != null,
-                      child: CartNavigationCard(),
-                    );
-                  }),
-                )
+                Text(
+                  widget.locationName,
+                  textAlign: TextAlign.left,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white),
+                ),
               ],
-            )),
-          )
-        : Container(
-            height: getScreenHeight(context),
-            child: Center(
-              child: CircularProgressIndicator(),
             ),
-          );
+          ],
+        ),
+      ),
+      drawer: HomeDrawer(),
+      body: SafeArea(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Obx(() {
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: controller.listOutletId.length + 1,
+                        itemBuilder: (context, index) {
+                          return index < controller.listOutletId.length
+                              ? GestureDetector(
+                              onTap: () {
+                                Get.to(OutletView(
+                                    controller.listOutletId[index].id));
+                              },
+                              child: ResturentCard(
+                                  controller.listOutletId[index]))
+                              : Container(
+                            height: getScreenHeight(context),
+                            child: HomeCardShimmer(),
+                          );
+                        }),
+                  );
+                }),
+              ),
+
+              Obx(() =>
+                  Visibility(
+                    visible:
+                    controller.cartRepository.cart.value?.restaurantName !=
+                        null,
+                    child: CartNavigationCard(),
+                  )),
+              Obx(() {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      bottom: (controller.cartRepository.cart.value
+                          ?.restaurantName ==
+                          null)
+                          ? 0
+                          : 70),
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: OrderStatusShowingComponent(
+                          listOfOrderStatus: controller.orderStatus)),
+                );
+              }),
+            ],
+          )),
+    )
+        : HomeCardShimmer();
   }
 
   Future<void> refresh() async {

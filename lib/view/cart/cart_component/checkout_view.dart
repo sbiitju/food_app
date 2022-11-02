@@ -18,7 +18,6 @@ class _CheckOutViewState extends State<CheckOutView> {
 
   @override
   void initState() {
-    controller.setDeliveryAddress();
     controller.getCustomerShoppingCartAddress();
     controller.getPaymentMethods();
     super.initState();

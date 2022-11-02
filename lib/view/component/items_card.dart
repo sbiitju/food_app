@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/component/cart_add_button.dart';
 
-import '../../data/model/item.dart';
-
 class ItemsCard extends StatefulWidget {
-  List<Item> itemInfo;
+  List<CartItem> itemInfo;
 
   ItemsCard(this.itemInfo, {Key? key}) : super(key: key);
 
@@ -15,9 +14,6 @@ class ItemsCard extends StatefulWidget {
 class _ItemsCardState extends State<ItemsCard> {
   @override
   Widget build(BuildContext context) {
-    for (final element in widget.itemInfo) {
-      debugPrint("Bashar${element.itemName}");
-    }
     return ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         separatorBuilder: (context, index) => Divider(),
@@ -31,7 +27,7 @@ class _ItemsCardState extends State<ItemsCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +42,7 @@ class _ItemsCardState extends State<ItemsCard> {
                               wordSpacing: 2),
                         ),
                         Text(
-                          "Tk ${widget.itemInfo[index].basePrice}",
+                          "Tk ${widget.itemInfo[index].price}",
                           style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
@@ -59,21 +55,30 @@ class _ItemsCardState extends State<ItemsCard> {
                   Flexible(
                     flex: 1,
                     child: SizedBox(
-                      height: 120,
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                              height: 100, child: Image.asset("assest/a.webp")),
-                          Positioned(
-                            top: 75,
-                            left: 10,
-                            right: 10,
-                            bottom: 5,
-                            child:
-                                CartUpdateButton(item: widget.itemInfo[index]),
-                          )
-                        ],
-                      ),
+                      height: widget.itemInfo[index].thumbnail != "" ? 120 : 50,
+                      child: widget.itemInfo[index].thumbnail != ""
+                          ? Stack(
+                              fit: StackFit.loose,
+                              children: [
+                                SizedBox(
+                                    height: 100,
+                                    child: Image.network(
+                                      widget.itemInfo[index].thumbnail,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Image.asset("assest/a.webp"),
+                                    )),
+                                Positioned(
+                                  top: 75,
+                                  left: 5,
+                                  right: 5,
+                                  bottom: 5,
+                                  child: CartUpdateButton(
+                                      item: widget.itemInfo[index]),
+                                )
+                              ],
+                            )
+                          : CartUpdateButton(item: widget.itemInfo[index]),
                     ),
                   )
                 ],

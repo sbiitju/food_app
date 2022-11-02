@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/view/component/outlet_info_card.dart';
 import 'package:food_app/view/outlet/outlet_controller.dart';
+import 'package:food_app/view/outlet/shimmer_component/shimmer_item_component.dart';
 import 'package:get/get.dart';
 
 import '../cart/cart_component/cart_navigation.dart';
@@ -36,12 +37,6 @@ class _OutletViewState extends State<OutletView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.cartRepository.cart.value == null) {
-        debugPrint("cart data");
-      } else {
-        debugPrint(
-            "cart data ${controller.cartRepository.cart.value!.outletName.toString()}");
-      }
       return Scaffold(
         body: (controller.listOfItems.isNotEmpty &&
                 controller.outlet.value != null)
@@ -158,14 +153,13 @@ class _OutletViewState extends State<OutletView> {
                     ],
                   ),
                   Visibility(
-                    visible: controller.cartRepository.cart.value != null,
+                    visible:
+                        controller.cartRepository.cart.value?.outletId != null,
                     child: CartNavigationCard(),
                   )
                 ],
               )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+            : OutletCardShimmer(),
       );
     });
   }

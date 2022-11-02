@@ -6,7 +6,7 @@ import 'package:food_app/view/cart/cart_component/medium_text_view.dart';
 import 'package:food_app/view/cart/cart_component/small_text_view.dart';
 import 'package:food_app/view/cart/cart_controller.dart';
 import 'package:food_app/view/cart/model/cart/cart.dart';
-import 'package:food_app/view/component/outlet_info.dart';
+import 'package:food_app/view/outlet/outlet_view.dart';
 import 'package:get/get.dart';
 
 import 'cart_component/big_textview.dart';
@@ -26,7 +26,6 @@ class _MyCartViewState extends State<MyCartView> {
   @override
   void initState() {
     controller.getCart();
-    controller.setDeliveryAddress();
     controller.getCustomerShoppingCartAddress();
     controller.getPaymentMethods();
     super.initState();
@@ -62,7 +61,7 @@ class _MyCartViewState extends State<MyCartView> {
                         child: SmallTextView(
                           text: "${cart!.outletName} - ${cart.restaurantName}",
                           onPressed: () {
-                            Get.to(OutletInfo(""));
+                            Get.off(OutletView(cart.outletId));
                           },
                         ),
                       ),
@@ -149,8 +148,10 @@ class _MyCartViewState extends State<MyCartView> {
                                       Radius.circular(10))),
                               child: MaterialButton(
                                 onPressed: () {
-                                  controller.getCart().then(
-                                      (_) => controller.placeRegularOrder());
+                                  controller.getCart().then((_) => controller
+                                      .placeRegularOrder()
+                                      .then((value) =>
+                                          controller.getRunningOrder()));
                                 },
                                 child: Text(
                                   "Confirm Order",

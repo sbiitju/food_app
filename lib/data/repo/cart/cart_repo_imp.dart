@@ -1,13 +1,13 @@
 import 'package:food_app/data/remote/cart/cart_data_source.dart';
 import 'package:food_app/data/repo/cart/cart_repo.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 import 'package:food_app/view/cart/model/cart/cart_payment_method.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../util/function.dart';
 import '../../../view/cart/model/cart/cart.dart';
-import '../../../view/cart/model/delivery_address_model.dart';
-import '../../model/item.dart';
+import '../../../view/cart/model/order_place_address_model.dart';
 
 class CartRepoImp implements CartRepo {
   final CartDataSource _remoteSource =
@@ -26,19 +26,15 @@ class CartRepoImp implements CartRepo {
   }
 
   @override
-  Future addToCart(Item itemInfo, LatLng latLng) async {
+  Future addToCart(CartItem itemInfo, LatLng latLng) async {
     String? fingerPrint = await getFingerPrint();
-    return _remoteSource.addToCart(itemInfo, latLng, fingerPrint);
+    _remoteSource
+        .addToCart(itemInfo, latLng, fingerPrint)
+        .then((value) => getCart());
   }
 
   @override
-  Future getCustomerShoppingCartReceivingAddresses() {
-    // TODO: implement getCustomerShoppingCartReceivingAddresses
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DeliveryAddress> getCustomerShoppingCartAddress() {
+  Future<List<OrderPlaceAddress>> getCustomerShoppingCartAddress() {
     return _remoteSource.getCustomerShoppingCartAddress();
   }
 
@@ -58,5 +54,16 @@ class CartRepoImp implements CartRepo {
   Future setPaymentMethod(String paymentType) async {
     String? fingerPrint = await getFingerPrint();
     return _remoteSource.setPaymentMethod(fingerPrint, paymentType);
+  }
+
+  @override
+  Future setDeliveryAddress(String deliveryAddressId) async {
+    String? fingerPrint = await getFingerPrint();
+    return _remoteSource.setDeliveryAddress(fingerPrint, deliveryAddressId);
+  }
+
+  @override
+  Future resetCart() {
+    return _remoteSource.resetCart();
   }
 }

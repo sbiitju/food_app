@@ -2,8 +2,9 @@ import 'package:food_app/data/remote/auth/auth_repo.dart';
 import 'package:get/get.dart';
 
 import '../../data/remote/auth/auth_model.dart';
+import '../../get/controller.dart';
 
-class AuthController extends GetxController {
+class AuthController extends Controller {
   final AuthRepo _repository = Get.find(tag: (AuthRepo).toString());
   var showLoginImage = true.obs;
   var showVerifyPage = false.obs;
@@ -17,6 +18,8 @@ class AuthController extends GetxController {
   }
 
   Future<VerifyResponse> verifyOTP(phoneNumber, otp) async {
-    return await _repository.verifyOtp(phoneNumber, otp);
+    VerifyResponse verifyResponse =
+        await _repository.verifyOtp(phoneNumber, otp);
+    return verifyResponse;
   }
 }

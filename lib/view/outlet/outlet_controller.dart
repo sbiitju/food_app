@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/data/repo/outlet/outlet_repo.dart';
 import 'package:food_app/get/base_controller.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ import '../../data/model/outlet_info_model.dart';
 import '../../data/repo/base_repo.dart';
 import '../../data/repo/cart/cart_repo.dart';
 import '../../util/ItemModel.dart';
+import '../cart/model/cart/cart_item.dart';
 
 class OutletController extends BaseController {
   List<Item> listOfItem = <Item>[].obs;
@@ -17,8 +19,10 @@ class OutletController extends BaseController {
   final scrollController = ScrollController();
   double outletInfoHeight = 252 - kToolbarHeight;
   List<double> breackPoints = [];
+  var loginStatus = false.obs;
   final BaseRepo _repository = Get.find(tag: (BaseRepo).toString());
   final CartRepo cartRepository = Get.find(tag: (CartRepo).toString());
+  final OutletRepo _outletRepo = Get.find(tag: (OutletRepo).toString());
 
   void getOutlet(outletId) {
     _repository.getOutlet(outletId).then((value) {
@@ -27,13 +31,40 @@ class OutletController extends BaseController {
   }
 
   void getCategoryItems(outletId) async {
-    _repository.getCategoryItems(outletId).then((value) {
-      listOfItems.value = value;
+    _repository.getCategoryItems(outletId).then((listOfCategoriesItems) {
+      listOfItems.value = listOfCategoriesItems.map((category) {
+        category.items.forEach((element) {
+          try {
+            element.quantity = cartRepository.cart.value?.listOfItems
+                ?.where((e) {
+                  return element.itemId == e.itemId;
+                })
+                .first
+                .quantity;
+          } catch (e) {
+            e.printError();
+          }
+        });
+        return category;
+      }).toList();
       scrollController.addListener(() {
         updateBrerackPoint(scrollController.offset);
       });
       createBreackPoints();
     });
+  }
+
+  Future removeItem(CartItem item) async {
+    final itemCount = (cartRepository.cart.value?.listOfItems
+                ?.where((element) => element.itemId == item.itemId))
+            ?.first
+            .quantity ??
+        0;
+    if (itemCount == 1) {
+      _outletRepo.removeItem(item).then((value) => cartRepository.getCart());
+    } else {
+      _outletRepo.subtractItem(item).then((value) => cartRepository.getCart());
+    }
   }
 
   void createBreackPoints() {
@@ -72,3 +103,4 @@ class OutletController extends BaseController {
     }
   }
 }
+

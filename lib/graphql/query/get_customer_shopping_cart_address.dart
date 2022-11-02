@@ -1,6 +1,6 @@
-class GetCustomerShoppingCartReceivingAddresses {
-  String getCustomerShoppingCartReceivingAddresses = """
-  query getCustomerShoppingCartReceivingAddresses{
+class GetCustomerShoppingCartAddress {
+  final String getCustomerShoppingCartAddress = """
+  {
   getCustomerShoppingCartReceivingAddresses {
     message
     statusCode

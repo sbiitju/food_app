@@ -1,15 +1,16 @@
 import 'package:food_app/data/repo/cart/cart_repo.dart';
 import 'package:food_app/view/cart/model/cart/cart.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
+import 'package:food_app/view/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../data/model/item.dart';
 import 'cart_component/order_place_popup.dart';
 import 'model/delivery_address_model.dart';
 import 'model/order_place_address_model.dart';
 import 'model/payment_ui_model.dart';
 
-class CartController extends GetxController {
+class CartController extends HomeController {
   final CartRepo _cartRepository = Get.find(tag: (CartRepo).toString());
 
   Rx<DeliveryAddress?> deliveryAddress = Rx(null);
@@ -18,19 +19,12 @@ class CartController extends GetxController {
 
   late final paymentMethodList = <PaymentUiModel>[].obs;
 
-  late var orderPlaceList = <OrderPlaceAddress>[
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-    OrderPlaceAddress("Home", "Shahin Bashar", "01613162522",
-        "Jahangirnagar University", LatLng(20, 30), false),
-  ].obs;
+  late var orderPlaceList = <OrderPlaceAddress>[].obs;
 
   RxBool hasAddress = true.obs;
   late final Rx<Cart?> cart = _cartRepository.cart;
 
-  Future addItem(Item itemInfo, LatLng latLng) {
+  Future addItem(CartItem itemInfo, LatLng latLng) {
     return _cartRepository.addToCart(itemInfo, latLng);
   }
 
@@ -40,10 +34,22 @@ class CartController extends GetxController {
     });
   }
 
-  placeRegularOrder() {
+  Future resetCart() async {
+    _cartRepository.resetCart();
+  }
+
+  Future setDeliveryAddress(String deliveryAddressId) async {
+    _cartRepository
+        .setDeliveryAddress(deliveryAddressId)
+        .then((value) => getCart());
+  }
+
+  Future placeRegularOrder() async {
     _cartRepository.placeRegularOrder().then((value) {
       if (value.isNotEmpty) {
-        _cartRepository.cart.value = null;
+        _cartRepository.cart.value?.restaurantName = null;
+        _cartRepository.resetCart();
+        getRunningOrder();
         Get.dialog(OrderPlacePopUp(
           orderUid: value,
         ));
@@ -74,18 +80,12 @@ class CartController extends GetxController {
     for (var element in orderPlaceList) {
       element.isSelected = false;
     }
-    orderPlaceAddress.isSelected = !orderPlaceAddress.isSelected;
+    orderPlaceAddress.isSelected = !orderPlaceAddress.isSelected!;
     orderPlaceList.value = orderPlaceList.value.map((e) => e).toList();
   }
 
-  getCustomerShoppingCartAddress() {
-    _cartRepository
-        .getCustomerShoppingCartAddress()
-        .then((value) => customerShoppingCartAddress.value = value);
-  }
-
-  setDeliveryAddress() {
-    deliveryAddress.value = DeliveryAddress(
-        "Md. Imam Hossain", "01613163", LatLng(23, 90), "address");
+  getCustomerShoppingCartAddress() async {
+    orderPlaceList.value =
+        await _cartRepository.getCustomerShoppingCartAddress();
   }
 }

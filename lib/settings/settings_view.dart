@@ -14,7 +14,10 @@ class SettingsView extends GetView<Controller> {
         appBar: AppBar(
           elevation: 0,
           title: Text(AppLocalizations.of(context)!.settingsText,
-              style: Theme.of(context).textTheme.titleSmall),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Colors.white)),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/view/cart/model/cart/cart_item.dart';
 
-import '../../data/model/item.dart';
 import '../component/items_card.dart';
 
 class MenuCategories extends StatelessWidget {
   final String title;
-  final List<Item> items;
+  final List<CartItem> items;
 
   MenuCategories(this.title, this.items);
 
