@@ -103,17 +103,4 @@ class OutletController extends BaseController {
     }
   }
 }
-/*
-     int? x = 0;
-          try {
-            x = cartRepository.cart.value?.listOfItems
-                ?.where((cartElement) {
-              return element.itemId == cartElement.itemId;
-            }).first
-                .quantity;
-          } catch (e) {
-            debugPrint(e.toString());
-          }
-          element.quantity = x ?? 0;
-        });
- */
+
