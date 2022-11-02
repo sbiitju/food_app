@@ -31,8 +31,22 @@ class OutletController extends BaseController {
   }
 
   void getCategoryItems(outletId) async {
-    _repository.getCategoryItems(outletId).then((value) {
-      listOfItems.value = value;
+    _repository.getCategoryItems(outletId).then((listOfCategoriesItems) {
+      listOfItems.value = listOfCategoriesItems.map((category) {
+        category.items.map((item) {
+          item.quantity = cartRepository.cart.value?.listOfItems
+              ?.where((element) {
+                return element.itemId == item.itemId;
+              })
+              .first
+              .quantity;
+          return item;
+        });
+        return category;
+      }).toList();
+      Future.delayed(Duration(milliseconds: 100));
+      debugPrint(
+          "MyListOFShahin" + listOfItems[0].items[0].quantity.toString());
       scrollController.addListener(() {
         updateBrerackPoint(scrollController.offset);
       });

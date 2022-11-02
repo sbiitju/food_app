@@ -121,7 +121,7 @@ class CartDataSourceImp extends BaseDataSource implements CartDataSource {
           "receivingAddressId": deliveryAddressId
         }));
     saveFingerPrint(
-        result.data!["setDeliveryAddress"]["result"]["fingerprint"]);
+        result.data?["setDeliveryAddress"]["result"]["fingerprint"]);
     debugPrint("SetAddress" + result.toString());
   }
 

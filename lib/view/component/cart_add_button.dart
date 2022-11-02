@@ -44,6 +44,7 @@ class _CartUpdateButtonState extends State<CartUpdateButton> {
       child: Align(
         alignment: Alignment.topCenter,
         child: CustomizableCounter(
+          count: (widget.item.quantity?.toDouble()) ?? 0,
           backgroundColor: Theme.of(context).primaryColor.withOpacity(0.25),
           onIncrement: (value) {
             if (controller.loginStatus.value) {

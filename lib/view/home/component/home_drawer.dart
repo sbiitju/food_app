@@ -28,7 +28,7 @@ class HomeDrawer extends GetView<Controller> {
                     child: controller.isLogedIn.value
                         ? Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 10),
+                                horizontal: 8.0, vertical: 5),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -37,9 +37,6 @@ class HomeDrawer extends GetView<Controller> {
                                     backgroundImage: NetworkImage(controller
                                             .profile.value?.profileImageUrl ??
                                         "")),
-                                SizedBox(
-                                  height: 10,
-                                ),
                                 Text(controller.profile.value?.name ?? "",
                                     style: Theme.of(context)
                                         .textTheme

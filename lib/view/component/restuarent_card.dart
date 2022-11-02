@@ -33,6 +33,7 @@ class _ResturentCardState extends State<ResturentCard> {
                   Stack(
                     children: [
                       Placeholder(
+                        color: Theme.of(context).backgroundColor,
                         strokeWidth: 1,
                         fallbackHeight: 200,
                         child: CachedNetworkImage(
